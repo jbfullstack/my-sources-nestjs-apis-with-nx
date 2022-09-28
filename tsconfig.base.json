@@ -15,7 +15,16 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@my-sources-nx/api-interfaces": ["libs/api-interfaces/src/index.ts"]
+      "@my-sources-nx/api-interfaces": ["libs/api-interfaces/src/index.ts"],
+      "@jbhive/admin": ["libs/backend/admin/src/index.ts"],
+      "@jbhive/auth": ["libs/backend/auth/src/index.ts"],
+      "@jbhive/core": ["libs/backend/core/src/index.ts"],
+      "@jbhive/course": ["libs/backend/course/src/index.ts"],
+      "@jbhive/crypt": ["libs/backend/crypt/src/index.ts"],
+      "@jbhive/data": ["libs/backend/data/src/index.ts"],
+      "@jbhive/log": ["libs/backend/log/src/index.ts"],
+      "@jbhive/source": ["libs/backend/source/src/index.ts"],
+      "@jbhive/struct": ["libs/backend/struct/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

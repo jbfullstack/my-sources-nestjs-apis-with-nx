@@ -4,6 +4,7 @@
   "projects": {
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
+    "frontend": "libs/frontend",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e"
   }
