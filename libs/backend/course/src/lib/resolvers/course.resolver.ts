@@ -4,9 +4,9 @@ import { CourseService } from '../course.service';
 import { CreateCourseInput } from '../dto/create-course.input';
 import { Course } from '../models/course';
 import { Logger, UseGuards } from '@nestjs/common'
-import { CtxUser, GqlAuthGuard, Public, User } from '@jbhive/auth'
+import { CtxUser, GqlAuthGuard, Public, User } from '@jbhive_be/auth'
 import { UpdateCourseInput } from '../dto/update-course.input';
-import { LogService } from '@jbhive/log';
+import { LogService } from '@jbhive_be/log';
 
 @Resolver()
 export class CourseResolver {

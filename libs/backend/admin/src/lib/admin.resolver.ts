@@ -1,10 +1,10 @@
 
 import { Args, Query, Resolver, Mutation,  } from '@nestjs/graphql';
 import { Logger, UseGuards } from '@nestjs/common'
-import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard, User } from '@jbhive/auth'
-import { Role } from "@jbhive/struct";
-import { LogService } from '@jbhive/log';
-import { Source } from '@jbhive/source';
+import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard, User } from '@jbhive_be/auth'
+import { Role } from "@jbhive_be/struct";
+import { LogService } from '@jbhive_be/log';
+import { Source } from '@jbhive_be/source';
 import { AdminService } from './admin.service';
 import { UpdateUserInput } from './dto/update-user-inupt';
 

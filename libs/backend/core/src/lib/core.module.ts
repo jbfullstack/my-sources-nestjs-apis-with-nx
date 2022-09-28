@@ -5,7 +5,7 @@ import { validationSchema } from "./config/validation";
 import { GraphQLModule } from "@nestjs/graphql";
 import { CoreResolver } from './core.resolver';
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
-import { LogModule } from '@jbhive/log';
+import { LogModule } from '@jbhive_be/log';
 
 
 @Module({

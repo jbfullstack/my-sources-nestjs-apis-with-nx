@@ -1,5 +1,5 @@
 import { Float, Query, Resolver } from "@nestjs/graphql";
-import { Color, LogService } from '@jbhive/log';
+import { Color, LogService } from '@jbhive_be/log';
 
 @Resolver()
 export class CoreResolver {

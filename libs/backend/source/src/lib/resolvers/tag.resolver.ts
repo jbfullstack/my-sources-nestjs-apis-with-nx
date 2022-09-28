@@ -1,11 +1,11 @@
 import { Args, Query, Resolver, Mutation } from '@nestjs/graphql';
 
 import { Logger, UseGuards } from '@nestjs/common'
-import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard } from '@jbhive/auth';
+import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard } from '@jbhive_be/auth';
 import { User } from '@prisma/client';
-// import { Role } from '@jbhive/auth';
-import { Role } from "@jbhive/struct";
-import { LogService } from '@jbhive/log';
+// import { Role } from '@jbhive_be/auth';
+import { Role } from "@jbhive_be/struct";
+import { LogService } from '@jbhive_be/log';
 import { CreateTagInput } from '../dto/create-tag-input';
 import { Tag } from '../models/tag';
 import { SourceService } from '../source.service';

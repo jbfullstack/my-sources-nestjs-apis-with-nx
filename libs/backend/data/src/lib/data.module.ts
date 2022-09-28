@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { DataService } from './data.service';
-import { AuthModule } from '@jbhive/auth';
-import { StructModule } from '@jbhive/struct';
+import { AuthModule } from '@jbhive_be/auth';
+import { StructModule } from '@jbhive_be/struct';
 
 
 @Module({

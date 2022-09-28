@@ -1,5 +1,5 @@
-import { DataModule } from '@jbhive/data';
-import { LogModule } from '@jbhive/log';
+import { DataModule } from '@jbhive_be/data';
+import { LogModule } from '@jbhive_be/log';
 import { Module } from '@nestjs/common'
 import { SourceTypeResolver } from './resolvers/source-type.resolver';
 import { SourceResolver  } from './resolvers/source.resolver';

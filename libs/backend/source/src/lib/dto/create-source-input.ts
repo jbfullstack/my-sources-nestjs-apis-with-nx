@@ -1,4 +1,4 @@
-import { User } from "@jbhive/auth";
+import { User } from "@jbhive_be/auth";
 import { Field, InputType } from "@nestjs/graphql";
 import { SourceType } from "../models/source-type";
 import { Tag } from "../models/tag";

@@ -1,11 +1,11 @@
-import { Color, LogService } from "@jbhive/log";
+import { Color, LogService } from "@jbhive_be/log";
 import { ExecutionContext, Injectable, Logger } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";
 import { AuthGuard } from "@nestjs/passport";
 import { IS_PUBLIC_KEY } from "../decorators/public.decorator";
 import { ROLES_KEY } from "../decorators/roles.decorator";
-import { Role } from "@jbhive/struct";
+import { Role } from "@jbhive_be/struct";
 
 
 @Injectable()

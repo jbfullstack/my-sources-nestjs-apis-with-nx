@@ -1,4 +1,4 @@
-import { User } from "@jbhive/auth";
+import { User } from "@jbhive_be/auth";
 import { Field, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()

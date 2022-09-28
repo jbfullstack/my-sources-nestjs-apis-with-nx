@@ -1,14 +1,14 @@
-import { DataService } from "@jbhive/data";
-import { Color, LogService } from "@jbhive/log";
+import { DataService } from "@jbhive_be/data";
+import { Color, LogService } from "@jbhive_be/log";
 import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
-import { CryptHelper } from "@jbhive/crypt";
+import { CryptHelper } from "@jbhive_be/crypt";
 import { AuthLoginInput } from "./dto/auth-login.input";
 import { AuthRegisterInput } from "./dto/auth-register.input";
 import { JwtDto } from "./dto/jwt.dto";
 // import { Role } from "./enums/role.enum";
-import { Role } from "@jbhive/struct";
+import { Role } from "@jbhive_be/struct";
 import { UserToken } from "./models/user-token";
 
 @Injectable()

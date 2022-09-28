@@ -1,4 +1,4 @@
-import { LogService } from "@jbhive/log";
+import { LogService } from "@jbhive_be/log";
 import { Type, CanActivate, ExecutionContext, mixin, Injectable, Inject, UnauthorizedException, Logger } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import { GqlExecutionContext } from "@nestjs/graphql";

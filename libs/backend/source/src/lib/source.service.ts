@@ -1,6 +1,6 @@
-import { User } from "@jbhive/auth";
-import { DataService } from "@jbhive/data";
-import { LogService } from "@jbhive/log";
+import { User } from "@jbhive_be/auth";
+import { DataService } from "@jbhive_be/data";
+import { LogService } from "@jbhive_be/log";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { CreateSourceInput } from "./dto/create-source-input";
