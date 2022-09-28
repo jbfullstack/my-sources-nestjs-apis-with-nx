@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@jbhive_ai/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@jbhive_be/admin": ["libs/backend/admin/src/index.ts"],
       "@jbhive_be/auth": ["libs/backend/auth/src/index.ts"],
       "@jbhive_be/core": ["libs/backend/core/src/index.ts"],
@@ -24,10 +25,8 @@
       "@jbhive_be/log": ["libs/backend/log/src/index.ts"],
       "@jbhive_be/source": ["libs/backend/source/src/index.ts"],
       "@jbhive_be/struct": ["libs/backend/struct/src/index.ts"],
-
-      "@jbhive_ai/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-
-      "@jbhive_fe/counter": ["libs/frontend/counter/src/index.ts"]
+      "@jbhive_fe/counter": ["libs/frontend/counter/src/index.ts"],
+      "@jbhive_fe/uptime": ["libs/frontend/uptime/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

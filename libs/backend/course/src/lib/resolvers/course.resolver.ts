@@ -12,6 +12,7 @@ import { LogService } from '@jbhive_be/log';
 export class CourseResolver {
     constructor(private readonly service: CourseService, private readonly log: LogService) {}
 
+    @Public()
     @Query( () => [Course], {nullable: true})
     courses () {
         this.log.logMethod(`Resolver.courses()`)

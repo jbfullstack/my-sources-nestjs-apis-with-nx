@@ -5,7 +5,8 @@
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
     "frontend": "libs/frontend",
-    "frontend-counter": "libs/frontend/counter",
+    "counter": "libs/frontend/counter",
+    "uptime": "libs/frontend/uptime",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e"
   }
