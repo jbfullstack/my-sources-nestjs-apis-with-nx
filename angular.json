@@ -4,11 +4,13 @@
   "projects": {
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
+    "auth": "libs/frontend/auth",
     "frontend": "libs/frontend",
     "frontend-auth": "libs/frontend/auth",
+    "frontend-types": "libs/frontend/types",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
     "uptime": "libs/frontend/uptime",
-    "auth": "libs/frontend/auth"
+    "types": "libs/frontend/types"
   }
 }

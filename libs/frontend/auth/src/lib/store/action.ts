@@ -1,9 +1,10 @@
 import { createAction, props } from '@ngrx/store';
+import { RegisterUserInterface } from '../types/register-user.interface';
 import { ActionTypes } from './action-types';
 
 export const registerAction = createAction(
     ActionTypes.REGISTER,
-    props<{ pseudo: string, email: string, password: string}>()
+    props<{ request: RegisterUserInterface }>()
 );
 
 export const loginAction = createAction(

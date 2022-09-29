@@ -1,6 +1,9 @@
 Register component
 
 <div class="auth-page">
+
+    ==={{ isSubmittings$ | async}}===
+
     <div class="container page">
         <div class="row" >
             <div class="clo-md-6 offset-md-3 col-xs-12">
@@ -23,7 +26,7 @@ Register component
                         <fieldset class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
                         </fieldset>                   
-                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmittings$ | async">
                             Sign up
                         </button>
                     </fieldset>
