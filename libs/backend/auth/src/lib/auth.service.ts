@@ -9,7 +9,8 @@ import { AuthRegisterInput } from "./dto/auth-register.input";
 import { JwtDto } from "./dto/jwt.dto";
 // import { Role } from "./enums/role.enum";
 import { Role } from "@jbhive_be/struct";
-import { UserToken } from "./models/user-token";
+// import { UserToken } from "./models/user-token";
+import { User } from "./models/user";
 
 @Injectable()
 export class AuthService {
@@ -23,7 +24,7 @@ export class AuthService {
         ) {}
 
 
-    async login(input: AuthLoginInput) : Promise<UserToken> {
+    async login(input: AuthLoginInput) : Promise<User> {
         const found = await this.data.findUserByEmail(input.email)
         if (!found){
             this.log.err(`User with email ${input.email} does not exists`)
@@ -36,7 +37,12 @@ export class AuthService {
             throw new Error(`Invalid password`)
         }
 
-        return { user: found, token: this.signToken(found.id)}
+        const response = {
+            ...found,
+            token: this.signToken(found.id)
+        }
+        // this.log.err(`response: ${JSON.stringify(response)}`)      
+        return response
     }
 
 
@@ -49,7 +55,14 @@ export class AuthService {
 
         const password = await CryptHelper.hash(input.password)    
         const created = await this.data.createUser({email: input.email, password: password, pseudo: input.pseudo, roleId: 0})
-        return {user: created, token: this.signToken(created.id)}
+        // this.log.err(`created: ${JSON.stringify(created)}`)
+
+        const response = {
+            ...created,
+            token: this.signToken(created.id)
+        }
+        // this.log.err(`response: ${JSON.stringify(response)}`)      
+        return response
     }
 
     signToken(id: number): string {

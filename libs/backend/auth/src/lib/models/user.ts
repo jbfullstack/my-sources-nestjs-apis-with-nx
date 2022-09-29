@@ -21,4 +21,11 @@ export class User {
 
     // @Field({ nullable: true }) --> no field bcs password not exposed
     password?: string
+
+    hidden?: boolean
+
+    activated?: boolean
+
+    @Field({ nullable: true })
+    token: string
 }
