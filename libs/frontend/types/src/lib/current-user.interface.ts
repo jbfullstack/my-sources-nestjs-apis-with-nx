@@ -5,6 +5,7 @@ export interface CurrentUserInterface {
     nickname: string | null,
     createAt: string,
     roleId: number,
+    roleName: string,
     image: string | null,
     token: string
 }
