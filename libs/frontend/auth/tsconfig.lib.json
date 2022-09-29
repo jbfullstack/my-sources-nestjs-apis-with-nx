@@ -13,5 +13,5 @@
     "jest.config.ts",
     "**/*.test.ts"
   ],
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "../../../apps/my-sources/src/app/auth-routing.module.ts"]
 }

@@ -1,0 +1,34 @@
+Register component
+
+<div class="auth-page">
+    <div class="container page">
+        <div class="row" >
+            <div class="clo-md-6 offset-md-3 col-xs-12">
+                <h1 class="text-xs-center">Sign up</h1>
+                <p class="text-xs-center">
+                    <a [routerLink]="['/login']"> Have an account?</a>
+                </p>
+
+                BACKEND ERROR WILL BE THERE
+
+                <!-- <form [formGroup]="form"> -->
+                <form>
+                    <fieldset>
+                        <fieldset class="form-group">
+                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo">
+                        </fieldset> 
+                        <fieldset class="form-group">
+                            <input type="Email" class="form-control form-control-lg" placeholder="Email">
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input type="password" class="form-control form-control-lg" placeholder="Password">
+                        </fieldset>                   
+                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
+                            Sign up
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

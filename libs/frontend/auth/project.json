@@ -1,14 +1,14 @@
 {
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "libs/frontend/counter/src",
+  "sourceRoot": "libs/frontend/auth/src",
   "prefix": "my-sources-nx",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/frontend/counter"],
+      "outputs": ["coverage/libs/frontend/auth"],
       "options": {
-        "jestConfig": "libs/frontend/counter/jest.config.ts",
+        "jestConfig": "libs/frontend/auth/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -16,8 +16,8 @@
       "executor": "@nrwl/linter:eslint",
       "options": {
         "lintFilePatterns": [
-          "libs/frontend/counter/**/*.ts",
-          "libs/frontend/counter/**/*.html"
+          "libs/frontend/auth/**/*.ts",
+          "libs/frontend/auth/**/*.html"
         ]
       }
     }
