@@ -11,17 +11,17 @@ Register component
 
                 BACKEND ERROR WILL BE THERE
 
-                <!-- <form [formGroup]="form"> -->
-                <form>
+                <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <!-- <form> -->
                     <fieldset>
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo">
+                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo" formControlName="pseudo">
                         </fieldset> 
                         <fieldset class="form-group">
-                            <input type="Email" class="form-control form-control-lg" placeholder="Email">
+                            <input type="Email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
                         </fieldset>
                         <fieldset class="form-group">
-                            <input type="password" class="form-control form-control-lg" placeholder="Password">
+                            <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
                         </fieldset>                   
                         <button class="btn btn-lg btn-primary pull-xs-right" type="submit">
                             Sign up

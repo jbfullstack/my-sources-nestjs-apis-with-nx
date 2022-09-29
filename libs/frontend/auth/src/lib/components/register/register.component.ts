@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core'
-// import { FormBuilder, FormGroup } from '@angular/forms'
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
+import { Store } from '@ngrx/store'
+
+import { registerAction } from '../../store/action'
 
 @Component({
   selector: 'ms-register',
@@ -7,9 +10,9 @@ import { Component, OnInit } from '@angular/core'
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit{
-  // form: FormGroup
+  form!: FormGroup
 
-  // constructor(private formBuilder : FormBuilder) {}
+  constructor(private formBuilder : FormBuilder, private store: Store) {}
 
 
   ngOnInit(): void {
@@ -17,6 +20,15 @@ export class RegisterComponent implements OnInit{
   }
 
   initializeForm(): void {
-    // this.form = this.formBuilder
+    this.form = this.formBuilder.group({
+      pseudo: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+    })
+  }
+
+  onSubmit(): void {
+    console.log("submit", this.form.value, this.form.valid)
+    this.store.dispatch(registerAction(this.form.value))
   }
 }

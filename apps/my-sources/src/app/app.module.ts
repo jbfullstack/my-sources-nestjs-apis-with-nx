@@ -16,6 +16,9 @@ import {InMemoryCache} from '@apollo/client/core';
 
 import { RouterModule, } from '@angular/router';
 import { AppRoutingModule} from './app-routing.module'
+import { FormBuilder, FormGroup } from '@angular/forms'
+import { StoreDevtoolsModule} from '@ngrx/store-devtools'
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent, UptimeComponent],
@@ -26,7 +29,11 @@ import { AppRoutingModule} from './app-routing.module'
     RouterModule,
     AppRoutingModule,
     AuthModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot([]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
     
   ],
   providers: [
@@ -42,6 +49,7 @@ import { AppRoutingModule} from './app-routing.module'
       },
       deps: [HttpLink],
     },
+    FormBuilder
   ],
   bootstrap: [AppComponent],
 })
