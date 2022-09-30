@@ -1,6 +1,6 @@
 import { DataService } from "@jbhive_be/data";
 import { Color, LogService } from "@jbhive_be/log";
-import { BadRequestException, Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { CryptHelper } from "@jbhive_be/crypt";
@@ -47,10 +47,9 @@ export class AuthService {
     }
 
 
-    async register(input: AuthRegisterInput) {    
-        
-        this.checkRegisterFieldsOk(input)
-        
+    async register(input: AuthRegisterInput) {  
+        this.checkRegisterFieldsOk(input)   
+       
         await this.manageNoDuplicatedEntryErros(input)
 
 
@@ -68,38 +67,114 @@ export class AuthService {
     
 
     checkRegisterFieldsOk(input: AuthRegisterInput) {
-        if (input.email.length < 10) {
-            this.log.err(`Cannot register, the email must be 10 characters long at least`)
-            throw new BadRequestException('The email must be 10 characters long at least')
+        let httpErrorResponse =  {
+            errors: 
+            {
+                email: [],
+                pseudo: [],
+                password: [],
+            }
         }
 
+        let isEmailValids: boolean = true
+        let isPseudoValids: boolean = true
+        let isPasswordValids: boolean = true        
+
+        if (input.email.includes(' ')) {
+            this.manageErrorMessage(
+                httpErrorResponse.errors.email, 
+                'email contains space', 
+                `Cannot register, the email must have no space character` 
+            )
+            if (isEmailValids){ isEmailValids = false }  
+        }
+
+        if (input.email.length < 10) {
+            this.manageErrorMessage(
+                httpErrorResponse.errors.email, 
+                'email too short (min size 10)', 
+                `Cannot register, the email must be 10 characters long at least` 
+            )
+            if (isEmailValids){ isEmailValids = false }
+        }
+
+        console.log(`isEmailValids:`, isEmailValids)
+
         if (input.pseudo.includes(' ')) {
-            this.log.err(`Cannot register, the pseudo must have no space character`)
-            throw new BadRequestException(`The pseudo must have no space character`)
+            this.manageErrorMessage(
+                httpErrorResponse.errors.pseudo, 
+                'pseudo contains space', 
+                `Cannot register, the pseudo must have no space character` 
+            )
+            if (isPseudoValids){ isPseudoValids = false }
         }
 
         if (input.pseudo.length < 3) {
-            this.log.err(`Cannot register, the pseudo must be 3 characters long at least`)
-            this.log.err(`Cannot register, the pseudo must be 3 characters long at least`)
+            this.manageErrorMessage(
+                httpErrorResponse.errors.pseudo, 
+                'pseudo too short (min size 3)', 
+                `Cannot register, the pseudo must be 3 characters long at least` 
+            )
+            if (isPseudoValids){ isPseudoValids = false }
         }
 
         if (input.password.length < 4) {
-            this.log.err(`Cannot register, the password must be 4 characters long at least`)
-            this.log.err(`Cannot register, the password must be 4 characters long at least`)
+            this.manageErrorMessage(
+                httpErrorResponse.errors.password, 
+                'password too short (min size 4)', 
+                `Cannot register, the password must be 4 characters long at least`
+            )
+            if (isPasswordValids){ isPasswordValids = false }
+        }
+
+        if ( !isEmailValids || ! isPasswordValids || ! isPasswordValids){
+            if (isEmailValids) { delete httpErrorResponse.errors.email }
+            if (isPseudoValids) { delete httpErrorResponse.errors.pseudo }
+            if (isPasswordValids) { delete httpErrorResponse.errors.password }
+
+            throw new BadRequestException(JSON.stringify(httpErrorResponse))
         }
     }
 
+    private manageErrorMessage(listToPush: string[], message: string, logErrMessage: string){
+        listToPush.push(message)
+        this.log.err(logErrMessage)
+    }
+
     async manageNoDuplicatedEntryErros(input: AuthRegisterInput) {
+        
+        let httpErrorResponse =  {
+            errors: 
+            {
+                email: [],
+                pseudo: [],
+            }
+        }
+
+        let isEmailValids: boolean = true
+        let isPseudoValids: boolean = true    
+
         const foundByEmail = await this.data.findUserByEmail(input.email.toLowerCase())
         if (foundByEmail){
-            this.log.err(`Cannot register with email ${input.email}`)
-            throw new BadRequestException(`Cannot register with email ${input.email}`)
+            this.manageErrorMessage(httpErrorResponse.errors.email,
+                'email already exists', `Cannot register with email ${input.email}`)
+            this.log.err(`Cannot register with email ${input.email},email already in db`)
+            if (isEmailValids){ isEmailValids = false }
+            
         }
 
         const foundByPseudo = await this.data.findUserByPseudo(input.pseudo.toLowerCase())
         if (foundByPseudo){
-            this.log.err(`Cannot register with pseudo ${input.pseudo}`)
-            throw new BadRequestException(`Cannot register with pseudo ${input.pseudo}`)
+            this.manageErrorMessage(httpErrorResponse.errors.pseudo,
+                'pseudo already exists', `Cannot register with pseudo ${input.email},pseudo already in db`)
+                if (isPseudoValids){ isPseudoValids = false }
+        }
+
+        if (!isEmailValids || !isPseudoValids) {
+            if (isEmailValids) { delete httpErrorResponse.errors.email }
+            if (isPseudoValids) { delete httpErrorResponse.errors.pseudo }
+
+            throw new BadRequestException(JSON.stringify(httpErrorResponse))
         }
     }
 

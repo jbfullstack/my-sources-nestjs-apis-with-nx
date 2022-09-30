@@ -26,14 +26,8 @@ export class RegisterEffect {
                     }),
 
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        // TODO : update backend to receive the proper errors
-                        // ex: {'register': ['err1', 'eer2'], 'grammaire':['tu sais pas ecrire']}
-                        const errors : BackendErrorsInterface = {
-                            register: [errorResponse.message]
-                        }
-
                         // of => produce an observable, bcs the action is not an  observable
-                        return of(registerFailureAction({errors: errors}))
+                        return of(registerFailureAction({errors: JSON.parse(errorResponse.message).errors}))
                     })
                 )
             })
