@@ -4,8 +4,8 @@ export interface CurrentUserInterface {
     emai: string,
     nickname: string | null,
     createAt: string,
-    roleId: number,
-    roleName: string,
+    roleId: number | null,
+    roleName: string | null,
     image: string | null,
-    token: string
+    token: string | null
 }

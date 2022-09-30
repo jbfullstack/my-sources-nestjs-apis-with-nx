@@ -1,17 +1,15 @@
 
-export interface AuthResponseInterface {
+export interface AuthRegisterResponseInterface {
     data: {
-        login: {
+        register: {
             token: string,
-            user: {
-                id: number,
-                email: string,
-                nickname: string | null,
-                role: {
-                    id: number,
-                    name: string
-                }
-            }
+            id: number,
+            email: string,
+            nickname: string | null,
+            // role: {
+            //     id: number,
+            //     name: string
+            // }
         }
     }
 }

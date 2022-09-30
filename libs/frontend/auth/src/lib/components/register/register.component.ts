@@ -5,6 +5,7 @@ import { select, Store } from '@ngrx/store'
 
 import { registerAction } from '../../store/action'
 import { isSubmittingSelector } from '../../store/selector'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'ms-register',
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit{
   form!: FormGroup
   isSubmittings$!: Observable<boolean>
 
-  constructor(private formBuilder : FormBuilder, private store: Store) {}
+  constructor(private formBuilder : FormBuilder, private store: Store, private authService: AuthService) {}
 
 
   ngOnInit(): void {
@@ -39,5 +40,6 @@ export class RegisterComponent implements OnInit{
   onSubmit(): void {
     console.log("submit", this.form.value, this.form.valid)
     this.store.dispatch(registerAction(this.form.value))
+    this.authService.register(this.form.value)
   }
 }

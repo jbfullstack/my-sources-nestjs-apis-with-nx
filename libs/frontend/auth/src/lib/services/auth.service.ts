@@ -1,9 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 import { RegisterRequestInterface } from "../types/register-request.interface";
 import { CurrentUserInterface } from '@jbhive_fe/types'
 import { Apollo, gql } from 'apollo-angular';
-import { AuthResponseInterface } from "../types/auth-response.interface";
+import { AuthRegisterResponseInterface } from "../types/auth-response.interface";
 
 @Injectable()
 export class AuthService {
@@ -21,25 +22,28 @@ export class AuthService {
     // }
 
     register(data: RegisterRequestInterface) { //}: Observable<CurrentUserInterface> {
+        console.log(`<wx:!<wx!:<wx:! >>>> data: ${JSON.stringify(data)}`)
         const graphQlRequest = gql`mutation register{  
             register (
                 input : {
-                    email: "${data.input.email}",
-                    password: "${data.input.password}",
-                    pseudo: "${data.input.pseudo}",
+                    email: "${data.email}",
+                    password: "${data.password}",
+                    pseudo: "${data.pseudo}",
                 }) 
             {
                 token
-                user {
-                    id
-                    email
-                    pseudo
-                    nickname
-                }
+                id
+                email
+                pseudo
+                nickname
             } 
         }`
 
-        return this.apollo.mutate<AuthResponseInterface>({ mutation: graphQlRequest })
+        return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: graphQlRequest })
+        .pipe(map((response: any) => response.data.register))
+        .subscribe( (currentUser: CurrentUserInterface) => {
+            console.log('curent user', currentUser)
+        })
         
     }
 }

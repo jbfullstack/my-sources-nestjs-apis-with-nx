@@ -1,8 +1,8 @@
 export interface RegisterRequestInterface {
-    input : {
+    // input : {
         email: string,
         password: string,
         pseudo: string,
         nickname: string | null,
-    }
+    // }
 }
