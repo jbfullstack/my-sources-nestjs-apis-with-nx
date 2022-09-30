@@ -154,6 +154,13 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
         })
     }
 
+    findUserByPseudo(pseudo: string) {
+        return this.user.findUnique({
+            where: { pseudo },
+            include: PrismaIncludes.userIncludes
+        })
+    }
+
     findRoleById(roleId: number) {
         return this.role.findUnique({
             where: {

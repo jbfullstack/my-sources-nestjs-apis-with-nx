@@ -25,7 +25,7 @@ export class AuthService {
 
 
     async login(input: AuthLoginInput) : Promise<User> {
-        const found = await this.data.findUserByEmail(input.email)
+        const found = await this.data.findUserByEmail(input.email.toLowerCase())
         if (!found){
             this.log.err(`User with email ${input.email} does not exists`)
             throw new NotFoundException(`User with email ${input.email} does not exists`)
@@ -46,12 +46,12 @@ export class AuthService {
     }
 
 
-    async register(input: AuthRegisterInput) {       
-        const found = await this.data.findUserByEmail(input.email)
-        if (found){
-            this.log.err(`Cannot register with email ${input.email}`)
-            throw new BadRequestException(`Cannot register with email ${input.email}`)
-        }
+    async register(input: AuthRegisterInput) {    
+        
+        this.checkRegisterFieldsOk(input)
+        
+        await this.manageNoDuplicatedEntryErros(input)
+
 
         const password = await CryptHelper.hash(input.password)    
         const created = await this.data.createUser({email: input.email, password: password, pseudo: input.pseudo, roleId: 0})
@@ -59,10 +59,47 @@ export class AuthService {
 
         const response = {
             ...created,
-            token: this.signToken(created.id)
+            // token: this.signToken(created.id)
         }
         // this.log.err(`response: ${JSON.stringify(response)}`)      
         return response
+    }
+    
+
+    checkRegisterFieldsOk(input: AuthRegisterInput) {
+        if (input.email.length < 10) {
+            this.log.err(`Cannot register, the email must be 10 characters long at least`)
+            throw new BadRequestException(`The email must be 10 characters long at least`)
+        }
+
+        if (input.pseudo.includes(' ')) {
+            this.log.err(`Cannot register, the pseudo must have no space character`)
+            throw new BadRequestException(`The pseudo must have no space character`)
+        }
+
+        if (input.pseudo.length < 3) {
+            this.log.err(`Cannot register, the pseudo must be 3 characters long at least`)
+            this.log.err(`Cannot register, the pseudo must be 3 characters long at least`)
+        }
+
+        if (input.password.length < 4) {
+            this.log.err(`Cannot register, the password must be 4 characters long at least`)
+            this.log.err(`Cannot register, the password must be 4 characters long at least`)
+        }
+    }
+
+    async manageNoDuplicatedEntryErros(input: AuthRegisterInput) {
+        const foundByEmail = await this.data.findUserByEmail(input.email.toLowerCase())
+        if (foundByEmail){
+            this.log.err(`Cannot register with email ${input.email}`)
+            throw new BadRequestException(`Cannot register with email ${input.email}`)
+        }
+
+        const foundByPseudo = await this.data.findUserByPseudo(input.pseudo.toLowerCase())
+        if (foundByPseudo){
+            this.log.err(`Cannot register with pseudo ${input.pseudo}`)
+            throw new BadRequestException(`Cannot register with pseudo ${input.pseudo}`)
+        }
     }
 
     signToken(id: number): string {
