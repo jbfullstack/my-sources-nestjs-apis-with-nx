@@ -12,7 +12,9 @@ Register component
                     <a [routerLink]="['/login']"> Have an account?</a>
                 </p>
 
-                BACKEND ERROR WILL BE THERE
+                <ms-backend-error-messages 
+                *ngIf="backendErrors$ | async"
+                [backendErrors]="backendErrors$ | async"></ms-backend-error-messages>
 
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <!-- <form> -->

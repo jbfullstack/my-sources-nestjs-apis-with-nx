@@ -11,6 +11,7 @@ import { JwtDto } from "./dto/jwt.dto";
 import { Role } from "@jbhive_be/struct";
 // import { UserToken } from "./models/user-token";
 import { User } from "./models/user";
+import { throwError } from "rxjs";
 
 @Injectable()
 export class AuthService {
@@ -69,7 +70,7 @@ export class AuthService {
     checkRegisterFieldsOk(input: AuthRegisterInput) {
         if (input.email.length < 10) {
             this.log.err(`Cannot register, the email must be 10 characters long at least`)
-            throw new BadRequestException(`The email must be 10 characters long at least`)
+            throw new BadRequestException('The email must be 10 characters long at least')
         }
 
         if (input.pseudo.includes(' ')) {
