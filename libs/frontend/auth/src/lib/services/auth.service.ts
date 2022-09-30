@@ -36,6 +36,11 @@ export class AuthService {
                 email
                 pseudo
                 nickname
+                role {
+                    id
+                    name
+                }
+
             } 
         }`
 

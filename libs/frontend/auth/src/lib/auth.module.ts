@@ -12,6 +12,7 @@ import { AuthService } from './services/auth.service';
 import { RegisterEffect } from './store/effects/register.effect';
 
 import { BackendErrorMessagesModule } from '@jbhive_fe/types';
+import { PersistanceService } from './services/persistance.service';
 
 const routes = [
   {
@@ -30,6 +31,6 @@ const routes = [
     BackendErrorMessagesModule
   ],
   declarations: [RegisterComponent],
-  providers: [AuthService]
+  providers: [AuthService, PersistanceService]
 })
 export class AuthModule {}

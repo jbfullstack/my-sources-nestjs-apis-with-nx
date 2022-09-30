@@ -1,25 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormGroup } from '@angular/forms'
 
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { UptimeComponent } from '@jbhive_fe/uptime';
-import { AuthModule } from '@jbhive_fe/auth';
-
+import { StoreDevtoolsModule} from '@ngrx/store-devtools'
 
 import {ApolloModule, APOLLO_OPTIONS} from 'apollo-angular';
 import {HttpLink} from 'apollo-angular/http';
 import {InMemoryCache} from '@apollo/client/core';
 
 import { RouterModule, } from '@angular/router';
+
 import { AppRoutingModule} from './app-routing.module'
-import { FormBuilder, FormGroup } from '@angular/forms'
-import { StoreDevtoolsModule} from '@ngrx/store-devtools'
 import { environment } from '../environments/environment';
-import { EffectsModule } from '@ngrx/effects';
+import { AppComponent } from './app.component';
+import { NxWelcomeComponent } from './nx-welcome.component';
+
+import { UptimeComponent } from '@jbhive_fe/uptime';
+import { AuthModule } from '@jbhive_fe/auth';
+
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent, UptimeComponent],
@@ -35,8 +36,7 @@ import { EffectsModule } from '@ngrx/effects';
       maxAge: 25,
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([]) // empty array => register all effects, inside any modules => nothing to do in app module :)
-    
+    EffectsModule.forRoot([]) // empty array => register all effects, inside any modules => nothing to do in app module :)    
   ],
   providers: [
     {

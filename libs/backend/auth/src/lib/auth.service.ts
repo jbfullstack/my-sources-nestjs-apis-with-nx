@@ -1,6 +1,6 @@
 import { DataService } from "@jbhive_be/data";
 import { Color, LogService } from "@jbhive_be/log";
-import { BadRequestException, HttpException, Injectable, Logger, NotFoundException } from "@nestjs/common";
+import { MethodNotAllowedException, BadRequestException, HttpException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { CryptHelper } from "@jbhive_be/crypt";
@@ -48,20 +48,25 @@ export class AuthService {
 
 
     async register(input: AuthRegisterInput) {  
-        this.checkRegisterFieldsOk(input)   
-       
+        this.checkRegisterFieldsOk(input)          
         await this.manageNoDuplicatedEntryErros(input)
 
 
         const password = await CryptHelper.hash(input.password)    
-        const created = await this.data.createUser({email: input.email, password: password, pseudo: input.pseudo, roleId: 0})
-        // this.log.err(`created: ${JSON.stringify(created)}`)
+        const created = await this.data.createUser({email: input.email, password: password, pseudo: input.pseudo, roleId: 0})       
+        // if (created) {
+        //     throw new MethodNotAllowedException(JSON.stringify({ errors: {registration: ['signup completed, now an admin need to activate your account :)']}}))
+        // }
+
 
         const response = {
             ...created,
-            // token: this.signToken(created.id)
-        }
-        // this.log.err(`response: ${JSON.stringify(response)}`)      
+            token: this.signToken(created.id),
+            role: {
+                id: 0,
+                name: 'user'
+            }
+        }      
         return response
     }
     

@@ -6,10 +6,10 @@ export interface AuthRegisterResponseInterface {
             id: number,
             email: string,
             nickname: string | null,
-            // role: {
-            //     id: number,
-            //     name: string
-            // }
+            role: {
+                id: number,
+                name: string
+            }
         }
     }
 }
