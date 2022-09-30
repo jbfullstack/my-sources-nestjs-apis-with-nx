@@ -41,9 +41,5 @@ export class AuthService {
 
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: graphQlRequest })
         .pipe(map((response: any) => response.data.register))
-        .subscribe( (currentUser: CurrentUserInterface) => {
-            console.log('curent user', currentUser)
-        })
-        
     }
 }

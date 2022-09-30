@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
-import { registerAction } from '../../store/action'
+import { registerAction } from '../../store/actions/register-action'
 import { isSubmittingSelector } from '../../store/selector'
-import { AuthService } from '../../services/auth.service'
+import { RegisterRequestInterface } from '../../types/register-request.interface'
 
 @Component({
   selector: 'ms-register',
@@ -16,8 +16,7 @@ export class RegisterComponent implements OnInit{
   form!: FormGroup
   isSubmittings$!: Observable<boolean>
 
-  constructor(private formBuilder : FormBuilder, private store: Store, private authService: AuthService) {}
-
+  constructor(private formBuilder : FormBuilder, private store: Store) {}
 
   ngOnInit(): void {
     this.initializeForm()
@@ -39,7 +38,7 @@ export class RegisterComponent implements OnInit{
 
   onSubmit(): void {
     console.log("submit", this.form.value, this.form.valid)
-    this.store.dispatch(registerAction(this.form.value))
-    this.authService.register(this.form.value)
+    const request : RegisterRequestInterface = {...this.form.value}
+    this.store.dispatch(registerAction( {request: request} ))
   }
 }

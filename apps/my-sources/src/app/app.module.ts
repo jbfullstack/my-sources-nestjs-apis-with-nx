@@ -19,6 +19,7 @@ import { AppRoutingModule} from './app-routing.module'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { StoreDevtoolsModule} from '@ngrx/store-devtools'
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent, UptimeComponent],
@@ -33,7 +34,8 @@ import { environment } from '../environments/environment';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    EffectsModule.forRoot([]) // empty array => register all effects, inside any modules => nothing to do in app module :)
     
   ],
   providers: [
