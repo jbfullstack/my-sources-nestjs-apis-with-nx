@@ -9,8 +9,8 @@ export class AuthRegisterInput{
     @Field()
     pseudo: string
 
-    @Field({ nullable: true })
-    nickname?: string
+    @Field()
+    nickname: string
 
     @Field()
     password: string

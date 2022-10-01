@@ -4,6 +4,7 @@ import { AuthStateInterface } from "../types/auth-state.interface";
 import { registerAction, registerFailureAction, registerSuccessAction } from "./actions/register-action";
 
 import { BackendErrorsInterface } from "@jbhive_fe/types";
+import { loginAction, loginFailureAction, loginSuccessAction } from "./actions/login-action";
 
 
 
@@ -39,6 +40,39 @@ const authReducer = createReducer(
 
     on(
         registerFailureAction, 
+        (state, action): AuthStateInterface => 
+        ({
+            ...state,
+            isSubmitting: false,
+            validationErrors: action.errors,
+            isLoggedIn: false,
+        })
+    ),
+
+
+    on(
+        loginAction, 
+        (state): AuthStateInterface => 
+        ({
+            ...state,
+            isSubmitting: true,
+            validationErrors: null
+        })
+    ),
+
+    on(
+        loginSuccessAction, 
+        (state, action): AuthStateInterface => 
+        ({
+            ...state,
+            isSubmitting: false,
+            currentUser: action.currentUser,
+            isLoggedIn: true,
+        })
+    ),
+
+    on(
+        loginFailureAction, 
         (state, action): AuthStateInterface => 
         ({
             ...state,

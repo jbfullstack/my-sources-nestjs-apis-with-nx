@@ -20,6 +20,7 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
         email: string,
         password: string,
         pseudo: string,
+        nickname: string,
         roleId: number
     }
 
@@ -30,6 +31,7 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
             email: this.config.get('admin_email'),
             password: this.config.get('admin_password'),
             pseudo: this.config.get('admin_pseudo'),
+            nickname: this.config.get('admin_pseudo'),
             roleId: this.config.get('admin_role_id'),
         }
     }
@@ -58,13 +60,15 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
      * 
      *********************************/
 
-    async createUser({ email, password, pseudo, roleId }: { email: string, password: string, pseudo: string, roleId: number }) {
+    async createUser({ email, password, pseudo, roleId, nickname }: { email: string, password: string, pseudo: string, roleId: number, nickname: string }) {
         // Comming from PrsimaClient
+        Logger.debug(`createUser`)
         const created = await this.user.create({
             data: {
                 email,
                 password,
                 pseudo,
+                nickname,
                 roleId: +roleId,
                 hidden: false,  // TIODO admin manage hidden & activated
                 activated: true,
@@ -74,13 +78,15 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
         return created
     }
 
-    async createActicatedUser({ email, password, pseudo, roleId }: { email: string, password: string, pseudo: string, roleId: number }) {
+    async createActivatedUser({ email, password, pseudo, roleId, nickname  }: { email: string, password: string, pseudo: string, roleId: number, nickname: string }) {
         // Comming from PrsimaClient
+        Logger.debug(`createActivatedUser`)
         const created = await this.user.create({
             data: {
                 email,
                 password,
                 pseudo,
+                nickname,
                 role: { connect : { id: +roleId}},
                 hidden: false,  // TIODO admin manage hidden & activated
                 activated: true,
@@ -151,6 +157,13 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
             where: {
                 id: userId
             }
+        })
+    }
+
+    findUserByNickname(nickname: string) {
+        return this.user.findUnique({
+            where: { nickname },
+            include: PrismaIncludes.userIncludes
         })
     }
 
@@ -611,10 +624,12 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
         if (found) {
             return true
         }
-        Logger.debug(`Initialize Admin user..`)
-        const created = await this.createUser(this.default_admin)
+        Logger.debug(`Initialize Admin user AIGHT..`)
+        const created = await this.createActivatedUser(this.default_admin)
+        
         for (var user of users_dataset) {
-            await this.createActicatedUser({ email: user.email, pseudo: user.pseudo, password: this.default_admin.password, roleId: user.roleId })
+            Logger.debug(`Initialize Admin user..`)
+            await this.createActivatedUser({ email: user.email, nickname: user.nickname, pseudo: user.pseudo, password: this.default_admin.password, roleId: user.roleId })
         }
 
     }

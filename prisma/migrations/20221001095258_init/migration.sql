@@ -7,7 +7,7 @@ CREATE TABLE "User" (
     "nickname" TEXT,
     "password" TEXT NOT NULL,
     "roleId" INTEGER NOT NULL,
-    "token" TEXT NOT NULL,
+    "token" TEXT,
     "activated" BOOLEAN NOT NULL,
     "hidden" BOOLEAN NOT NULL,
 

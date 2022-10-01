@@ -12,42 +12,33 @@ import { AuthService } from '../../services/auth.service';
 import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive_fe/types';
 import { PersistanceService } from '../../services/persistance.service';
 import { Router } from '@angular/router';
+import { loginAction, loginFailureAction, loginSuccessAction } from '../actions/login-action';
 
 
 @Injectable()
-export class RegisterEffect {
+export class LoginEffect {
 
-    register$ = createEffect( () => 
+    login$ = createEffect( () => 
         this.actions$.pipe(
-            ofType(registerAction),
+            ofType(loginAction),
             switchMap(({request}) => {
-                // pipe map => bcs register is an asynchronous call (and so produce an observable)
-                return this.authService.register(request).pipe(
+                // pipe map => bcs login is an asynchronous call (and so produce an observable)
+                return this.authService.login(request).pipe(
                     map((currentUser: CurrentUserInterface) => {
-                        
+                        // register the Jwt token
+                        this.persistanceService.set('accessToken', currentUser.token)
                         //
-                        return registerSuccessAction({currentUser})
+                        return loginSuccessAction({currentUser})
                     }),
 
                     catchError( (errorResponse: HttpErrorResponse) => {
                         // of => produce an observable, bcs the action is not an  observable
-                        return of(registerFailureAction({errors: JSON.parse(errorResponse.message).errors}))
+                        return of(loginFailureAction({errors: JSON.parse(errorResponse.message).errors}))
                     })
                 )
             })
         ) 
     )
-
-    // redirectAfterSubmit$ = createEffect( () => 
-    //     this.actions$.pipe(
-    //         ofType(registerSuccessAction),
-    //         tap( () => {
-    //             this.router.navigateByUrl('/')
-    //         })
-    //     ),
-    //     // {dispatch: false}
-    // )
-
     constructor(
         private actions$: Actions, 
         private authService: AuthService, 

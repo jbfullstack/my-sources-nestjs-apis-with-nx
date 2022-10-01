@@ -24,8 +24,8 @@ export const types_dataset = [
 ] 
 
 export const users_dataset = [
-    { email: 'bj@gmail.com', pseudo: 'astek', roleId: Role.Astek },
-    { email: 'bu@gmail.com', pseudo: 'buddy', roleId: Role.Buddy },
-    { email: 'lo@gmail.com', pseudo: 'lord', roleId: Role.Lord },
-    { email: 'us@gmail.com', pseudo: 'user', roleId: Role.User },
+    { email: 'bj@gmail.com', nickname: 'astek', pseudo: 'astek', roleId: Role.Astek },
+    { email: 'bu@gmail.com', nickname: 'buddy', pseudo: 'buddy', roleId: Role.Buddy },
+    { email: 'lo@gmail.com', nickname: 'lord', pseudo: 'lord', roleId: Role.Lord },
+    { email: 'us@gmail.com', nickname: 'user', pseudo: 'user', roleId: Role.User },
 ] 

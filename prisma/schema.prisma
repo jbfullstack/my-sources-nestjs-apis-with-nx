@@ -22,7 +22,7 @@ model User {
   roleId    Int
   Tag       Tag[]
   source    Source[]
-  token     String
+  token     String?
   activated Boolean
   hidden    Boolean
 }

@@ -14,3 +14,8 @@ export const validationErrorSelector = createSelector(
     (authState: AuthStateInterface) => authState.validationErrors
 )
 
+export const isLoggedInSelector = createSelector(
+    authFeatureSelector, 
+    (authState: AuthStateInterface) => authState.isLoggedIn
+)
+

@@ -4,34 +4,24 @@
             <div class="clo-md-6 offset-md-3 col-xs-12">
                 <h1 class="text-xs-center">Sign up</h1>
                 <p class="text-xs-center">
-                    <a [routerLink]="['/login']"> Have an account?</a>
+                    <a [routerLink]="['/register']"> Need an account?</a>
                 </p>
 
                 <ms-backend-error-messages 
                 *ngIf="backendErrors$ | async"
                 [backendErrors]="backendErrors$ | async"></ms-backend-error-messages>
 
-                <div *ngIf="isLoggedInSelector$ |async">
-                    Account created, now an administrator need to activated it :)
-                </div>
-
                 <form [formGroup]="form" (ngSubmit)="onSubmit()">
                 <!-- <form> -->
                     <fieldset>
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo" formControlName="pseudo">*display to others
-                        </fieldset> 
-                        <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Nickname" formControlName="nickname">*for login
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input type="Email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
-                        </fieldset>
+                            <input type="text" class="form-control form-control-lg" placeholder="Nickname" formControlName="nickname">
+                        </fieldset>  
                         <fieldset class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
-                        </fieldset>                   
+                        </fieldset>              
                         <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmittings$ | async">
-                            Sign up
+                            Sign in
                         </button>
                     </fieldset>
                 </form>

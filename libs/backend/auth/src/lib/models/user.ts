@@ -27,5 +27,5 @@ export class User {
     activated?: boolean
 
     @Field({ nullable: true })
-    token: string
+    token?: string
 }

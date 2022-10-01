@@ -6,18 +6,29 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { reducers } from './store/reducers';
+
 import { RegisterComponent } from './components/register/register.component';
-import { AuthService } from './services/auth.service';
+// import { LoginComponent } from './components/login/login.component';
+import { reducers } from './store/reducers';
 import { RegisterEffect } from './store/effects/register.effect';
 
-import { BackendErrorMessagesModule } from '@jbhive_fe/types';
+import { AuthService } from './services/auth.service';
 import { PersistanceService } from './services/persistance.service';
+
+import { BackendErrorMessagesModule } from '@jbhive_fe/types';
+import { LoginComponent } from './components/login/login.component';
+import { LoginEffect } from './store/effects/login.effect';
+
+
 
 const routes = [
   {
     path: 'register',
     component: RegisterComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   }
 ]
 
@@ -27,10 +38,10 @@ const routes = [
     RouterModule.forChild(routes), 
     ReactiveFormsModule, 
     StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([RegisterEffect]),
+    EffectsModule.forFeature([RegisterEffect, LoginEffect]),
     BackendErrorMessagesModule
   ],
-  declarations: [RegisterComponent],
+  declarations: [RegisterComponent, LoginComponent],
   providers: [AuthService, PersistanceService]
 })
 export class AuthModule {}

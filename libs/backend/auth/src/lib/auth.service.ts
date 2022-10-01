@@ -26,47 +26,49 @@ export class AuthService {
 
 
     async login(input: AuthLoginInput) : Promise<User> {
-        const found = await this.data.findUserByEmail(input.email.toLowerCase())
+        Logger.log(`login:`, input)
+        const found = await this.data.findUserByNickname(input.nickname.toLowerCase())
         if (!found){
-            this.log.err(`User with email ${input.email} does not exists`)
-            throw new NotFoundException(`User with email ${input.email} does not exists`)
+            this.log.err(`User with nickname ${input.nickname} does not exists`)
+            const httpErrorResponse =  { errors:  {  credentials: [`User with nickname ${input.nickname} does not exists in the database`], }}
+            throw new BadRequestException(JSON.stringify(httpErrorResponse))
+        } else {
+            Logger.debug(`user by nickname found:`, found)
         }
 
         const passwordValid = await CryptHelper.validate(input.password, found.password)
         if (!passwordValid) {
             this.log.err(`Invalid password`)
-            throw new Error(`Invalid password`)
+            const httpErrorResponse =  { errors:  {  credentials: [`Invalid password`], }}
+            throw new BadRequestException(JSON.stringify(httpErrorResponse))
+        } else {
+            Logger.debug(`passwordValid:`, passwordValid)
         }
 
         const response = {
             ...found,
             token: this.signToken(found.id)
         }
-        // this.log.err(`response: ${JSON.stringify(response)}`)      
+        Logger.debug(`response: ${JSON.stringify(response)}`)      
         return response
     }
 
 
-    async register(input: AuthRegisterInput) {  
-        this.checkRegisterFieldsOk(input)          
+    async register(input: AuthRegisterInput) {         
+        this.checkRegisterFieldsOk(input)        
         await this.manageNoDuplicatedEntryErros(input)
 
-
         const password = await CryptHelper.hash(input.password)    
-        const created = await this.data.createUser({email: input.email, password: password, pseudo: input.pseudo, roleId: 0})       
-        // if (created) {
-        //     throw new MethodNotAllowedException(JSON.stringify({ errors: {registration: ['signup completed, now an admin need to activate your account :)']}}))
-        // }
-
+        const created = await this.data.createUser({email: input.email, nickname: input.nickname, password: password, pseudo: input.pseudo, roleId: 0}) 
 
         const response = {
             ...created,
-            token: this.signToken(created.id),
             role: {
                 id: 0,
                 name: 'user'
             }
         }      
+        Logger.log(`response:`, response) 
         return response
     }
     
@@ -76,25 +78,18 @@ export class AuthService {
             errors: 
             {
                 email: [],
+                nickname: [],
                 pseudo: [],
                 password: [],
             }
         }
 
         let isEmailValids: boolean = true
+        let isNicknameValids: boolean = true
         let isPseudoValids: boolean = true
         let isPasswordValids: boolean = true        
 
-        if (input.email.includes(' ')) {
-            this.manageErrorMessage(
-                httpErrorResponse.errors.email, 
-                'email contains space', 
-                `Cannot register, the email must have no space character` 
-            )
-            if (isEmailValids){ isEmailValids = false }  
-        }
-
-        if (input.email.length < 10) {
+        if (input.email.trim().length ===0 || input.email.length < 10) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.email, 
                 'email too short (min size 10)', 
@@ -103,7 +98,23 @@ export class AuthService {
             if (isEmailValids){ isEmailValids = false }
         }
 
-        console.log(`isEmailValids:`, isEmailValids)
+        if (input.nickname.includes(' ')) {
+            this.manageErrorMessage(
+                httpErrorResponse.errors.nickname, 
+                'nickname contains space', 
+                `Cannot register, the nickname must have no space character` 
+            )
+            if (isNicknameValids){ isNicknameValids = false }
+        }
+
+        if (input.nickname.trim().length ===0 || input.nickname.length < 3) {
+            this.manageErrorMessage(
+                httpErrorResponse.errors.nickname, 
+                'nickname too short (min size 3)', 
+                `Cannot register, the nickname must be 3 characters long at least` 
+            )
+            if (isNicknameValids){ isNicknameValids = false }
+        }
 
         if (input.pseudo.includes(' ')) {
             this.manageErrorMessage(
@@ -114,7 +125,7 @@ export class AuthService {
             if (isPseudoValids){ isPseudoValids = false }
         }
 
-        if (input.pseudo.length < 3) {
+        if (input.pseudo.trim().length ===0 || input.pseudo.length < 3) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.pseudo, 
                 'pseudo too short (min size 3)', 
@@ -123,7 +134,7 @@ export class AuthService {
             if (isPseudoValids){ isPseudoValids = false }
         }
 
-        if (input.password.length < 4) {
+        if (input.password.trim().length ===0 || input.password.length < 4) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.password, 
                 'password too short (min size 4)', 
@@ -132,10 +143,11 @@ export class AuthService {
             if (isPasswordValids){ isPasswordValids = false }
         }
 
-        if ( !isEmailValids || ! isPasswordValids || ! isPasswordValids){
+        if ( !isEmailValids || ! isPasswordValids || ! isPasswordValids || !isNicknameValids){
             if (isEmailValids) { delete httpErrorResponse.errors.email }
             if (isPseudoValids) { delete httpErrorResponse.errors.pseudo }
             if (isPasswordValids) { delete httpErrorResponse.errors.password }
+            if (isNicknameValids) { delete httpErrorResponse.errors.nickname }
 
             throw new BadRequestException(JSON.stringify(httpErrorResponse))
         }
@@ -153,11 +165,13 @@ export class AuthService {
             {
                 email: [],
                 pseudo: [],
+                nickname: [],
             }
         }
 
         let isEmailValids: boolean = true
-        let isPseudoValids: boolean = true    
+        let isPseudoValids: boolean = true  
+        let isNicknameValids: boolean = true    
 
         const foundByEmail = await this.data.findUserByEmail(input.email.toLowerCase())
         if (foundByEmail){
@@ -175,9 +189,17 @@ export class AuthService {
                 if (isPseudoValids){ isPseudoValids = false }
         }
 
-        if (!isEmailValids || !isPseudoValids) {
+        const foundByNickname = await this.data.findUserByNickname(input.nickname.toLowerCase())
+        if (foundByNickname){
+            this.manageErrorMessage(httpErrorResponse.errors.nickname,
+                'nickname already exists', `Cannot register with nickname ${input.nickname},pseudo already in db`)
+                if (isNicknameValids){ isNicknameValids = false }
+        }
+
+        if (!isEmailValids || !isPseudoValids || !isNicknameValids) {
             if (isEmailValids) { delete httpErrorResponse.errors.email }
             if (isPseudoValids) { delete httpErrorResponse.errors.pseudo }
+            if (isNicknameValids) { delete httpErrorResponse.errors.nickname }
 
             throw new BadRequestException(JSON.stringify(httpErrorResponse))
         }
