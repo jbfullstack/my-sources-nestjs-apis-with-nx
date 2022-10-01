@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
-import { registerAction } from '../../store/actions/register-action'
-import { isSubmittingSelector, validationErrorSelector } from '../../store/selector'
+import { isSubmittingSelector, validationErrorSelector } from '../../store/selectors/login-selector'
 import { RegisterRequestInterface } from '../../types/register-request.interface'
 import { BackendErrorsInterface } from '@jbhive_fe/types'
 import { loginAction } from '../../store/actions/login-action'
+import { LoginRequestInterface } from '../../types/login-request.interface'
 
 @Component({
   selector: 'ms-login',
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit{
 
   onSubmit(): void {
     console.log("submit", this.form.value, this.form.valid)
-    const request : RegisterRequestInterface = {...this.form.value}
+    const request : LoginRequestInterface = {...this.form.value}
     this.store.dispatch(loginAction( {request: request} ))
   }
 }

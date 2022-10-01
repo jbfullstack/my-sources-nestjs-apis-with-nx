@@ -1,10 +1,10 @@
-import { BackendErrorsInterface, CurrentUserInterface } from "@jbhive_fe/types"
+import { BackendErrorsInterface } from "./backend-errors.interface"
+import { CurrentUserInterface } from "./current-user.interface"
 
 
-export interface AuthStateInterface {
+export interface LoginStateInterface {
     isSubmitting: boolean
     currentUser: CurrentUserInterface | null
     isLoggedIn: boolean | null // null means not known yet
     validationErrors: BackendErrorsInterface | null
-
 }

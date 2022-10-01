@@ -39,6 +39,17 @@ export class LoginEffect {
             })
         ) 
     )
+
+    redirectAfterSubmit$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(loginAction),
+            tap( () => {
+                this.router.navigateByUrl('/register')
+            })
+        ),
+        {dispatch: false}
+    )
+
     constructor(
         private actions$: Actions, 
         private authService: AuthService, 

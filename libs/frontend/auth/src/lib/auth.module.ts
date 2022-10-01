@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { RegisterComponent } from './components/register/register.component';
 // import { LoginComponent } from './components/login/login.component';
-import { reducers } from './store/reducers';
+import { reducers } from './store/reducers/auth-reducers';
 import { RegisterEffect } from './store/effects/register.effect';
 
 import { AuthService } from './services/auth.service';

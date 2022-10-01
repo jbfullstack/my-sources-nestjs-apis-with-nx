@@ -2,5 +2,8 @@
 <!-- <h1> App.component: </h1> -->
 <!-- <app-my-counter></app-my-counter> -->
 
+<div *ngIf="userLoggedSelector$ | async">
+    Welcome you !
+</div>
 
 <router-outlet></router-outlet>

@@ -8,10 +8,10 @@
                 </p>
 
                 <ms-backend-error-messages 
-                *ngIf="backendErrors$ | async"
-                [backendErrors]="backendErrors$ | async"></ms-backend-error-messages>
+                *ngIf="backendErrorsSelector$ | async"
+                [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages>
 
-                <div *ngIf="isLoggedInSelector$ |async">
+                <div *ngIf="isAccountCreatedSelector$ |async">
                     Account created, now an administrator need to activated it :)
                 </div>
 
@@ -30,7 +30,7 @@
                         <fieldset class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
                         </fieldset>                   
-                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmittings$ | async">
+                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmittingsSelector$ | async">
                             Sign up
                         </button>
                     </fieldset>

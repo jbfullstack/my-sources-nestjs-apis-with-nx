@@ -4,9 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
 import { registerAction } from '../../store/actions/register-action'
-import { isLoggedInSelector, isSubmittingSelector, validationErrorSelector } from '../../store/selector'
 import { RegisterRequestInterface } from '../../types/register-request.interface'
 import { BackendErrorsInterface } from '@jbhive_fe/types'
+import { isSubmittingSelector, validationErrorSelector, isAccountCreated } from '../../store/selectors/register-selector'
 
 @Component({
   selector: 'ms-register',
@@ -15,9 +15,9 @@ import { BackendErrorsInterface } from '@jbhive_fe/types'
 })
 export class RegisterComponent implements OnInit{
   form!: FormGroup
-  isSubmittings$!: Observable<boolean>
-  isLoggedInSelector$!: Observable<boolean | null>
-  backendErrors$!: Observable<BackendErrorsInterface | null>
+  isSubmittingsSelector$!: Observable<boolean>
+  isAccountCreatedSelector$!: Observable<boolean | null>
+  backendErrorsSelector$!: Observable<BackendErrorsInterface | null>
   
 
   constructor(private formBuilder : FormBuilder, private store: Store) {}
@@ -37,9 +37,9 @@ export class RegisterComponent implements OnInit{
   }
 
   initializeValues(): void {
-    this.isSubmittings$ = this.store.pipe(select(isSubmittingSelector))
-    this.isLoggedInSelector$ = this.store.pipe(select(isLoggedInSelector))
-    this.backendErrors$ = this.store.pipe(select(validationErrorSelector))
+    this.isSubmittingsSelector$ = this.store.pipe(select(isSubmittingSelector))
+    this.isAccountCreatedSelector$ = this.store.pipe(select(isAccountCreated))
+    this.backendErrorsSelector$ = this.store.pipe(select(validationErrorSelector))
     
   }
 
