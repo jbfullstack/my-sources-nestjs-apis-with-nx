@@ -2,22 +2,23 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
-    "api": "apps/api",
     "admin_be": "libs/admin/backend",
-    "config_be": "libs/utils/config/backend",
+    "api": "apps/api",
+    "api-interfaces": "libs/api-interfaces",
     "auth_be": "libs/security/auth/backend",
     "auth_fe": "libs/security/auth/frontend",
+    "config_be": "libs/utils/config/backend",
     "crypt": "libs/security/crypt",
-    "user_be": "libs/user/backend",
     "log_be": "libs/utils/log/backend",
-    "source_be": "libs/source/backend",
-    "type_be": "libs/utils/types/backend",
-    "types_fe": "libs/utils/types/frontend",
-    "api-interfaces": "libs/api-interfaces",
-    "profile": "libs/profile/frontend",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
-    "uptime": "libs/utils/uptime/frontend"
+    "profile": "libs/profile/frontend",
+    "source_be": "libs/source/backend",
+    "styles": "libs/styles",
+    "type_be": "libs/utils/types/backend",
+    "types_fe": "libs/utils/types/frontend",
+    "uptime": "libs/utils/uptime/frontend",
+    "user_be": "libs/user/backend"
   },
   "styles": ["src/styles.scss"]
 }

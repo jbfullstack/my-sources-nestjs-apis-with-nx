@@ -19,6 +19,7 @@ import { BackendErrorMessagesModule } from '@jbhive/types_fe';
 import { LoginComponent } from './components/login/login.component';
 import { LoginEffect } from './store/effects/login.effect';
 import { AuthGuard } from './guards/auth.guard';
+import {MatTabsModule} from '@angular/material/tabs';
 
 
 
@@ -36,6 +37,7 @@ const routes = [
 
 @NgModule({
   imports: [
+    MatTabsModule,
     CommonModule, 
     RouterModule.forChild(routes),
     ReactiveFormsModule,

@@ -62,6 +62,7 @@ import { ProfileComponent, ProfileModule } from '@jbhive/profile';
       },
       deps: [HttpLink],
     },
+    MaterialsModules,
     FormBuilder
   ],
   bootstrap: [AppComponent],

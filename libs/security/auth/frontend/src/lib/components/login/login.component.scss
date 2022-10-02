@@ -7,3 +7,289 @@
     border-color: #ebccd1;
     color: #a94442;
 }
+
+
+// .container {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: center;
+// }
+
+// .container > * {
+//     width: 40%;
+// }
+
+// .container {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     flex-direction: center;
+// }
+
+// .container > * {
+//     width: 40%;
+// }
+
+/*
+	Active by TEMPLATE STOCK
+	templatestock.co @templatestock
+	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+*/
+
+/* TABLE OF CONTENTS
+
+	1. Import section
+	2. Basic styles
+	3. Header
+	4. Service Icons
+	5. Subscribe
+	6. Contact
+	7. Footer
+	8. Responsive
+
+*/
+
+/* 1. IMPORT SECTION */
+
+@import url("../../styles/css/bootstrap.min.css");
+@import url("../../styles/css/font-awesome.min.css");
+@import url("http://fonts.googleapis.com/css?family=Lato:300,700,700italic&subset=latin,latin-ext");
+@import url("http://fonts.googleapis.com/css?family=Raleway:300,700&subset=latin,latin-ext");
+
+/* 2. BASIC STYLES */
+
+html,
+body {
+    font: 16px/1.5 Lato, "Century Gothic", "Trebuchet MS", Helvetica, sans-serif;
+    height: 100%;
+    background-color: #262626;
+    font-weight: 300;
+}
+
+// body {
+//     font: 16px/1.5 Lato, "Century Gothic", "Trebuchet MS", Helvetica, sans-serif;
+//     background-color: #262626;
+//     color: #fff;
+//     font-weight: 300;
+//   }
+
+a {
+    color: #262626;
+    transition: all 0.125s ease-in-out 0s;
+    -moz-transition: all 0.125s ease-in-out 0s;
+    -webkit-transition: all 0.125s ease-in-out 0s;
+    -o-transition: all 0.125s ease-in-out 0s;
+    -ms-transition: all 0.125s ease-in-out 0s;
+}
+
+a:hover {
+    color: #68c3a3;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+}
+
+#st-preloader {
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+}
+
+p {
+    line-height: 1.5;
+}
+
+#pre-status,
+.preload-placeholder {
+    background-image: url(../../styles/images/preloader.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 40px;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    position: absolute;
+    top: 50%;
+    width: 40px;
+}
+
+.preload-placeholder {
+    background: none;
+    left: 0;
+    margin: 0;
+    text-align: center;
+    top: 65%;
+}
+
+/* 5. SUBSCRIBE */
+
+.login {
+    height: 700px;
+    padding-top: 100px;
+    padding-bottom: 120px;
+    position: relative;
+    background-image: url(../../styles/images/login-bg.jpg);
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // background-attachment: fixed;
+}
+
+.login.reset {
+    background-image: url(../../styles/images/login-bg-reset.jpg);
+}
+
+.color-overlay {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.8);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.st-login-title h3 {
+    color: #fff;
+    font-family: "Raleway";
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.st-login-title p {
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.login input[type="fullsize-input"] {
+    margin-top: 5px;
+    padding: 0 20px;
+    width: 100%;
+    border: 1px solid #fff;
+    border-radius: 3px 0 0 3px;
+    height: 60px;
+    line-height: 60px;
+    outline: none;
+}
+
+.login input[type="partsize-input"] {
+    margin-top: 5px;
+    padding: 0 20px;
+    width: 70%;
+    border: 1px solid #fff;
+    border-radius: 3px 0 0 3px;
+    height: 60px;
+    line-height: 60px;
+    outline: none;
+}
+
+.login input[type="submit"] {
+    margin-top: 4px;
+    width: 30%;
+    float: right;
+    height: 61px;
+    line-height: 60px;
+    background-color: #68c3a3;
+    border: 1px solid #68c3a3;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Raleway";
+    border-radius: 0 3px 3px 0;
+    outline: none;
+}
+
+.login input[type="submit"]:disabled {
+    margin-top: 3px;
+    width: 30%;
+    float: right;
+    height: 64px;
+    line-height: 60px;
+    background-color: #555555;
+    border: 1px solid #111111;
+    color: #fff;
+    font-weight: 700;
+    font-family: "Raleway";
+    border-radius: 0 3px 3px 0;
+    outline: none;
+}
+
+.login input[type="submit"]:hover:disabled {
+    background-color: #555555;
+    border: 1px solid #111111;
+    color: #fff;
+}
+
+.login input[type="submit"]:hover {
+    background-color: #38b589;
+    border: 1px solid #38b589;
+}
+
+.st-login-message {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    font-size: 14px;
+    clear: both;
+}
+
+.st-login-message i {
+    margin-right: 5px;
+}
+
+.st-login-message .fa-warning {
+    color: #ff5c5c;
+}
+
+.st-login-message .fa-check {
+    color: #68c3a3;
+}
+
+/* 8. RESPONSIVE */
+
+// @media (max-width: 767px) {
+//     .login {
+//         padding-top: 80px;
+//         padding-bottom: 100px;
+//     }
+
+//     .login input {
+//         width: 100%;
+//     }
+
+//     .login-form {
+//         padding: 0 10%;
+//     }
+// }
+
+// @media (max-width: 479px) {
+//     .login input {
+//         width: 100%;
+//         border-radius: 3px 3px 0 0;
+//     }
+// }
+
+
+@font-face {
+    font-family: 'password';
+    font-style: normal;
+    font-weight: 400;
+    src: url(https://jsbin-user-assets.s3.amazonaws.com/rafaelcastrocouto/password.ttf);
+  }
+  
+  input.key {
+    font-family: 'password';
+    width: 100px; height: 16px;  
+  }
+
+

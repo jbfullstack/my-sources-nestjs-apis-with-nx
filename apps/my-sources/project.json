@@ -6,9 +6,7 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/my-sources",
         "index": "apps/my-sources/src/index.html",
@@ -91,9 +89,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/apps/my-sources"
-      ],
+      "outputs": ["coverage/apps/my-sources"],
       "options": {
         "jestConfig": "apps/my-sources/jest.config.ts",
         "passWithNoTests": true
