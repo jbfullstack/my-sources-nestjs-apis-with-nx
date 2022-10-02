@@ -17,13 +17,13 @@ export class SourceTypeResolver {
     @Query( () => [SourceType], {nullable: true})
     types () {
         this.log.logMethod(`Resolver.types()`)
-        return this.service.types()
+        return this.service.findSourceTypes()
     }
 
     @Query( () => SourceType, {nullable: true})
     type (@Args('id') id: number) {
         this.log.logMethod(`Resolver.type()`)
-        return this.service.type(id)
+        return this.service.findSourceType(id)
     }
 
     @Roles(Role.Admin, Role.Astek)
@@ -32,7 +32,7 @@ export class SourceTypeResolver {
         @CtxUser() user: User,
         @Args('input') input: CreateSourceTypeInput) {
         this.log.logMethod(`Resolver.createType()`)
-        return await this.service.createType(user.id, input)
+        return await this.service.createSourceType(input)
     }
 
     @Roles(Role.Admin, Role.Astek)
@@ -42,7 +42,7 @@ export class SourceTypeResolver {
         @Args('id') id: number,
         @Args('input') input: UpdateSourceTypeInput) {
         this.log.logMethod(`Resolver.updateType()`)
-        return this.service.updateType(user.id, id, input)
+        return this.service.updateSourceType(id, input)
     }
 
     @Roles(Role.Admin, Role.Astek)
@@ -51,6 +51,6 @@ export class SourceTypeResolver {
         @CtxUser() user: User,        
         @Args('id') id: number) {
         this.log.logMethod(`Resolver.deleteType()`)
-        return this.service.deleteType(user.id, id)
+        return this.service.deleteSourceType(id)
     }
 }

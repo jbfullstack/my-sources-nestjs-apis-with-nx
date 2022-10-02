@@ -19,12 +19,12 @@ export class TagResolver {
     
     @Query( () => [Tag], {nullable: true})
     tags () {
-        return this.service.tags()
+        return this.service.findTags()
     }
     
     @Query( () => Tag, {nullable: true})
     tag (@Args('id') id: number) {
-        return this.service.tag(id)
+        return this.service.findTag(id)
     }
 
     @Roles(Role.Admin, Role.Astek, Role.Lord, Role.Buddy)

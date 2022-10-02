@@ -19,30 +19,30 @@ export class SourceResolver {
     @Roles(Role.Admin, Role.Astek)
     @Query( () => [Source], {nullable: true})
     sources () {
-        return this.service.sources()
+        return this.service.findSources()
     }
 
     @Query( () => [Source], {nullable: true})
     sourcesOwned (@CtxUser() user: User) {
-        return this.service.sourcesOwned(user.id)
+        return this.service.findSourcesWhereOwnerId(user.id)
     }
 
     @Public()
     @Query( () => [Source], {nullable: true})
     sourcesPublic () {
-        return this.service.sourcesPublic()
+        return this.service.findSourcesPublic()
     }
 
     @Roles(Role.Admin, Role.Astek)
     @Query( () => Source, {nullable: true})
     source (@Args('id') id: number) {
-        return this.service.source(id)
+        return this.service.findSource(id)
     }
 
     @Roles(Role.Admin, Role.Astek)
     @Query( () => Source, {nullable: true})
     sourceOwned (@CtxUser() user: User, @Args('id') id: number) {
-        return this.service.sourceOwned(user.id, id)
+        return this.service.findSourceWhereOwnerId(user.id, id)
     }
 
     @Roles(Role.Admin, Role.Astek)

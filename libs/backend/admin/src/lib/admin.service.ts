@@ -1,10 +1,9 @@
 import { User } from "@jbhive_be/auth";
 import { DataService } from "@jbhive_be/data";
 import { LogService } from "@jbhive_be/log";
-import { Role } from "@jbhive_be/struct";
+import { Role, UpdateUserInput } from "@jbhive_be/struct";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
-import { UpdateUserInput } from "./dto/update-user-inupt";
 
 @Injectable()
 export class AdminService {

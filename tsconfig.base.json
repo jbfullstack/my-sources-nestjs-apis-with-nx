@@ -27,7 +27,8 @@
       "@jbhive_be/struct": ["libs/backend/struct/src/index.ts"],
       "@jbhive_fe/auth": ["libs/frontend/auth/src/index.ts"],
       "@jbhive_fe/types": ["libs/frontend/types/src/index.ts"],
-      "@jbhive_fe/uptime": ["libs/frontend/uptime/src/index.ts"]
+      "@jbhive_fe/uptime": ["libs/frontend/uptime/src/index.ts"],
+      "@jbhive_fe/profile": ["libs/frontend/profile/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

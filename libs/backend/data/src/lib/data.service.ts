@@ -4,12 +4,12 @@ import { Prisma, PrismaClient, Tag } from "@prisma/client";
 // import { JwtDto } from "libs/auth/src/lib/dto/jwt.dto";
 import { roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive_be/struct";
 import { CreateCourseInput, UpdateCourseInput, CreateLessonInput, UpdateLessonInput } from "@jbhive_be/course";
-import { CreateSourceInput, UpdateSourceInput, CreateSourceTypeInput, UpdateSourceTypeInput, CreateTagInput, UpdateTagInput } from "@jbhive_be/source"
+// import { CreateSourceInput, UpdateSourceInput, CreateSourceTypeInput, UpdateSourceTypeInput, CreateTagInput, UpdateTagInput } from "@jbhive_be/source"
 
 import { PrismaIncludes } from "../prisma-includes";
 import { LogService } from "@jbhive_be/log";
 import { ForbiddenError } from "apollo-server-express";
-import { UpdateUserInput } from "@jbhive_be/admin";
+import { UpdateUserInput } from "@jbhive_be/struct";
 import { CryptHelper } from "@jbhive_be/crypt";
 
 
@@ -38,17 +38,6 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
 
     async onModuleInit() {
         await this.$connect()
-        await this.ensureDbIsInitialized()
-
-    }
-
-    async ensureDbIsInitialized() {
-        Logger.log(`Check if DB need to load a default dataset..`)
-        await this.ensureRolesExist()
-        await this.ensureAdminUserExists()
-        await this.ensureTagsExist()
-        await this.ensureTypesExist()
-
     }
 
     async onModuleDestroy() {
@@ -250,364 +239,14 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
             where: { id: id }
         })
         return !!deleted
-    }
+    }   
 
 
-
-    /*********************************
-     *  SOURCES
-     * 
-     *********************************/
-
-    async findSource(id: number) {
-        const source = await this.source.findUnique({
-            where: {
-                id
-            },
-            include: PrismaIncludes.sourceIncludes
-        })
-
-        if (!source) {
-            throw new NotFoundException(`Source ${id} not found`)
-        }
-
-        // Map the tags
-        const result = { ...source, tags: source.tags.map(tag => tag.tag) }
-        return result
-    }
-
-    async findSources() {
-        const allSources = await this.source.findMany({ include: PrismaIncludes.sourceIncludes })
-
-        if (!allSources || allSources.length === 0) {
-            throw new NotFoundException(`No source found`)
-        }
-
-        // Map the tags
-        const result = allSources.map(source => {
-            return { ...source, tags: source.tags.map(tag => tag.tag) }
-        })
-        return result
-    }
-
-    async findSourcesWhereOwnerId(userId: number) {
-        const allSources = await this.source.findMany({
-            where: {
-                ownerId: userId
-            },
-            include: PrismaIncludes.sourceIncludes
-        })
-
-        if (!allSources || allSources.length === 0) {
-            throw new NotFoundException(`No source found`)
-        }
-
-        const result = allSources.map(source => {
-            return { ...source, tags: source.tags.map(tag => tag.tag) }
-        })
-        return result
-    }
-
-    async findSourcesPublic() {
-        const allSources = await this.source.findMany({
-            where: {
-                public: true
-            },
-            include: PrismaIncludes.sourceIncludes
-        })
-
-        if (!allSources || allSources.length === 0) {
-            throw new NotFoundException(`No source found`)
-        }
-
-        const result = allSources.map(source => {
-            return { ...source, tags: source.tags.map(tag => tag.tag) }
-        })
-        return result
-    }
-
-    async createSource(userId: number, typeId: number, tags: number[], input: CreateSourceInput) {
-        const userFound = await this.findUserById(userId)
-        if (!userFound) {
-            // this.log.err(`user ${userId} not found, can"t create the source: ${JSON.stringify(input)}`)
-            throw new NotFoundException(`user ${userId} not found, can"t create the source: ${JSON.stringify(input)}`);
-        }
-
-        const created = await this.source.create({
-            data: {
-                ...input,
-                type: { connect: { id: typeId } },
-                owner: { connect: { id: userId } }
-            }
-        })
-
-        this.manageReccordAssignementForSourceTag(created.id, tags)
-        return created
-    }
-
-    async updateSource(userId: number, sourceId: number, input: UpdateSourceInput) {
-        const typeId = input?.typeId
-        delete input.typeId
-        const tagIds = input?.tagIds
-        delete input.tagIds
-
-        let data
-        if (typeId) {
-            data = {
-                ...input,
-                type: { connect: { id: typeId } }
-            }
-        } else {
-            data = { ...input }
-        }
-
-        const updatedSource = await this.source.update({
-            where: { id: sourceId },
-            data: data,
-        })
-
-        if (tagIds) {
-            await this.manageReccordAssignementForSourceTag(sourceId, tagIds)
-        }
-
-
-        return updatedSource
-    }
-
-    async updateSourceOwned(userId: number, sourceId: number, input: UpdateSourceInput) {
-        const found = await this.findSource(sourceId)
-        if (!found) {
-            throw new NotFoundException(`Can't performe update operation, source ${sourceId} not found`)
-        }
-
-        if (found.ownerId !== userId) {
-            throw new ForbiddenError(`User ${userId} is not allowed to update source ${sourceId}`)
-        }
-
-        return await this.updateSource(userId, sourceId, input)
-    }
-
-
-    async deleteSource(userId: number, sourceId: number) {
-        const deleted = await this.source.delete({
-            where: {
-                id: sourceId
-            }
-        })
-
-        return !!deleted
-    }
-
-    async deleteSourceOwned(userId: number, sourceId: number) {
-        const found = await this.findSource(sourceId)
-        if (!found) {
-            throw new NotFoundException(`Can't performe delete operation, source ${sourceId} not found`)
-        }
-
-        if (found.ownerId !== userId) {
-            throw new ForbiddenError(`User ${userId} is not allowed to delte source ${sourceId}`)
-        }
-
-        const deleted = await this.deleteSource(userId, sourceId)
-    }
-
-    async deleteSources(userId: number) {
-        const deleted = await this.source.deleteMany({})
-        return deleted.count > 0
-    }
-
-    async manageReccordAssignementForSourceTag(sourceId: number, tags: number[]) {
-
-        const source = await this.findSource(sourceId)
-        this.removeOldReccordsForSourceTag(source, sourceId, tags)
-        this.addNewReccordsForSourceTag(source, sourceId, tags)
-        return true
-    }
-    async addNewReccordsForSourceTag(source: { tags: Tag[]; id: number; createdAt: Date; title: string; url: string; content: string; description: string; typeId: number; ownerId: number; owner: { id: number; pseudo: string; email: string; role: import(".prisma/client").Role; }; type: import(".prisma/client").SourceType; }, sourceId: number, tags: number[]) {
-        // // News
-        let assignements = []
-        for (var tagId of tags) {
-            let found: Boolean = false
-            for (var tag of source.tags) {
-                if (tagId === tag.id) {
-                    found = true
-                    break
-                }
-            }
-            if (!found) {
-                assignements = [
-                    ...assignements,
-                    {
-                        sourceId: sourceId,
-                        tagId: tagId
-                    }
-                ]
-            }
-        }
-        const relationsCreated = await this.sourceTag.createMany({
-            data: assignements
-        })
-
-    }
-
-    async removeOldReccordsForSourceTag(source: { tags: Tag[]; id: number; createdAt: Date; title: string; url: string; content: string; description: string; typeId: number; ownerId: number; owner: { id: number; pseudo: string; email: string; role: import(".prisma/client").Role; }; type: import(".prisma/client").SourceType; }, sourceId: number, tags: number[]) {
-        // Olds
-        // let assignements = []
-        let ids: number[] = []
-        for (var tag of source.tags) {
-            let found: Boolean = false
-            for (var tagId of tags) {
-                if (tagId === tag.id) {
-                    found = true;
-                    break
-                }
-            }
-            if (!found) {
-                ids.push(tag.id)
-            }
-        }
-
-        for (var id of ids) {
-            await this.sourceTag.delete({
-                where: {
-                    sourceId_tagId: {
-                        sourceId: sourceId,
-                        tagId: id
-                    }
-
-                }
-            })
-        }
-    }
-
-    findTagById(tagId: number) {
-        return this.tag.findUnique({
-            where: {
-                id: tagId
-            }
-        })
-    }
-
-    findTag(id: number) {
-        return this.tag.findUnique({
-            where: {
-                id
-            },
-            include: PrismaIncludes.tagIncludes
-        })
-    }
-
-    findTags() {
-        return this.tag.findMany({ include: PrismaIncludes.tagIncludes })
-    }
-
-    findTagByIds(tags: number[]) {
-        return this.tag.findMany({
-            where: {
-                id: { in: tags }
-            }
-        })
-    }
-
-    async createTag(userId: number, input: CreateTagInput) {
-        const userFound = await this.findUserById(userId)
-        if (!userFound) {
-            // this.log.err(`user ${userId} not found, can"t create the tag: ${JSON.stringify(input)}`)
-            throw new NotFoundException(`User ${userId} not found, can"t create the tag: ${JSON.stringify(input)}`);
-        }
-
-        const created = await this.tag.create({
-            data: {
-                ...input,
-                author: { connect: { id: userId } }
-            }
-        })
-
-        return created
-    }
-
-    async updateTag(userId: number, id: number, input: UpdateTagInput) {
-        return await this.tag.update({
-            where: { id: id },
-            data: { ...input }
-        })
-    }
-
-    async updateTagOwned(userId: number, id: number, input: UpdateTagInput) {
-        const found = await this.findTag(id)
-        if (!found) {
-            throw new NotFoundException(`Tag ${id} not found, can't update the tag ${id}`)
-        }
-
-        if (found.authorId !== userId) {
-            throw new ForbiddenError(`User ${userId} not allowed to update tag ${id}`)
-        }
-
-        return await this.tag.update({
-            where: { id: id },
-            data: { ...input }
-        })
-    }
-
-
-
-
-    async deleteTag(userId: number, id: number) {
-        const deleted = await this.tag.delete({
-            where: { id: id }
-        })
-        return !!deleted
-    }
-
-    findTypeById(id: number) {
-        return this.sourceType.findUnique({
-            where: {
-                id: id
-            }
-        })
-    }
-
-    findSourceType(id: number) {
-        return this.sourceType.findUnique({
-            where: {
-                id
-            }
-        })
-    }
-
-    findSourceTypes() {
-        return this.sourceType.findMany()
-    }
-
-    async createSourceType(input: CreateSourceTypeInput) {
-        return await this.sourceType.create({
-            data: {
-                ...input
-            }
-        })
-    }
-
-    updateSourceType(id: number, input: UpdateSourceTypeInput) {
-        return this.sourceType.update({
-            where: { id: id },
-            data: { ...input }
-        })
-    }
-
-    async deleteSourceType(id: number) {
-        const deleted = await this.sourceType.delete({
-            where: { id: id }
-        })
-        return !!deleted
-    }
-
-
-
-    /*********************************
-     *  UTILS
-     * 
-     *********************************/
-    private async ensureRolesExist() {
+    // /*********************************
+    //  *  UTILS
+    //  * 
+    //  *********************************/
+    async ensureRolesExist() {
         const found = await this.findRoleById(0)
         if (found) {
             return true
@@ -619,7 +258,7 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
         }
     }
 
-    private async ensureAdminUserExists() {
+    async ensureAdminUserExists() {
         const found = await this.findUserByEmail(this.default_admin.email)
         if (found) {
             return true
@@ -634,27 +273,27 @@ export class DataService extends PrismaClient implements OnModuleInit, OnModuleD
 
     }
 
-    private async ensureTagsExist() {
-        const found = await this.findTagById(1)
-        if (found) {
-            return true
-        }
-        // create roles
-        Logger.debug(`Initialize Tags..`)
-        for (var tag of tags_dataset) {
-            await this.createTag(1, { title: tag.title, description: tag.description })
-        }
-    }
+    // private async ensureTagsExist() {
+    //     const found = await this.findTagById(1)
+    //     if (found) {
+    //         return true
+    //     }
+    //     // create roles
+    //     Logger.debug(`Initialize Tags..`)
+    //     for (var tag of tags_dataset) {
+    //         await this.createTag(1, { title: tag.title, description: tag.description })
+    //     }
+    // }
 
-    private async ensureTypesExist() {
-        const found = await this.findTypeById(1)
-        if (found) {
-            return true
-        }
-        Logger.debug(`Initialize Types..`)
-        // create roles
-        for (var type of types_dataset) {
-            await this.createSourceType({ title: type.title, description: type.description })
-        }
-    }
+    // private async ensureTypesExist() {
+    //     const found = await this.findTypeById(1)
+    //     if (found) {
+    //         return true
+    //     }
+    //     Logger.debug(`Initialize Types..`)
+    //     // create roles
+    //     for (var type of types_dataset) {
+    //         await this.createSourceType({ title: type.title, description: type.description })
+    //     }
+    // }
 }
