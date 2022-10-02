@@ -19,18 +19,43 @@
                 <!-- <form> -->
                     <fieldset>
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo" formControlName="pseudo">*display to others
+                            *display to others
+                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo" formControlName="pseudo">
+                            <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
+                                <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.
+                                </div>
+                            </div>
                         </fieldset> 
                         <fieldset class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Nickname" formControlName="nickname">*for login
+                            *for login
+                            <input type="text" class="form-control form-control-lg" placeholder="Nickname" formControlName="nickname">
+                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
+                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
+                                </div>
+                            </div>                            
                         </fieldset>
                         <fieldset class="form-group">
                             <input type="Email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
+                            <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
+                                <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
+                                <div *ngIf="this.form.controls['email'].errors?.['email']">Wrong format email.</div>
+                            </div>
                         </fieldset>
                         <fieldset class="form-group">
                             <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
+                            <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
+                                <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.</div>
+                            </div>
                         </fieldset>                   
-                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="isSubmittingsSelector$ | async">
+                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="(isSubmittingsSelector$ | async) || !this.form.valid">
                             Sign up
                         </button>
                     </fieldset>

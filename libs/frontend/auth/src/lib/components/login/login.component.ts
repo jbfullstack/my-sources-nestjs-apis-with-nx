@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit{
   initializeForm(): void {
     this.form = this.formBuilder.group({
       nickname: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', Validators.required, , Validators.minLength(4)],
+      password: ['', [Validators.required, , Validators.minLength(4)]],
     })
   }
 
@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit{
 
   onSubmit(): void {
     console.log("submit", this.form.value, this.form.valid)
+    console.log("submit", this.form.value, this.form.controls['nickame'])
     const request : LoginRequestInterface = {...this.form.value}
     this.store.dispatch(loginAction( {request: request} ))
   }

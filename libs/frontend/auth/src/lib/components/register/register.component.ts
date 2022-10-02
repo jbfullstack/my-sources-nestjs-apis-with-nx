@@ -29,10 +29,10 @@ export class RegisterComponent implements OnInit{
   
   initializeForm(): void {
     this.form = this.formBuilder.group({
-      pseudo: ['', Validators.required, Validators.minLength(3)],
+      pseudo: ['', [Validators.required, Validators.minLength(3)]],
       nickname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(10)]],
-      password: ['', Validators.required, , Validators.minLength(4)],
+      password: ['', [Validators.required, , Validators.minLength(4)]],
     })
   }
 

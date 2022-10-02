@@ -110,7 +110,7 @@ export class AuthService {
         if (input.nickname.trim().length ===0 || input.nickname.length < 3) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.nickname, 
-                'nickname too short (min size 3)', 
+                'nickname empty or too short (min size 3)', 
                 `Cannot register, the nickname must be 3 characters long at least` 
             )
             if (isNicknameValids){ isNicknameValids = false }
@@ -128,7 +128,7 @@ export class AuthService {
         if (input.pseudo.trim().length ===0 || input.pseudo.length < 3) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.pseudo, 
-                'pseudo too short (min size 3)', 
+                'pseudo empty or too short (min size 3)', 
                 `Cannot register, the pseudo must be 3 characters long at least` 
             )
             if (isPseudoValids){ isPseudoValids = false }
@@ -137,7 +137,7 @@ export class AuthService {
         if (input.password.trim().length ===0 || input.password.length < 4) {
             this.manageErrorMessage(
                 httpErrorResponse.errors.password, 
-                'password too short (min size 4)', 
+                'password empty or too short (min size 4)', 
                 `Cannot register, the password must be 4 characters long at least`
             )
             if (isPasswordValids){ isPasswordValids = false }
