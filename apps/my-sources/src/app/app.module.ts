@@ -18,8 +18,8 @@ import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
-import { UptimeComponent } from '@jbhive_fe/uptime';
-import { AuthModule } from '@jbhive_fe/auth';
+import { UptimeComponent } from '@jbhive/uptime';
+import { AuthModule } from '@jbhive/auth_fe';
 
 
 @NgModule({

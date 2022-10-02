@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { RegisterComponent } from "@jbhive_fe/auth";
+import { RegisterComponent } from "@jbhive/auth_fe";
 
 
 const routes: Routes = [

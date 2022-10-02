@@ -1,5 +1,5 @@
 import { DataService } from "@jbhive_be/data";
-import { LogService } from "@jbhive_be/log";
+import { LogService } from "libs/utils/log/backend/src";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { CreateCourseInput } from "./dto/create-course.input";
 import { CreateLessonInput } from "./dto/create-lesson.input";

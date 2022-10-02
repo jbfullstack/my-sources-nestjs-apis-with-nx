@@ -3,20 +3,22 @@
   "version": 2,
   "projects": {
     "api": "apps/api",
-    "admin_be": "libs/backend/admin",
-    "core_be": "libs/backend/core",
-    "auth_be": "libs/backend/auth",
-    "crypt_be": "libs/backend/crypt",
+    "admin_be": "libs/admin/backend",
+    "config_be": "libs/utils/config/backend",
+    "auth_be": "libs/security/auth/backend",
+    "auth_fe": "libs/security/auth/frontend",
+    "crypt": "libs/security/crypt",
     "data_be": "libs/backend/data",
-    "log_be": "libs/backend/log",
-    "source_be": "libs/backend/source",
-    "struct_be": "libs/backend/struct",
+    "log_be": "libs/utils/log/backend",
+    "source_be": "libs/source/backend",
+    "type_be": "libs/utils/types/backend",
+    "types_fe": "libs/utils/types/frontend",
     "api-interfaces": "libs/api-interfaces",
-    "auth": "libs/frontend/auth",
-    "profile": "libs/frontend/profile",
+    
+    "profile": "libs/profile/frontend",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
-    "types": "libs/frontend/types",
-    "uptime": "libs/frontend/uptime"
+    
+    "uptime": "libs/utils/uptime/frontend"
   }
 }

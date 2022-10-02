@@ -5,10 +5,10 @@ import { Lesson } from '../models/lesson';
 
 import { Logger, UseGuards } from '@nestjs/common'
 import { UpdateLessonInput } from '../dto/update-lesson.input';
-import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard } from '@jbhive_be/auth';
+import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard } from '@jbhive/auth_be';
 import { User } from '@prisma/client';
-// import { Role } from '@jbhive_be/auth';
-import { Role } from "@jbhive_be/struct";
+// import { Role } from '@jbhive/auth_be';
+import { Role } from "@jbhive/types_be";
 
 @Resolver()
 @UseGuards(RolesGuard)

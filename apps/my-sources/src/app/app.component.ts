@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Message } from '@jbhive_ai/api-interfaces';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { isLoggedInSelector } from 'libs/frontend/auth/src/lib/store/selectors/login-selector';
+import { isLoggedInSelector } from '@jbhive/auth_fe';
 
 @Component({
   selector: 'my-sources-nx-root',

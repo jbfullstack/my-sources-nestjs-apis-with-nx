@@ -2,15 +2,14 @@ import { Injectable, OnModuleInit, OnModuleDestroy, Logger, NotFoundException } 
 import { ConfigService } from "@nestjs/config";
 import { Prisma, PrismaClient, Tag } from "@prisma/client";
 // import { JwtDto } from "libs/auth/src/lib/dto/jwt.dto";
-import { roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive_be/struct";
 import { CreateCourseInput, UpdateCourseInput, CreateLessonInput, UpdateLessonInput } from "@jbhive_be/course";
 // import { CreateSourceInput, UpdateSourceInput, CreateSourceTypeInput, UpdateSourceTypeInput, CreateTagInput, UpdateTagInput } from "@jbhive_be/source"
 
 import { PrismaIncludes } from "../prisma-includes";
-import { LogService } from "@jbhive_be/log";
+import { LogService } from "libs/utils/log/backend/src";
 import { ForbiddenError } from "apollo-server-express";
-import { UpdateUserInput } from "@jbhive_be/struct";
-import { CryptHelper } from "@jbhive_be/crypt";
+import { UpdateUserInput, roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive/types_be";
+import { CryptHelper } from "@jbhive/crypt";
 
 
 @Injectable()

@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "outDir": "../../../dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": []
+  },
+  "exclude": [
+    "src/test-setup.ts",
+    "**/*.spec.ts",
+    "jest.config.ts",
+    "**/*.test.ts"
+  ],
+  "include": ["**/*.ts", "../../../apps/my-sources/src/app/auth-routing.module.ts", "../types/src/lib/auth-state.interface.ts"]
+}
