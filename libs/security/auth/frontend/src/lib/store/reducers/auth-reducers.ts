@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AuthStateInterface } from "@jbhive/types_fe";
 
-import { loginAction, loginFailureAction, loginSuccessAction } from "../actions/login-action";
+import { loginAction, loginFailureAction, loginSuccessAction, logoutAction } from "../actions/login-action";
 import { registerAction, registerSuccessAction, registerFailureAction } from "../actions/register-action";
 
 
@@ -101,6 +101,26 @@ const authReducer = createReducer(
                 isAccountCreated: false,
                 isSubmitting: false,
                 validationErrors: action.errors,               
+            },
+        })
+    ),
+
+
+    on(
+        logoutAction, 
+        (state, action): AuthStateInterface => 
+        ({
+            ...state,
+            login: {
+                isSubmitting: false,
+                validationErrors: null, 
+                isLoggedIn: false,
+                currentUser: null,              
+            },
+            register: {
+                isSubmitting: false,
+                validationErrors: null, 
+                isAccountCreated: false, 
             },
         })
     ),

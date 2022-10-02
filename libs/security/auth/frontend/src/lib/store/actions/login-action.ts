@@ -20,3 +20,7 @@ export const loginFailureAction = createAction(
     ActionTypes.LOGIN_FAILURE,
     props<{ errors: BackendErrorsInterface}>()
 );
+
+export const logoutAction = createAction(
+    ActionTypes.LOGOUT,
+);

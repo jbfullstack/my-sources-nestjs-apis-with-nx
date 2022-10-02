@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { isLoggedInSelector } from '@jbhive/auth_fe';
 import { ChildrenOutletContexts, Router } from '@angular/router';
-import { AuthService } from 'libs/security/auth/frontend/src/lib/services/auth.service';
+import { logoutAction } from '@jbhive/auth_fe';
 
 @Component({
   selector: 'my-sources-nx-root',
@@ -18,9 +18,7 @@ export class AppComponent implements OnInit{
 
   constructor(
     private store: Store, 
-    private contexts: ChildrenOutletContexts,
     private router: Router, 
-    private authService: AuthService
     ) {}
 
   ngOnInit(): void {
@@ -32,14 +30,9 @@ export class AppComponent implements OnInit{
     this.userLoggedSelector$ = this.store.pipe(select(isLoggedInSelector))
   }
 
-  getRouteAnimationData() {
-    // console.log(` + AppComponent.getRouteAnimationData(${JSON.stringify(this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'])}`);
-    return this.contexts.getContext('primary')?.route?.snapshot?.data?.['animation'];
-  }
-
   logout() {
-    this.authService.logout();
-    window.location.reload();
+    this.store.dispatch(logoutAction())
+    this.router.navigate(['login']);
   }
 
   isCurrentRoute(routeName: string) {

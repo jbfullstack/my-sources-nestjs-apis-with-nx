@@ -18,6 +18,7 @@ import { PersistanceService } from './services/persistance.service';
 import { BackendErrorMessagesModule } from '@jbhive/types_fe';
 import { LoginComponent } from './components/login/login.component';
 import { LoginEffect } from './store/effects/login.effect';
+import { AuthGuard } from './guards/auth.guard';
 
 
 
@@ -25,6 +26,7 @@ const routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    // canActivate: [AuthGuard],
   },
   {
     path: 'login',
@@ -42,6 +44,6 @@ const routes = [
     BackendErrorMessagesModule
   ],
   declarations: [RegisterComponent, LoginComponent],
-  providers: [AuthService, PersistanceService]
+  providers: [AuthService, PersistanceService, AuthGuard]
 })
 export class AuthModule {}

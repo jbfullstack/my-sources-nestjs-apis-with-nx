@@ -25,10 +25,11 @@ import { UptimeComponent } from '@jbhive/uptime';
 import { AuthModule } from '@jbhive/auth_fe';
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, UptimeComponent],
+  declarations: [AppComponent, NxWelcomeComponent, UptimeComponent, ProfileComponent],
   imports: [
     BrowserModule, 
     ApolloModule,
@@ -39,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     // MyOwnMaterial modules there !!
     MaterialsModules,
     AuthModule,
+    ProfileModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
