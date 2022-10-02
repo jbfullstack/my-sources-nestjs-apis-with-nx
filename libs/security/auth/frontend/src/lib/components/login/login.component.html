@@ -1,6 +1,11 @@
 <mat-tab-group dynamicHeight>
     <mat-tab label="Login">
         <section class="login">
+
+            <ms-backend-error-messages 
+            *ngIf="backendErrorsSelector$ | async"
+            [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages>
+            
             <div class="color-overlay"></div><!-- /COLOR OVERLY -->
             <div class="container">
                 <div class="row">
@@ -37,7 +42,8 @@
         </section>
     </mat-tab>
 
-    <!-- <mat-tab label="Forgot password">
+   <mat-tab label="Forgot password">
+     <!-- 
         <section class="login reset">
             <div class="color-overlay"></div>
             <div class="container">
@@ -56,6 +62,7 @@
                 </div>
             </div>
         </section>
-    </mat-tab> -->
+        -->
+    </mat-tab> 
 
 </mat-tab-group>

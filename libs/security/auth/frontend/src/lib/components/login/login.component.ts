@@ -16,8 +16,8 @@ import { LoginRequestInterface } from '../../types/login-request.interface'
 })
 export class LoginComponent implements OnInit{
   form!: FormGroup
-  isSubmittings$!: Observable<boolean>
-  backendErrors$!: Observable<BackendErrorsInterface | null>
+  isSubmittingsSelector$!: Observable<boolean>
+  backendErrorsSelector$!: Observable<BackendErrorsInterface | null>
 
   constructor(private formBuilder : FormBuilder, private store: Store) {}
 
@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit{
   }
 
   initializeValues(): void {
-    this.isSubmittings$ = this.store.pipe(select(isSubmittingSelector))
-    this.backendErrors$ = this.store.pipe(select(validationErrorSelector))
+    this.isSubmittingsSelector$ = this.store.pipe(select(isSubmittingSelector))
+    this.backendErrorsSelector$ = this.store.pipe(select(validationErrorSelector))
   }
 
   onSubmit(): void {

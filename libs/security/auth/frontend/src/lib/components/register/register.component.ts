@@ -8,6 +8,7 @@ import { RegisterRequestInterface } from '../../types/register-request.interface
 import { BackendErrorsInterface } from '@jbhive/types_fe'
 import { isSubmittingSelector, validationErrorSelector, isAccountCreated } from '../../store/selectors/register-selector'
 
+
 @Component({
   selector: 'ms-register',
   templateUrl: './register.component.html',
@@ -33,8 +34,13 @@ export class RegisterComponent implements OnInit{
       nickname: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email, Validators.minLength(10)]],
       password: ['', [Validators.required, , Validators.minLength(4)]],
+      // confirmPassword: ['', [Validators.required]]
     })
+    // , {
+    //   validators: CustomValidators.passwordsMatch
+    // })
   }
+
 
   initializeValues(): void {
     this.isSubmittingsSelector$ = this.store.pipe(select(isSubmittingSelector))

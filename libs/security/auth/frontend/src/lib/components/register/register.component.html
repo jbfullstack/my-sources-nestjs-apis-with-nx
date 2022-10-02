@@ -1,66 +1,108 @@
-<div class="auth-page">
-    <div class="container page">
-        <div class="row" >
-            <div class="clo-md-6 col-xs-12">
-                <h1 class="text-xs-center">Sign up</h1>
-                <p class="text-xs-center">
-                    <a [routerLink]="['/login']"> Have an account?</a>
-                </p>
 
-                <ms-backend-error-messages 
-                *ngIf="backendErrorsSelector$ | async"
-                [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages>
 
-                <div *ngIf="isAccountCreatedSelector$ |async">
-                    Account created, now an administrator need to activated it :)
-                </div>
 
-                <form [formGroup]="form" (ngSubmit)="onSubmit()">
-                <!-- <form> -->
-                    <fieldset>
-                        <fieldset class="form-group">
-                            *display to others
-                            <input type="text" class="form-control form-control-lg" placeholder="Pseudo" formControlName="pseudo">
-                            <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
+
+
+
+
+
+
+<mat-tab-group dynamicHeight>
+
+    <mat-tab label="Register">
+        <!-- SUBSCRIBE -->
+        <section class="register">
+            <ms-backend-error-messages 
+        *ngIf="backendErrorsSelector$ | async"
+        [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages>
+        
+            <div class="color-overlay"></div><!-- /COLOR OVERLY -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 register-form">
+                        <div class="st-register-title text-center">
+                            <h3>  Sign up  </h3>
+                            <p>  <a [routerLink]="['/login']"> Have an account?</a>  </p>
+                        </div>
+
+                        <form id="register" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                            <fieldset class="form-group">
+                                *display to others
+                                <input placeholder="Pseudonyme (display to others)" formControlName="pseudo" type="fullsize-input" value="" name="register-pseudo" id="st-pseudo">
+                            
+                                <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
                                 class="alert">
-                                <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
-                                <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.
+                                    <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
+                                    <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.
                                 </div>
                             </div>
-                        </fieldset> 
-                        <fieldset class="form-group">
-                            *for login
-                            <input type="text" class="form-control form-control-lg" placeholder="Nickname" formControlName="nickname">
-                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
+                            </fieldset>
+                            <fieldset class="form-group">
+                                *for login
+                                <input placeholder="Nickname (for login)" formControlName="nickname" type="fullsize-input" value="" name="register-nickname" id="st-nickname">
+                                <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
                                 class="alert">
-                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
-                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
+                                    <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
+                                    <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
                                 </div>
-                            </div>                            
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input type="Email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
-                            <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
+                            </div>   
+                            </fieldset>
+                            <fieldset class="form-group">                                
+                                <input placeholder="Email" formControlName="email" type="fullsize-input" value="" name="register-email" id="st-email">
+                                <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
                                 class="alert">
-                                <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
-                                <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
+                                    <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
+                                    <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
                                 <div *ngIf="this.form.controls['email'].errors?.['email']">Wrong format email.</div>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
-                            <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <input placeholder="Password" formControlName="password" type="partsize-input" value="" name="register-password" id="st-password">
+                                <input [disabled]="!this.form.valid" type="submit" name="register-submit" value="Sign up">
+                                <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
                                 class="alert">
-                                <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
-                                <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.</div>
-                            </div>
-                        </fieldset>                   
-                        <button class="btn btn-lg btn-primary pull-xs-right" type="submit" [disabled]="(isSubmittingsSelector$ | async) || !this.form.valid">
-                            Sign up
-                        </button>
-                    </fieldset>
-                </form>
+                                    <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
+                                    <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.</div>
+                                </div>
+                            </fieldset>
+
+                            <!-- <fieldset class="form-group">
+                                <input placeholder="Password Confirmation" formControlName="confirmPassword" type="partsize-input" value="" name="register-confirmPassword" id="st-password">
+                                <input [disabled]="this.form.valid" type="submit" name="register-submit" value="Sign up">
+
+                            </fieldset> -->
+                
+                                
+                        </form>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
+        </section>
+    </mat-tab>
+      <mat-tab label="Resend e-mail">
+
+        <!-- <section class="register resend">
+            <div class="color-overlay"></div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 col-md-offset-3 register-form">
+                        <div class="st-register-title text-center">
+                            <h3> {{ registerResendMainText }} </h3>
+                            <p>  {{ registerResendParaText }} </p>
+                        </div>
+                    
+                        <form [formGroup]="resendMailForm" (ngSubmit)="resendConfirmationEmail()">
+                            <input type="email" value="" name="resend-email" id="st-email" placeholder="Enter your e-mail" formControlName="email" type="partsize-input" value="" name="resend-email" id="st-email">
+                            <input [disabled]="isResendFormValids()" type="submit" name="resend-submit" value="Resend e-mail">
+                            <label for="st-email" class="st-resend-message"></label>
+                        </form>
+                     
+                    </div>
+                </div>
+            </div>
+        </section> -->
+    </mat-tab>
+
+</mat-tab-group>
