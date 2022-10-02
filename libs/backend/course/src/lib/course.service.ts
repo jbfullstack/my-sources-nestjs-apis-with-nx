@@ -1,5 +1,5 @@
-import { DataService } from "@jbhive_be/data";
-import { LogService } from "libs/utils/log/backend/src";
+import { UserService } from "@jbhive/user_be";
+import { LogService } from "@jbhive/log_be";
 import { Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { CreateCourseInput } from "./dto/create-course.input";
 import { CreateLessonInput } from "./dto/create-lesson.input";
@@ -17,7 +17,7 @@ export class CourseService {
     //     lessons: true,
     // }
 
-    constructor(private readonly data: DataService, private readonly log: LogService) { }
+    constructor(private readonly data: UserService, private readonly log: LogService) { }
 
     courses() {
         return this.data.findCourses()

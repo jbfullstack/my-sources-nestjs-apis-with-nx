@@ -1,4 +1,4 @@
-import { DataService } from "@jbhive_be/data";
+import { UserService } from "@jbhive/user_be";
 import { Color, LogService } from "libs/utils/log/backend/src";
 import { MethodNotAllowedException, BadRequestException, HttpException, Injectable, Logger, NotFoundException } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
@@ -18,7 +18,7 @@ export class AuthService {
     
     
     constructor(
-        private readonly data: DataService,
+        private readonly data: UserService,
         private readonly jwt: JwtService,
         private readonly log: LogService,
         private readonly config: ConfigService

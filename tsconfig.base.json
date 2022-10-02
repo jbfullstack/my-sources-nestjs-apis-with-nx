@@ -26,7 +26,7 @@
       "@jbhive/config_be": ["libs/utils/config/backend/src/index.ts"],
       "@jbhive_be/course": ["libs/backend/course/src/index.ts"],
       
-      "@jbhive_be/data": ["libs/backend/data/src/index.ts"],
+      "@jbhive/user_be": ["libs/user/backend/src/index.ts"],
       "@jbhive/log_be": ["libs/utils/log/backend/src/index.ts"],
       "@jbhive/source_be": ["libs/source/backend/src/index.ts"],
       

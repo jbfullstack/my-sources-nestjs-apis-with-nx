@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common'
 import { CourseResolver } from './resolvers/course.resolver'
 import { CourseService } from './course.service'
 import { LessonResolver } from './resolvers/lesson.resolver'
-import { DataModule } from '@jbhive_be/data'
-import { LogModule } from 'libs/utils/log/backend/src'
+import { UserModule } from '@jbhive/user_be'
+import { LogModule } from '@jbhive/log_be'
 
 @Module({   
   controllers: [],
-  imports: [DataModule, LogModule],
+  imports: [UserModule, LogModule],
   providers: [CourseResolver, CourseService, LessonResolver],
   exports: [],
 })

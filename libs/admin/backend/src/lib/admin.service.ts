@@ -1,5 +1,5 @@
-import { DataService } from "@jbhive_be/data";
-import { LogService } from "libs/utils/log/backend/src";
+import { UserService } from "@jbhive/user_be";
+import { LogService } from "@jbhive/log_be";
 import { Role, UpdateUserInput } from "@jbhive/types_be";
 import { Injectable, NotFoundException } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
@@ -8,7 +8,7 @@ import { ForbiddenError } from "apollo-server-express";
 export class AdminService {
     
 
-    constructor(private readonly data: DataService, private readonly log: LogService) { }
+    constructor(private readonly data: UserService, private readonly log: LogService) { }
 
 
     async updateRoleUser(loggedUserId: number, userId: number, roleId: number) {

@@ -1,6 +1,6 @@
 import { User } from "@jbhive/auth_be";
-import { DataService } from "@jbhive_be/data";
-import { LogService } from "libs/utils/log/backend/src";
+import { UserService } from "@jbhive/user_be";
+import { LogService } from "@jbhive/log_be";
 import { Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { CreateSourceInput } from "./dto/create-source-input";
@@ -19,7 +19,7 @@ import { roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from 
 export class SourceService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
 
 
-    constructor(private readonly data: DataService, private readonly log: LogService) {
+    constructor(private readonly data: UserService, private readonly log: LogService) {
         super()
     }
 

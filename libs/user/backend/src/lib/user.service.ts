@@ -13,7 +13,7 @@ import { CryptHelper } from "@jbhive/crypt";
 
 
 @Injectable()
-export class DataService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+export class UserService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
 
     private default_admin: {
         email: string,

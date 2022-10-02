@@ -8,7 +8,7 @@
     "auth_be": "libs/security/auth/backend",
     "auth_fe": "libs/security/auth/frontend",
     "crypt": "libs/security/crypt",
-    "data_be": "libs/backend/data",
+    "user_be": "libs/user/backend",
     "log_be": "libs/utils/log/backend",
     "source_be": "libs/source/backend",
     "type_be": "libs/utils/types/backend",

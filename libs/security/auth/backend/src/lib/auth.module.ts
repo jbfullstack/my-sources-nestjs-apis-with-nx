@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common'
 import { AuthResolver } from './auth.resolver';
 import { AuthService } from './auth.service';
-import { DataModule } from '@jbhive_be/data'
+import { UserModule } from '@jbhive/user_be'
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { GqlAuthGuard } from './guards/gql-auth.guards';
-import { LogModule } from 'libs/utils/log/backend/src';
+import { LogModule } from '@jbhive/log_be';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     LogModule,
-    DataModule, 
+    UserModule, 
     JwtModule.registerAsync({
       useFactory: async (configService: ConfigService) => ({
         secret: configService.get('jwt_secret'),
