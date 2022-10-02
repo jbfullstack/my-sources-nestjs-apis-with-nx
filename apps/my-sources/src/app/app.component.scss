@@ -1,0 +1,55 @@
+$first-color: #2b2d42;
+$second-color: #ffff8c;
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+
+.example-icon {
+    color: white;
+}
+
+.example-icon svg {
+    fill: white;
+}
+
+
+.logged {
+    background-color: $first-color;
+  }
+  
+  .unlogged {
+    background-color: #2a2a2a;
+  }
+  
+  .example-icon {
+    padding: 0 14px;
+  }
+  
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .home-link:hover {
+    cursor: pointer;
+  }
+  
+  button {
+    color: #fff;
+    background-color: #333;
+    transition: all 1s ease-out;
+  }
+  
+  button.active,
+  button:hover,
+  button:focus {
+    color: #333;
+    background-color: #fff;
+  }
+  
+  .back-btn {
+    z-index: 10;
+    margin-left: 20px;
+    // margin-top: 20%;
+  }

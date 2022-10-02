@@ -2,8 +2,52 @@
 <!-- <h1> App.component: </h1> -->
 <!-- <app-my-counter></app-my-counter> -->
 
+<!-- <p>
+    <mat-toolbar color="primary">
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>My App</span>
+      <span class="example-spacer"></span>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with heart icon">
+        Login
+      </button>
+      <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+        Register
+      </button>
+    </mat-toolbar>
+</p> -->
+
+
+<mat-toolbar  class="logged">
+    <mat-toolbar-row>
+  
+      <!-- <span routerLink="/home" class="home-link">Home</span> -->
+      <span routerLink="/" class="home-link">  homeBtnText  </span>
+      <span class="example-spacer"></span>
+  
+  
+      <div *ngIf="userLoggedSelector$ | async ; else loggedOut">        
+        <!-- <button *ngIf="isAdminOrAstek()" [ngClass]="{'active' : isCurrentRoute('users')}" mat-flat-button routerLink="users">Users</button> -->
+        <button [ngClass]="{'active' : isCurrentRoute('login')}" mat-flat-button style="margin-left: 20px;" routerLink="user">Profile</button>
+  
+        <!-- <button *ngIf="isAdminOrAstek()" [ngClass]="{'active' : isCurrentRoute('admin')}" mat-flat-button style="margin-left: 20px;" routerLink="admin">Admin</button>         -->
+        <button mat-flat-button style="margin-left: 20px;" (click)="logout()">Logout</button>
+      </div>
+  
+      <ng-template #loggedOut>
+        <button [ngClass]="{'active' : isCurrentRoute('login')}" mat-flat-button style="margin-left: 20px;" routerLink="login">Login</button>
+        <button [ngClass]="{'active' : isCurrentRoute('register')}" mat-flat-button style="margin-left: 20px;" routerLink="register">Register</button>
+    </ng-template>
+    </mat-toolbar-row> 
+  </mat-toolbar>
+
+
 <div *ngIf="userLoggedSelector$ | async">
     Welcome you !
 </div>
 
-<router-outlet></router-outlet>
+<!-- <div [@routeAnimations]="getRouteAnimationData()">   -->
+    <router-outlet></router-outlet>
+    <!-- <button class = "back-btn" mat-flat-button (click)="back()">Back</button> -->
+<!-- </div> -->

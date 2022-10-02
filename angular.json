@@ -14,11 +14,10 @@
     "type_be": "libs/utils/types/backend",
     "types_fe": "libs/utils/types/frontend",
     "api-interfaces": "libs/api-interfaces",
-    
     "profile": "libs/profile/frontend",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
-    
     "uptime": "libs/utils/uptime/frontend"
-  }
+  },
+  "styles": ["src/styles.scss"]
 }

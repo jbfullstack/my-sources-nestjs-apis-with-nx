@@ -12,6 +12,7 @@ import { createRequestGqlRequest } from "../graphql-requests/request-gql.reques"
 @Injectable()
 export class AuthService {
     
+    
 
     constructor(private apollo: Apollo) { }
 
@@ -32,5 +33,9 @@ export class AuthService {
     login(data: LoginRequestInterface) : Observable<CurrentUserInterface> {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: createLoginGqlRequest(data) })
         .pipe(map((response: any) => response.data.login))
+    }
+
+    logout() {
+        throw new Error('Method not implemented.');
     }
 }

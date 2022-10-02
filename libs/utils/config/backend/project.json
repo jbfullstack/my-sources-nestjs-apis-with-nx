@@ -5,14 +5,20 @@
   "targets": {
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["libs/backend/core/**/*.ts"]
+        "lintFilePatterns": [
+          "libs/backend/core/**/*.ts"
+        ]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/backend/core"],
+      "outputs": [
+        "coverage/libs/backend/core"
+      ],
       "options": {
         "jestConfig": "libs/backend/core/jest.config.ts",
         "passWithNoTests": true

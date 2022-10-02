@@ -6,7 +6,9 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/frontend/uptime"],
+      "outputs": [
+        "coverage/libs/frontend/uptime"
+      ],
       "options": {
         "jestConfig": "libs/frontend/uptime/jest.config.ts",
         "passWithNoTests": true

@@ -24,11 +24,11 @@ import { LoginEffect } from './store/effects/login.effect';
 const routes = [
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   }
 ]
 
