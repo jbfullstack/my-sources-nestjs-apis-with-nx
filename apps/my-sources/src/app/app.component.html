@@ -23,15 +23,12 @@
     <mat-toolbar-row>
   
       <!-- <span routerLink="/home" class="home-link">Home</span> -->
-      <span routerLink="/" class="home-link">  homeBtnText  </span>
+      <span routerLink="/profile" class="home-link">  MySources  </span>
       <span class="example-spacer"></span>
   
   
       <div *ngIf="userLoggedSelector$ | async ; else loggedOut">        
-        <!-- <button *ngIf="isAdminOrAstek()" [ngClass]="{'active' : isCurrentRoute('users')}" mat-flat-button routerLink="users">Users</button> -->
         <button [ngClass]="{'active' : isCurrentRoute('profile')}" mat-flat-button style="margin-left: 20px;" routerLink="user">Profile</button>
-  
-        <!-- <button *ngIf="isAdminOrAstek()" [ngClass]="{'active' : isCurrentRoute('admin')}" mat-flat-button style="margin-left: 20px;" routerLink="admin">Admin</button>         -->
         <button mat-flat-button style="margin-left: 20px;" (click)="logout()">Logout</button>
       </div>
   
@@ -43,9 +40,9 @@
   </mat-toolbar>
 
 
-<div *ngIf="userLoggedSelector$ | async">
+<!-- <div *ngIf="userLoggedSelector$ | async">
     Welcome you !
-</div>
+</div> -->
 
 <!-- <div [@routeAnimations]="getRouteAnimationData()">   -->
     <router-outlet></router-outlet>

@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { AuthStateInterface } from '@jbhive/types_fe'
+import { AuthStateInterface, CurrentUserInterface } from '@jbhive/types_fe'
 
 export const loginFeatureSelector = createFeatureSelector<AuthStateInterface>('auth')
 
@@ -17,4 +17,12 @@ export const isLoggedInSelector = createSelector(
     loginFeatureSelector, 
     (loginState: AuthStateInterface) => loginState.login.isLoggedIn
 )
+
+export const currentUserSelector = createSelector(
+    loginFeatureSelector, 
+    (loginState: AuthStateInterface) => loginState.login.currentUser
+)
+
+
+
 

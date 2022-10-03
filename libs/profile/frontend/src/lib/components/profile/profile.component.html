@@ -1,55 +1,67 @@
 <div class="auth-page">
     <div class="container page">
         <div class="row">
-        <div class="clo-md-6 col-xs-12">
-            <h1 class="text-xs-center">Sign up</h1>
-            <p class="text-xs-center">
-            <a [routerLink]="['/register']"> Need an account?</a>
-            </p>
 
-            <!-- <ms-backend-error-messages
-            *ngIf="backendErrors$ | async"
-            [backendErrors]="backendErrors$ | async"
-            ></ms-backend-error-messages> -->
+            <div *ngIf="isCurrentUSerLoaded(); else loggedOut">     
 
-            <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">           
-                <fieldset class="form-group">
-                    <input
-                        type="text"
-                        class="form-control form-control-lg"
-                        placeholder="Nickname"
-                        formControlName="nickname"
-                    />
-                    <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
-                        class="alert">
-                        <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
-                        <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
-                        </div>
+                <div class="clo-md-6 col-xs-12">
+                    <h1 class="text-xs-center">Welcome {{ pseudo() }}</h1>
+                    <p class="text-xs-center"> Nice to see you ! </p>
+
+                    <div>
+                        email: {{ email() }}
                     </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <input
-                        type="password"
-                        class="form-control form-control-lg"
-                        placeholder="Password"
-                        formControlName="password"
-                    />
-                    <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
-                        class="alert">
-                        <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
-                        <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.
-                        </div>
+                    <div>
+                        role: {{ roleName() }}
                     </div>
-                </fieldset>
-                <button
-                    class="btn btn-lg btn-primary pull-xs-right"
-                    type="submit"
-                    [disabled]="(isSubmittings$ | async) || !this.form.valid" >
-                    Sign in
-                </button>
-                </fieldset>
-            </form> -->
+                    <!-- <ms-backend-error-messages
+                    *ngIf="backendErrors$ | async"
+                    [backendErrors]="backendErrors$ | async"
+                    ></ms-backend-error-messages> -->
+
+                    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">           
+                        <fieldset class="form-group">
+                            <input
+                                type="text"
+                                class="form-control form-control-lg"
+                                placeholder="Nickname"
+                                formControlName="nickname"
+                            />
+                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
+                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <input
+                                type="password"
+                                class="form-control form-control-lg"
+                                placeholder="Password"
+                                formControlName="password"
+                            />
+                            <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
+                                class="alert">
+                                <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
+                                <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.
+                                </div>
+                            </div>
+                        </fieldset>
+                        <button
+                            class="btn btn-lg btn-primary pull-xs-right"
+                            type="submit"
+                            [disabled]="(isSubmittings$ | async) || !this.form.valid" >
+                            Sign in
+                        </button>
+                        </fieldset>
+                    </form> -->
+                </div>
+            </div>
         </div>
-        </div>
+
+        <ng-template #loggedOut>
+            You need to sign in :)
+        </ng-template>
     </div>
 </div>

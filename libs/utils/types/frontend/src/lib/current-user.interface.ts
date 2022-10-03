@@ -1,11 +1,13 @@
 export interface CurrentUserInterface {
     id: number,
     pseudo: string,
-    emai: string,
+    email: string,
     nickname: string | null,
     createAt: string,
-    roleId: number | null,
-    roleName: string | null,
+    role: {
+        id: number | null,
+        name: string | null,
+    }
     image: string | null,
     token: string | null
 }
