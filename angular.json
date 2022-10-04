@@ -3,6 +3,7 @@
   "version": 2,
   "projects": {
     "admin_be": "libs/admin/backend",
+    "admin_fe": "libs/admin/frontend",
     "api": "apps/api",
     "api-interfaces": "libs/api-interfaces",
     "auth_be": "libs/security/auth/backend",
@@ -18,7 +19,7 @@
     "type_be": "libs/utils/types/backend",
     "types_fe": "libs/utils/types/frontend",
     "uptime": "libs/utils/uptime/frontend",
-    "user_be": "libs/user/backend"
-  },
-  "styles": ["src/styles.scss"]
+    "user_be": "libs/user/backend",
+    "graphql": "libs/data/graphql"
+  }
 }

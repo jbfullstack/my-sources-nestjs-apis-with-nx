@@ -2,7 +2,7 @@
 import { Args, Query, Resolver, Mutation,  } from '@nestjs/graphql';
 import { Logger, UseGuards } from '@nestjs/common'
 import { CtxUser, GqlAuthGuard, Public, Roles, RolesGuard, User } from '@jbhive/auth_be'
-import { Role, UpdateUserInput } from "@jbhive/types_be";
+import { Role, UpdateUserInput, AdminUpdateUserInput } from "@jbhive/types_be";
 import { LogService } from 'libs/utils/log/backend/src';
 import { Source } from 'libs/source/backend/src';
 import { AdminService } from './admin.service';
@@ -14,7 +14,7 @@ export class AdminResolver {
 
 
     @Roles(Role.Astek, Role.Admin, Role.Lord)
-    @Mutation( () => Source, {nullable: true})
+    @Mutation( () => User, {nullable: true})
     async updateRoleUser(
         @CtxUser() user: User,
         @Args('userId') userId: number,
@@ -24,7 +24,25 @@ export class AdminResolver {
     }
 
     @Roles(Role.Astek, Role.Admin, Role.Lord)
-    @Mutation( () => Source, {nullable: true})
+    @Mutation( () => [User], {nullable: true})
+    async loadAllDesactivatedUsers(
+        @CtxUser() user: User)  {
+        this.log.logMethod(`Resolver.loadAllDesactivatedUsers()`)
+        return this.service.loadAllDesactivatedUsers(user?.role?.id)
+    }
+
+    @Roles(Role.Astek, Role.Admin, Role.Lord)
+    @Mutation( () => [User], {nullable: true})
+    async loadAllUsers(
+        @CtxUser() user: User)  {
+        this.log.logMethod(`Resolver.loadAllUsers()`)
+        return this.service.loadAllUsers(user?.role?.id)
+    }
+
+    
+
+    @Roles(Role.Astek, Role.Admin, Role.Lord)
+    @Mutation( () => User, {nullable: true})
     async updateUser(
         @CtxUser() user: User,
         @Args('userId') userId: number,
@@ -33,7 +51,17 @@ export class AdminResolver {
         return this.service.updateUser(user.id, userId, input)
     }
 
-    @Mutation( () => Source, {nullable: true})
+    @Roles(Role.Astek, Role.Admin, Role.Lord)
+    @Mutation( () => User, {nullable: true})
+    async updateAdminUser(
+        @CtxUser() user: User,
+        @Args('userId') userId: number,
+        @Args('input') input: AdminUpdateUserInput)  {
+        this.log.logMethod(`Resolver.updateRoleUser(${userId}`)
+        return this.service.updateAdminUser(user.id, userId, input)
+    }
+
+    @Mutation( () => User, {nullable: true})
     async updateMyself(
         @CtxUser() user: User,
         @Args('input') input: UpdateUserInput)  {

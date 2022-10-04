@@ -5,7 +5,10 @@ import { AuthGuard } from "@jbhive/auth_fe";
 
 
 const routes: Routes = [
-  
+    // {
+    //     path: '**',
+    //     redirectTo: 'login',
+    // }
 ]
 
 @NgModule({

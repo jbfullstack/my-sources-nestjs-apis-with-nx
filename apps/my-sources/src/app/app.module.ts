@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { FlexLayoutModule } from "@angular/flex-layout";
@@ -26,10 +26,13 @@ import { AuthModule } from '@jbhive/auth_fe';
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
+import { AdminComponent, AdminModule } from '@jbhive/admin_fe';
+import { GraphQLModule, middleware } from '@jbhive/graphql';
+
 
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, UptimeComponent, ProfileComponent],
+  declarations: [AppComponent, NxWelcomeComponent, UptimeComponent, ProfileComponent, AdminComponent],
   imports: [
     BrowserModule, 
     ApolloModule,
@@ -40,7 +43,9 @@ import { ProfileComponent, ProfileModule } from '@jbhive/profile';
     // MyOwnMaterial modules there !!
     MaterialsModules,
     AuthModule,
+    AdminModule,
     ProfileModule,
+    GraphQLModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -50,13 +55,17 @@ import { ProfileComponent, ProfileModule } from '@jbhive/profile';
     BrowserAnimationsModule // empty array => register all effects, inside any modules => nothing to do in app module :)    
   ],
   providers: [
+    // GraphQLModule,
     {
       provide: APOLLO_OPTIONS,
       useFactory: (httpLink: HttpLink) => {
         return {
           cache: new InMemoryCache(),
+          // link: middleware.concat(environment.graphql_url)
           link: httpLink.create({
             uri: environment.graphql_url,
+            // headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+            headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAwNTE2LCJleHAiOjE2NjQ5MDQxMTZ9.ZI52TdfCYha9L_7ctBnz3uzNd8TPGtqfQNbyjoNVm6M`)
           }),
         };
       },

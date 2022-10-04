@@ -42,6 +42,8 @@
     "apollo-angular": "^4.0.1",
     "apollo-angular-link-http": "^1.10.0-alpha.0",
     "apollo-errors": "^1.9.0",
+    "apollo-link": "^1.2.14",
+    "apollo-link-context": "^1.0.20",
     "apollo-server-express": "^3.10.2",
     "bcryptjs": "^2.4.3",
     "graphql": "^16.6.0",

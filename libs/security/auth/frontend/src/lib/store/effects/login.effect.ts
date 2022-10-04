@@ -33,6 +33,7 @@ export class LoginEffect {
 
                     catchError( (errorResponse: HttpErrorResponse) => {
                         // of => produce an observable, bcs the action is not an  observable
+                        console.error('create login error: ', errorResponse)
                         return of(loginFailureAction({errors: JSON.parse(errorResponse.message).errors}))
                     })
                 )

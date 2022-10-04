@@ -10,18 +10,25 @@ export const isSubmittingSelector = createSelector(
 
 export const validationErrorSelector = createSelector(
     loginFeatureSelector, 
-    (loginState: AuthStateInterface) => loginState.login.validationErrors
+    (loginState: AuthStateInterface) => loginState.login?.validationErrors
 )
 
 export const isLoggedInSelector = createSelector(
     loginFeatureSelector, 
-    (loginState: AuthStateInterface) => loginState.login.isLoggedIn
+    (loginState: AuthStateInterface) => loginState.login?.isLoggedIn
 )
 
 export const currentUserSelector = createSelector(
     loginFeatureSelector, 
     (loginState: AuthStateInterface) => loginState.login.currentUser
 )
+
+export const userTokenSelector = createSelector(
+    loginFeatureSelector, 
+    (loginState: AuthStateInterface) => loginState.login.currentUser?.token
+)
+
+
 
 
 

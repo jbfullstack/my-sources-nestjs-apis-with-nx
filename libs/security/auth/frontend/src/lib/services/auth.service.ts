@@ -32,7 +32,7 @@ export class AuthService {
 
     login(data: LoginRequestInterface) : Observable<CurrentUserInterface> {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: createLoginGqlRequest(data) })
-        .pipe(map((response: any) => response.data.login))
+        .pipe(map((response: any) => response.data.login ))
     }
 
     logout() {

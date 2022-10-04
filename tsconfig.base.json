@@ -23,13 +23,15 @@
       "@jbhive/log_be": ["libs/utils/log/backend/src/index.ts"],
       "@jbhive/profile": ["libs/profile/frontend/src/index.ts"],
       "@jbhive/source_be": ["libs/source/backend/src/index.ts"],
+      "@jbhive/styles": ["libs/styles/src/index.ts"],
       "@jbhive/types_be": ["libs/utils/types/backend/src/index.ts"],
       "@jbhive/types_fe": ["libs/utils/types/frontend/src/index.ts"],
       "@jbhive/uptime": ["libs/utils/uptime/frontend/src/index.ts"],
       "@jbhive/user_be": ["libs/user/backend/src/index.ts"],
       "@jbhive_ai/api-interfaces": ["libs/api-interfaces/src/index.ts"],
       "@jbhive_be/course": ["libs/backend/course/src/index.ts"],
-      "@my-sources-nx/styles": ["libs/styles/src/index.ts"]
+      "@jbhive/admin_fe": ["libs/admin/frontend/src/index.ts"],
+      "@jbhive/graphql": ["libs/data/graphql/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

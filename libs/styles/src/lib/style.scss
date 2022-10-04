@@ -1,0 +1,92 @@
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+
+
+/* 1. IMPORT SECTION */
+
+@import url("./css/bootstrap.min.css");
+@import url("./css/font-awesome.min.css");
+@import url("http://fonts.googleapis.com/css?family=Lato:300,700,700italic&subset=latin,latin-ext");
+@import url("http://fonts.googleapis.com/css?family=Raleway:300,700&subset=latin,latin-ext");
+
+/* 2. BASIC STYLES */
+
+html,
+body {
+    font: 16px/1.5 Lato, "Century Gothic", "Trebuchet MS", Helvetica, sans-serif;
+    height: 100%;
+    background-color: #262626;
+    font-weight: 300;
+}
+
+// body {
+//     font: 16px/1.5 Lato, "Century Gothic", "Trebuchet MS", Helvetica, sans-serif;
+//     background-color: #262626;
+//     color: #fff;
+//     font-weight: 300;
+//   }
+
+a {
+    color: #262626;
+    transition: all 0.125s ease-in-out 0s;
+    -moz-transition: all 0.125s ease-in-out 0s;
+    -webkit-transition: all 0.125s ease-in-out 0s;
+    -o-transition: all 0.125s ease-in-out 0s;
+    -ms-transition: all 0.125s ease-in-out 0s;
+}
+
+a:hover {
+    color: #68c3a3;
+}
+
+a,
+a:hover,
+a:active,
+a:focus {
+    outline: 0;
+    border: 0;
+    text-decoration: none;
+}
+
+#st-preloader {
+    background: #fff;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 9999;
+}
+
+p {
+    line-height: 1.5;
+}
+
+#pre-status,
+.preload-placeholder {
+    background-image: url(./images/preloader.gif);
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 40px;
+    left: 50%;
+    margin: -20px 0 0 -20px;
+    position: absolute;
+    top: 50%;
+    width: 40px;
+}
+
+.preload-placeholder {
+    background: none;
+    left: 0;
+    margin: 0;
+    text-align: center;
+    top: 65%;
+}

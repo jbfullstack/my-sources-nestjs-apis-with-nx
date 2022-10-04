@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit{
   isSubmittingsSelector$!: Observable<boolean>
   backendErrorsSelector$!: Observable<BackendErrorsInterface | null>
 
-  constructor(private formBuilder : FormBuilder, private store: Store) {}
+  constructor(private formBuilder : FormBuilder, private store: Store) { }
 
   ngOnInit(): void {
     this.initializeForm()

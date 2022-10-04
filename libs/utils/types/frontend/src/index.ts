@@ -5,4 +5,7 @@ export * from './lib/login-state.interface'
 export * from './lib/register-state.interface'
 export * from './lib/current-user.interface'
 export * from './lib/backend-errors.interface'
+export * from './lib/admin-state.interface'
+export * from './lib/user-list-state.interface'
 export * from './lib/modules/backendErrorMessages/backend-error-message.module'
+

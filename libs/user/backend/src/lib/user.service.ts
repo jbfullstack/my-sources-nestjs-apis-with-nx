@@ -8,7 +8,7 @@ import { CreateCourseInput, UpdateCourseInput, CreateLessonInput, UpdateLessonIn
 import { PrismaIncludes } from "../prisma-includes";
 import { LogService } from "libs/utils/log/backend/src";
 import { ForbiddenError } from "apollo-server-express";
-import { UpdateUserInput, roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive/types_be";
+import { AdminUpdateUserInput, UpdateUserInput, roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive/types_be";
 import { CryptHelper } from "@jbhive/crypt";
 
 
@@ -109,9 +109,44 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
 
     async updateRoleUser(userId: number, roleId: number) {
         // Update
-        return this.user.update({
+        return await this.user.update({
             where: { id: userId },
             data: { roleId }
+        })
+    }
+
+    // async loadAllDesactivatedUsersWithLessPrivilege(userRoleId: number) {
+    //     return await this.user.findMany({
+    //         where: {
+    //             activated: true,
+    //             // hidden: false,
+    //             // roleId: {
+    //             //     lt: userRoleId
+    //             // }
+    //         }
+    //     })
+    // }
+
+    async loadAllUsersWithLessPrivilege(userRoleId: number) {
+        return await this.user.findMany({
+            where: {
+                hidden: false,
+                roleId: {
+                    lt: userRoleId
+                }
+            }
+        })
+    }
+
+    
+
+    async updateAdminUser(userId: number, input: AdminUpdateUserInput) {
+
+        let data = { ...input }
+
+        return await this.user.update({
+            where: { id: userId },
+            data: data
         })
     }
 

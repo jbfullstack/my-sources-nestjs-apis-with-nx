@@ -1,14 +1,26 @@
 import { UserService } from "@jbhive/user_be";
 import { LogService } from "@jbhive/log_be";
-import { Role, UpdateUserInput } from "@jbhive/types_be";
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { Role, UpdateUserInput, AdminUpdateUserInput } from "@jbhive/types_be";
+import { Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
+import { Prisma, PrismaClient, Tag } from "@prisma/client";
 
 @Injectable()
-export class AdminService {
+export class AdminService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
+   
     
 
-    constructor(private readonly data: UserService, private readonly log: LogService) { }
+    constructor(private readonly data: UserService, private readonly log: LogService) {
+        super()
+     }
+
+     async onModuleInit() {
+        await this.$connect()
+    }
+
+    async onModuleDestroy() {
+        await this.$disconnect()
+    }
 
 
     async updateRoleUser(loggedUserId: number, userId: number, roleId: number) {
@@ -59,7 +71,29 @@ export class AdminService {
             throw new NotFoundException(`User ${loggedUserId} not allowed to perform update operation on user ${userId}, logged user has less privileges`)
         }
 
+        Logger.log('VOILLLAAAAA')
+
         return this.data.updateUser(userId, input)
+    }
+
+    async updateAdminUser(loggedUserId: number, userId: number, input: AdminUpdateUserInput) {
+        const userFound = await this.data.findUser(userId)
+        if (!userFound) {
+            throw new NotFoundException(`Can't update User ${userId}, user not found`)
+        }
+
+        const loggedUserFound = await this.data.findUser(loggedUserId)
+        if (!loggedUserFound) {
+            throw new NotFoundException(`User ${loggedUserId} not allowed to perform update role operation, user not found`)
+        }
+
+        if (loggedUserFound.roleId < userFound.roleId) {
+            throw new NotFoundException(`User ${loggedUserId} not allowed to perform update operation on user ${userId}, logged user has less privileges`)
+        }
+
+        Logger.log('VOILLLAAAAA')
+
+        return this.data.updateAdminUser(userId, input)
     }
 
 
@@ -69,6 +103,29 @@ export class AdminService {
             throw new NotFoundException(`Can't update User ${id}, user not found`)
         }
         return this.data.updateUser(id, input)
+    }
+
+    async loadAllDesactivatedUsers(roleId: number) {
+        const found = await this.user.findMany({
+            where: {
+                activated: false,
+                hidden: false,
+                roleId: {
+                    lt: roleId
+                }
+            }
+        })
+
+        Logger.error('found: ', found)
+        return found
+    }
+
+    async loadAllUsers(roleId: number) {
+        // Retrieve all user where 
+        const found = await this.data.loadAllUsersWithLessPrivilege(roleId)
+
+
+        return found
     }
 
 }

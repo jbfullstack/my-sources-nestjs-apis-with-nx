@@ -28,6 +28,7 @@
   
   
       <div *ngIf="userLoggedSelector$ | async ; else loggedOut">        
+        <button [ngClass]="{'active' : isCurrentRoute('admin')}" mat-flat-button style="margin-left: 20px;" routerLink="admin">Admin</button>
         <button [ngClass]="{'active' : isCurrentRoute('profile')}" mat-flat-button style="margin-left: 20px;" routerLink="user">Profile</button>
         <button mat-flat-button style="margin-left: 20px;" (click)="logout()">Logout</button>
       </div>
