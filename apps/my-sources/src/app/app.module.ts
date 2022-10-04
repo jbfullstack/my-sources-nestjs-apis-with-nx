@@ -27,7 +27,7 @@ import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 import { AdminComponent, AdminModule } from '@jbhive/admin_fe';
-import { GraphQLModule, middleware } from '@jbhive/graphql';
+import { GraphQLModule } from '@jbhive/graphql';
 
 
 
@@ -55,22 +55,22 @@ import { GraphQLModule, middleware } from '@jbhive/graphql';
     BrowserAnimationsModule // empty array => register all effects, inside any modules => nothing to do in app module :)    
   ],
   providers: [
-    // GraphQLModule,
-    {
-      provide: APOLLO_OPTIONS,
-      useFactory: (httpLink: HttpLink) => {
-        return {
-          cache: new InMemoryCache(),
-          // link: middleware.concat(environment.graphql_url)
-          link: httpLink.create({
-            uri: environment.graphql_url,
-            // headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
-            headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAwNTE2LCJleHAiOjE2NjQ5MDQxMTZ9.ZI52TdfCYha9L_7ctBnz3uzNd8TPGtqfQNbyjoNVm6M`)
-          }),
-        };
-      },
-      deps: [HttpLink],
-    },
+    GraphQLModule,
+    // {
+    //   provide: APOLLO_OPTIONS,
+    //   useFactory: (httpLink: HttpLink) => {
+    //     return {
+    //       cache: new InMemoryCache(),
+    //       // link: middleware.concat(environment.graphql_url)
+    //       link: httpLink.create({
+    //         uri: environment.graphql_url,
+    //         // headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
+    //         headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAyOTk1LCJleHAiOjE2NjQ5MDY1OTV9.tyHyUpLJNtC6eG3v3MHRsh6C1AH5S3LKk_a5NsqPvj8`)
+    //       }),
+    //     };
+    //   },
+    //   deps: [HttpLink],
+    // },
     MaterialsModules,
     FormBuilder
   ],
