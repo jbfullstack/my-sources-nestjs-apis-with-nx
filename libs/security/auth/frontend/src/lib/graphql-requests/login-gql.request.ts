@@ -13,10 +13,11 @@ export function createLoginGqlRequest( data: LoginRequestInterface) {
             email
             pseudo
             nickname
+            createdAt
             role { 
                 name
                 id
-            }
+            }            
             token
         } 
     }`

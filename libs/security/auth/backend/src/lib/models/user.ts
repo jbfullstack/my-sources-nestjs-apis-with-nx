@@ -19,6 +19,9 @@ export class User {
     @Field( () => Role, {nullable: true})
     role: Role
 
+    @Field({ nullable: true })
+    createdAt?: Date
+
     // @Field({ nullable: true }) --> no field bcs password not exposed
     password?: string
 

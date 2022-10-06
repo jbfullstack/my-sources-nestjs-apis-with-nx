@@ -6,6 +6,8 @@ export function loadAllUsersWithLessPrivilegesGqlRequest() {
         {
             id
             pseudo
+            email
+            createdAt
         } 
     }`
 }

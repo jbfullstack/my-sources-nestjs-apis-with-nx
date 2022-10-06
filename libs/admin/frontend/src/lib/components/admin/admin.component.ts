@@ -16,7 +16,7 @@ export class AdminComponent implements OnInit{
   // form!: FormGroup
   // isSubmittingsSelector$!: Observable<boolean>
   // backendErrorsSelector$!: Observable<BackendErrorsInterface | null>
-  currentUser!: CurrentUserInterface |null
+  currentUser!: CurrentUserInterface | null
 
   constructor(private formBuilder : FormBuilder, private store: Store) { }
 
