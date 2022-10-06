@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule, HttpHeaders, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms'
 
 import { FlexLayoutModule } from "@angular/flex-layout";
-// import {MatIconModule} from '@angular/material/icon'; 
 
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -27,7 +26,7 @@ import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 import { AdminComponent, AdminModule } from '@jbhive/admin_fe';
-import { GraphQLModule } from '@jbhive/graphql';
+import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
 
 
 
@@ -56,23 +55,25 @@ import { GraphQLModule } from '@jbhive/graphql';
   ],
   providers: [
     GraphQLModule,
-    // {
-    //   provide: APOLLO_OPTIONS,
-    //   useFactory: (httpLink: HttpLink) => {
-    //     return {
-    //       cache: new InMemoryCache(),
-    //       // link: middleware.concat(environment.graphql_url)
-    //       link: httpLink.create({
-    //         uri: environment.graphql_url,
-    //         // headers: new HttpHeaders().set('Authorization', `Bearer ${token}`)
-    //         headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAyOTk1LCJleHAiOjE2NjQ5MDY1OTV9.tyHyUpLJNtC6eG3v3MHRsh6C1AH5S3LKk_a5NsqPvj8`)
-    //       }),
-    //     };
-    //   },
-    //   deps: [HttpLink],
-    // },
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory: (httpLink: HttpLink) => {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: environment.graphql_url,
+          }),
+        };
+      },
+      deps: [HttpLink],
+    },
     MaterialsModules,
-    FormBuilder
+    FormBuilder,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApolloInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })

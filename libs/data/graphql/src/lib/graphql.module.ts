@@ -12,7 +12,7 @@ export function createApollo(httpLink: HttpLink) {
   return {
     link: httpLink.create({ 
       uri: uri,
-      headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAyOTk1LCJleHAiOjE2NjQ5MDY1OTV9.tyHyUpLJNtC6eG3v3MHRsh6C1AH5S3LKk_a5NsqPvj8`)
+      // headers: new HttpHeaders().set('Authorization', `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInJvbGVJZCI6MCwiaWF0IjoxNjY0OTAyOTk1LCJleHAiOjE2NjQ5MDY1OTV9.tyHyUpLJNtC6eG3v3MHRsh6C1AH5S3LKk_a5NsqPvj8`)
     }),
     cache: new InMemoryCache(),
     
