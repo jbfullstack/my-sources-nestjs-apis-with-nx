@@ -1,7 +1,7 @@
 import { UserService } from "@jbhive/user_be";
 import { LogService } from "@jbhive/log_be";
 import { Role, UpdateUserInput, AdminUpdateUserInput } from "@jbhive/types_be";
-import { Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { Injectable, Logger, MethodNotAllowedException, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { Prisma, PrismaClient, Tag } from "@prisma/client";
 
@@ -94,6 +94,21 @@ export class AdminService extends PrismaClient implements OnModuleInit, OnModule
         Logger.log('VOILLLAAAAA')
 
         return this.data.updateAdminUser(userId, input)
+    }
+
+    async deleteUser(loggedUserId: any, userId: number) {
+        const userFound = await this.data.findUser(loggedUserId)
+        const loggedFound = await this.data.findUser(userId)
+
+        if (!userFound ||! loggedFound) {
+            throw new NotFoundException(`User ${loggedUserId} can't delete user ${userFound}, at least one does not exists`)
+        }
+
+        if (userFound.roleId <= loggedFound.roleId){
+            throw new MethodNotAllowedException(`User ${loggedUserId} not allowed to delete user ${userFound}`)
+        }
+
+        return await this.data.deleteUser(userId)
     }
 
 

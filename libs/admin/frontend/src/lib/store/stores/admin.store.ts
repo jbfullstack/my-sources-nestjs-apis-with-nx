@@ -12,7 +12,7 @@ export const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
     // manageUsersList: [],
     // searchInput: '',
-    pending: true,
+    pending: false,
     errors: null
 }
 

@@ -42,13 +42,10 @@ export class AdminComponent implements OnInit{
         if (allDesactivated.length > 0) {
           console.log('allDesactivated: ', allDesactivated)
           this.adminStore.loadDesactivatedUsers(allDesactivated)
-          // this.store.dispatch(loadDesactivatedUsersSuccessAction({desactivatedUsers: allDesactivated}))
         }             
       }
     })
-
-    // this.desactivatedUsersSelector$ = this.store.pipe(select(desactivatedUsersSelector))
-    // this.desactivatedListSubscription = this.store.pipe(select(desactivatedUsersSelector)).subscribe( allDesactivated =>  this.desactivatedList = allDesactivated?.users)
+    
   }
 
   onSubmit(): void {
@@ -57,11 +54,6 @@ export class AdminComponent implements OnInit{
     // const request : LoginRequestInterface = {...this.form.value}
     // this.store.dispatch(loginAction( {request: request} ))
   }
-
-  // getDesactivatedUsers(){
-  //   let res : UsersListStateInterface =  {
-  //     users: this.desactivatedUsersSelector$
-  //   }
 
 
 }

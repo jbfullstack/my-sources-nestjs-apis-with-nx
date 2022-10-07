@@ -68,4 +68,13 @@ export class AdminResolver {
         this.log.logMethod(`Resolver.updateRoleUser(${user.id}`)
         return this.service.updateMyself(user.id, input)
     }
+
+    @Roles(Role.Astek, Role.Admin)
+    @Mutation( () => Boolean, {nullable: true})
+    async deleteUser(
+        @CtxUser() user: User,
+        @Args('userId') userId: number)  {
+        this.log.logMethod(`Resolver.deleteUser(${userId}`)
+        return this.service.deleteUser(user.id, userId)
+    }
 }

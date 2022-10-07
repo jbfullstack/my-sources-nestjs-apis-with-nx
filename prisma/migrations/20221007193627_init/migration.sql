@@ -24,28 +24,6 @@ CREATE TABLE "Role" (
 );
 
 -- CreateTable
-CREATE TABLE "Course" (
-    "id" SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT,
-    "imageUrl" TEXT,
-    "authorId" INTEGER,
-
-    CONSTRAINT "Course_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Lesson" (
-    "id" SERIAL NOT NULL,
-    "title" TEXT NOT NULL,
-    "description" TEXT,
-    "content" TEXT,
-    "courseId" INTEGER NOT NULL,
-
-    CONSTRAINT "Lesson_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Tag" (
     "id" SERIAL NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -108,12 +86,6 @@ CREATE UNIQUE INDEX "SourceType_title_key" ON "SourceType"("title");
 
 -- AddForeignKey
 ALTER TABLE "User" ADD CONSTRAINT "User_roleId_fkey" FOREIGN KEY ("roleId") REFERENCES "Role"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Course" ADD CONSTRAINT "Course_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Lesson" ADD CONSTRAINT "Lesson_courseId_fkey" FOREIGN KEY ("courseId") REFERENCES "Course"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Tag" ADD CONSTRAINT "Tag_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

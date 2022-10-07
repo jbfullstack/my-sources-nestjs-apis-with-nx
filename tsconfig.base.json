@@ -29,7 +29,6 @@
       "@jbhive/uptime": ["libs/utils/uptime/frontend/src/index.ts"],
       "@jbhive/user_be": ["libs/user/backend/src/index.ts"],
       "@jbhive_ai/api-interfaces": ["libs/api-interfaces/src/index.ts"],
-      "@jbhive_be/course": ["libs/backend/course/src/index.ts"],
       "@jbhive/admin_fe": ["libs/admin/frontend/src/index.ts"],
       "@jbhive/graphql": ["libs/data/graphql/src/index.ts"]
     }

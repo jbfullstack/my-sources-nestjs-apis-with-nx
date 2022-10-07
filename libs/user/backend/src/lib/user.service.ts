@@ -2,7 +2,6 @@ import { Injectable, OnModuleInit, OnModuleDestroy, Logger, NotFoundException } 
 import { ConfigService } from "@nestjs/config";
 import { Prisma, PrismaClient, Tag } from "@prisma/client";
 // import { JwtDto } from "libs/auth/src/lib/dto/jwt.dto";
-import { CreateCourseInput, UpdateCourseInput, CreateLessonInput, UpdateLessonInput } from "@jbhive_be/course";
 // import { CreateSourceInput, UpdateSourceInput, CreateSourceTypeInput, UpdateSourceTypeInput, CreateTagInput, UpdateTagInput } from "@jbhive_be/source"
 
 import { PrismaIncludes } from "../prisma-includes";
@@ -166,6 +165,16 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         })
     }
 
+    async deleteUser(id: number) {
+        const deleted = await this.user.delete({
+            where: {
+                id
+            }
+        })
+
+        return !!deleted
+    }
+
 
 
     findUserByEmail(email: string) {
@@ -204,76 +213,6 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
             }
         })
     }
-
-
-
-
-
-    /*********************************
-     *  COURSES & LESSONS
-     * 
-     *********************************/
-
-    findCourse(id: number) {
-        return this.course.findUnique({
-            where: { id },
-            include: PrismaIncludes.coursesIncludes
-        })
-    }
-
-    findCourses() {
-        return this.course.findMany({ include: PrismaIncludes.coursesIncludes })
-    }
-
-    createCourse(userId: number, input: CreateCourseInput) {
-        return this.course.create({
-            data: {
-                ...input,
-                author: { connect: { id: userId } }
-            },
-        })
-    }
-
-    updateCourse(userId: number, id: number, input: UpdateCourseInput) {
-        return this.course.update({
-            where: { id },
-            data: { ...input }
-        })
-    }
-
-    async deleteCourse(userId: number, id: number) {
-        const deleted = await this.course.delete({
-            where: {
-                id
-            }
-        })
-
-        return !!deleted
-    }
-
-
-    async createLesson(userId: number, courseId: number, input: CreateLessonInput) {
-        return this.lesson.create({
-            data: {
-                course: { connect: { id: courseId } },
-                ...input
-            }
-        })
-    }
-
-    updateLesson(userId: number, id: number, input: UpdateLessonInput) {
-        return this.lesson.update({
-            where: { id: id },
-            data: { ...input }
-        })
-    }
-
-    async deleteLesson(userId: number, id: number) {
-        const deleted = await this.lesson.delete({
-            where: { id: id }
-        })
-        return !!deleted
-    }   
 
 
     // /*********************************

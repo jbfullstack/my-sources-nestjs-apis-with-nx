@@ -27,3 +27,9 @@ export function activateUserWithLessPrivilegesGqlRequest(userId: number) {
         } 
     }`
 }
+
+export function  deleteUserWithLessPrivilegesGqlRequest(userId: number) {
+    return gql`mutation deleteUser{ 
+        deleteUser(userId: ${userId})
+    }`
+}

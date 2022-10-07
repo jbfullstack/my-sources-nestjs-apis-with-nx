@@ -17,11 +17,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: JwtDto) {
-
+        Logger.log("AIGHTTT !!! payload: ", payload)
         const user = await this.service.validateUser(payload.userId)
-
-        if (!user){
-            throw new UnauthorizedException()
+        if (!user ||  !user?.activated){
+            throw new UnauthorizedException('Not allowed inside')
         }
 
         // return payload

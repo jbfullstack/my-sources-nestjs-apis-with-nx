@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
@@ -21,6 +21,11 @@ export class AdminService {
         .pipe(map((response: any) => response.data))
     }
     
+    deleteUser(id: number) {
+        console.log('delete: ', id)
+        return this.apollo.mutate<any>({ mutation: deleteUserWithLessPrivilegesGqlRequest(id) })
+        .pipe(map((response: any) => response.data))
+    }
     
 
     constructor(private apollo: Apollo) { }

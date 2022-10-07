@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AdminService } from '../../services/admin.service';
 import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
-import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction } from '../actions/admin.action';
+import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction } from '../actions/admin.action';
 import { UsersListStateInterface } from 'libs/utils/types/frontend/src/lib/user-list-state.interface';
 
 
@@ -50,9 +50,27 @@ export class AdminEffect {
                         return of(activateFailureAction({errors: errorResponse.message}))
                     })
                 )
-        })
+            })
+        )
     )
-)
+
+    deleteUsers$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(deleteAction),
+            switchMap( (action) => {
+                return this.adminService.deleteUser(action.userId).pipe(
+                    map((deleted: boolean) => {
+                        // call backend
+                        // adminService.activate()
+                        return deleteSuccessAction({ userId: action.userId })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(deleteFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
 
     // activate$ = createEffect( () => 
     //     this.actions$.pipe(

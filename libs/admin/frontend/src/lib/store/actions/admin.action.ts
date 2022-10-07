@@ -37,6 +37,22 @@ export const activateFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const deleteAction = createAction(
+    ActionTypes.DELETE,
+    props<{ userId: number }>()
+);
+
+export const deleteSuccessAction = createAction(
+    ActionTypes.DELETE_SUCCESS,
+    props<{ userId: number}>()
+);
+
+export const deleteFailureAction = createAction(
+    ActionTypes.DELETE_FAILURE,
+    props<{ errors: string}>()
+);
+
+
 // export const logoutAction = createAction(
 //     ActionTypes.LOGOUT,
 // );

@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, } from "../actions/admin.action";
 
 
 
@@ -72,18 +72,34 @@ const adminReducer = createReducer(
         })
     ),
 
-    // on(
-    //     activateSuccessAction, 
-    //     (state, action): AdminStateInterface => 
-    //     ({
-    //         ...state,
-    //         desactivatedUsersList: {
-    //             users: state.desactivatedUsersList.users.filter( user => user.id === action.)
-    //         }
-    //         // update user in the store
-            
-    //     })
-    // ),
+    on(
+        deleteAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+
+    on(
+        deleteSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id !== action.userId)
+        })
+    ),
+
+    on(
+        deleteFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
 )
 
 export function reducers(state: AdminStateInterface, action: Action){

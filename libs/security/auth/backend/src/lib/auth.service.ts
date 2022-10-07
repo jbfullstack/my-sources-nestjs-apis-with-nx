@@ -36,6 +36,12 @@ export class AuthService {
             Logger.debug(`user by nickname found:`, found)
         }
 
+        if (!found.activated){
+            this.log.err(`User with nickname ${input.nickname} not activated`)
+            const httpErrorResponse =  { errors:  {  credentials: [`User with nickname ${input.nickname} is not activated`], }}
+            throw new BadRequestException(JSON.stringify(httpErrorResponse))
+        }
+
         const passwordValid = await CryptHelper.validate(input.password, found.password)
         if (!passwordValid) {
             this.log.err(`Invalid password`)

@@ -17,8 +17,7 @@ model User {
   pseudo    String   @unique
   nickname  String?  @unique
   password  String
-  courses   Course[]
-  role      Role     @relation(fields: [roleId], references: [id])
+  role      Role    @relation(fields: [roleId], references: [id])
   roleId    Int
   Tag       Tag[]
   source    Source[]
@@ -32,25 +31,6 @@ model Role {
   name        String @unique
   description String
   user        User[]
-}
-
-model Course {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String?
-  imageUrl    String?
-  lessons     Lesson[]
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?
-}
-
-model Lesson {
-  id          Int     @id @default(autoincrement())
-  title       String
-  description String?
-  content     String?
-  course      Course  @relation(fields: [courseId], references: [id])
-  courseId    Int
 }
 
 // Sources
