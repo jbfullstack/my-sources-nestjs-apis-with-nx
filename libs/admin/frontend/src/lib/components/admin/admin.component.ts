@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
 import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
-import { loadDesactivatedUsersAction } from '../../store/actions/admin.action'
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction } from '../../store/actions/admin.action'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector'
 import { AdminStore } from '../../store/stores/admin.store'
 
@@ -42,7 +42,8 @@ export class AdminComponent implements OnInit{
         if (allDesactivated.length > 0) {
           console.log('allDesactivated: ', allDesactivated)
           this.adminStore.loadDesactivatedUsers(allDesactivated)
-        }        
+          // this.store.dispatch(loadDesactivatedUsersSuccessAction({desactivatedUsers: allDesactivated}))
+        }             
       }
     })
 

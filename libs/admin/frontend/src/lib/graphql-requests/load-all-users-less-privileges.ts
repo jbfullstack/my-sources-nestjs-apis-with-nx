@@ -11,3 +11,17 @@ export function loadAllUsersWithLessPrivilegesGqlRequest() {
         } 
     }`
 }
+
+
+export function activateUserWithLessPrivilegesGqlRequest(userId: number) {
+    return gql`mutation updateUser{ 
+        updateUser( 
+            userId: ${userId},
+            input: {
+            activated: true
+        }
+        ){
+            activated          
+        } 
+    }`
+}

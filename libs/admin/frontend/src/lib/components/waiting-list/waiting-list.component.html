@@ -1,16 +1,18 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+        <mat-panel-title> Waiting list </mat-panel-title>
+        <mat-panel-description>
+            Users not activated
+            <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+        </mat-expansion-panel-header>
 
-<div class="row">
-    <div class="col-md-6 col-md-offset-3 login-form">
-
-        <div class="st-login-title text-center">
-            <h3>  Waiting list  </h3>
-            <p> All desactivated users  </p>
-
+        <div class="row">
             <div *ngFor="let user of users">
-                <ms-activate-user [user]="user">
-                </ms-activate-user>
+            <ms-activate-user [user]="user"> </ms-activate-user>
             </div>
         </div>
-    </div>
-</div>
 
+    </mat-expansion-panel>
+</mat-accordion>

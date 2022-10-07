@@ -3,7 +3,7 @@ export interface CurrentUserInterface {
     pseudo: string,
     email: string,
     nickname: string | null,
-    createAt: string,
+    createdAt: string,
     role: {
         id: number | null,
         name: string | null,
