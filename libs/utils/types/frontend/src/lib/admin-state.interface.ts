@@ -5,11 +5,11 @@ import { RegisterStateInterface } from "./register-state.interface";
 import { UsersListStateInterface } from "./user-list-state.interface";
 
 export interface AdminStateInterface {
-   desactivatedUsersList: UsersListStateInterface | null
-   manageUsersList: UsersListStateInterface | null
-   searchInput: string 
-   isLoading: boolean
-   validationErrors: BackendErrorsInterface | null
+   desactivatedUsersList: CurrentUserInterface[] //UsersListStateInterface | null
+   // manageUsersList: CurrentUserInterface[] //UsersListStateInterface | null
+   // searchInput: string 
+   pending: boolean
+   errors: string | null
 }
 
 

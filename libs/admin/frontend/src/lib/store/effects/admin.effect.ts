@@ -22,7 +22,7 @@ export class AdminEffect {
             ofType(loadDesactivatedUsersAction),
             switchMap( () => {
                 return this.adminService.loadAllDesactivatedUsers().pipe(
-                    map((desactivatedUsers: UsersListStateInterface) => {
+                    map((desactivatedUsers: CurrentUserInterface[]) => {
                         // call backend
                         // adminService.activate()
 

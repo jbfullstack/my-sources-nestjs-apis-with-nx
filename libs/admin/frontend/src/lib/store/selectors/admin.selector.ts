@@ -5,7 +5,12 @@ export const loginFeatureSelector = createFeatureSelector<AdminStateInterface>('
 
 export const isLoadingSelector = createSelector(
     loginFeatureSelector, 
-    (adminState: AdminStateInterface) => adminState.isLoading
+    (adminState: AdminStateInterface) => adminState.pending
+)
+
+export const desactivatedUsersSelector = createSelector(
+    loginFeatureSelector, 
+    (adminState: AdminStateInterface) => adminState.desactivatedUsersList
 )
 
 // export const validationErrorSelector = createSelector(

@@ -8,16 +8,16 @@ import { desactivatedUsersSelector } from '../../store/selectors/admin.selector'
 
 
 @Component({
-    selector: 'ms-waiting-list',
-    templateUrl: './waiting-list.component.html',
-    styleUrls: ['./waiting-list.component.scss'],    
+    selector: 'ms-activate-user',
+    templateUrl: './activate-user.component.html',
+    styleUrls: ['./activate-user.component.scss'],    
 })
-export class WaitingListComponent  implements OnInit {
-    @Input() users!: CurrentUserInterface[] | null;
+export class ActivateUserComponent  implements OnInit {
+    @Input() user!: CurrentUserInterface | null;
 
     constructor() { }
 
     ngOnInit() {
-        console.log(this.users) // data from parent
+        console.log(this.user) // data from parent
     }
 }

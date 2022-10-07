@@ -1,42 +1,53 @@
-import { Observable } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
-import { BackendErrorsInterface, CurrentUserInterface, } from '@jbhive/types_fe'
+import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
 import { loadDesactivatedUsersAction } from '../../store/actions/admin.action'
-import { AdminUnactivatedUSersRequestInterface } from '../../types/admin-activated-users.request.interface.ts'
+import { desactivatedUsersSelector } from '../../store/selectors/admin.selector'
+import { AdminStore } from '../../store/stores/admin.store'
 
 @Component({
   selector: 'ms-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.scss'],
+  providers: [AdminStore]
 })
 export class AdminComponent implements OnInit{
-  // form!: FormGroup
-  // isSubmittingsSelector$!: Observable<boolean>
-  // backendErrorsSelector$!: Observable<BackendErrorsInterface | null>
-  currentUser!: CurrentUserInterface | null
+  // desactivatedUsersSelector$!: Observable<UsersListStateInterface | null>
+  // desactivatedListSubscription!: Subscription
+  // desactivatedList!: CurrentUserInterface[] | undefined
 
-  constructor(private formBuilder : FormBuilder, private store: Store) { }
+  desactivatedUsers$ = this.adminStore.desactivatedUsersList$
+  pending$ = this.adminStore.pending$
+  errors$ = this.adminStore.errors$
 
+  constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore) { }
   ngOnInit(): void {
     this.initializeValues()
   }
 
+  ngOnDestroy() {
+    // this.desactivatedListSubscription.unsubscribe();
+  }
+
   initializeValues(): void {
-    // this.isSubmittingsSelector$ = this.store.pipe(select(isSubmittingSelector))
-    // this.backendErrorsSelector$ = this.store.pipe(select(validationErrorSelector))
-
-    // this.store.select(currentUserSelector).subscribe(
-    //   (data) => {
-    //     this.currentUser = data
-    //     this.store.dispatch(loadDesactivatedUsersAction())
-    //   }
-    // );
-
     console.log('DISPATCH MTFKA')
     this.store.dispatch(loadDesactivatedUsersAction())
+    // this.adminStore.loadDesactivatedUsers(this.desactivatedUsers$)
+
+    this.store.pipe(select(desactivatedUsersSelector)).subscribe( {
+      next: (allDesactivated) => {
+        if (allDesactivated.length > 0) {
+          console.log('allDesactivated: ', allDesactivated)
+          this.adminStore.loadDesactivatedUsers(allDesactivated)
+        }        
+      }
+    })
+
+    // this.desactivatedUsersSelector$ = this.store.pipe(select(desactivatedUsersSelector))
+    // this.desactivatedListSubscription = this.store.pipe(select(desactivatedUsersSelector)).subscribe( allDesactivated =>  this.desactivatedList = allDesactivated?.users)
   }
 
   onSubmit(): void {
@@ -45,5 +56,11 @@ export class AdminComponent implements OnInit{
     // const request : LoginRequestInterface = {...this.form.value}
     // this.store.dispatch(loginAction( {request: request} ))
   }
+
+  // getDesactivatedUsers(){
+  //   let res : UsersListStateInterface =  {
+  //     users: this.desactivatedUsersSelector$
+  //   }
+
 
 }

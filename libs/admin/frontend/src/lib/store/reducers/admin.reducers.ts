@@ -7,11 +7,11 @@ import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDe
 
 
 const initialState: AdminStateInterface = {
-    desactivatedUsersList: { users: []},
-    manageUsersList: { users: []},
-    searchInput: '',
-    isLoading: false,
-    validationErrors: null
+    desactivatedUsersList: [],
+    // manageUsersList: [],
+    // searchInput: '',
+    pending: false,
+    errors: null
 }
 
 const adminReducer = createReducer(
@@ -21,7 +21,7 @@ const adminReducer = createReducer(
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            isLoading: true
+            pending: true
         })
     ),
     on(
@@ -29,7 +29,7 @@ const adminReducer = createReducer(
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            isLoading: false,
+            pending: false,
             desactivatedUsersList: action.desactivatedUsers
         })
     ),
@@ -38,8 +38,8 @@ const adminReducer = createReducer(
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            isLoading: false,
-            validationErrors: action.errors
+            pending: false,
+            errors: action.errors
         })
     ),
 
@@ -48,7 +48,7 @@ const adminReducer = createReducer(
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            isLoading: true
+            pending: true
         })
     ),
 

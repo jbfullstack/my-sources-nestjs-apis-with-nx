@@ -12,12 +12,12 @@ export const loadDesactivatedUsersAction = createAction(
 
 export const loadDesactivatedUsersSuccessAction = createAction(
     ActionTypes.LOAD_DESACTIVATED_SUCCESS,
-    props<{ desactivatedUsers: UsersListStateInterface}>()
+    props<{ desactivatedUsers: CurrentUserInterface[]}>()
 );
 
 export const loadDesactivatedUsersFailureAction = createAction(
     ActionTypes.LOAD_DESACTIVATED_FAILURE,
-    props<{ errors: BackendErrorsInterface}>()
+    props<{ errors: string}>()
 );
 
 

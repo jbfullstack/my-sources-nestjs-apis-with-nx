@@ -1,5 +1,5 @@
 import { gql } from 'apollo-angular';
-import { AdminUnactivatedUSersRequestInterface } from '../types/admin-activated-users.request.interface.ts';
+import { AdminUnactivatedUsersRequestInterface } from '../types/admin-activated-users.request.interface.ts';
 
 export function activateUserGqlRequest( userId: number) {
     return gql`mutation updateUser{ 
