@@ -36,6 +36,24 @@ export class AdminEffect {
         )
     )
 
+    activateUsers$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(activateAction),
+            switchMap( (action) => {
+                return this.adminService.activate(action.userId).pipe(
+                    map((user: CurrentUserInterface) => {
+                        // call backend
+                        // adminService.activate()
+                        return activateSuccessAction({ userId: action.userId })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(activateFailureAction({errors: errorResponse.message}))
+                    })
+                )
+        })
+    )
+)
+
     // activate$ = createEffect( () => 
     //     this.actions$.pipe(
     //         ofType(activateAction),

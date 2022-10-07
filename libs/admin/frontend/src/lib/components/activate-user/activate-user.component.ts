@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminService } from '../../services/admin.service';
+import { AdminStore } from '../../store/stores/admin.store';
+import { activateAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -16,7 +18,7 @@ import { AdminService } from '../../services/admin.service';
 export class ActivateUserComponent  implements OnInit {
     @Input() user!: CurrentUserInterface | null;
 
-    constructor(private adminService: AdminService) { }
+    constructor(private store: Store) { }
 
     ngOnInit() {
         console.log(this.user) // data from parent
@@ -24,7 +26,8 @@ export class ActivateUserComponent  implements OnInit {
 
     activate(){
         if (this.user?.id) {
-            this.adminService.activate(this.user.id)
+            this.store.dispatch(activateAction({userId: this.user.id}))
+            // this.adminService.activate(this.user.id)
         }
         // TODO : manage error
     }

@@ -14,14 +14,16 @@ export function loadAllUsersWithLessPrivilegesGqlRequest() {
 
 
 export function activateUserWithLessPrivilegesGqlRequest(userId: number) {
-    return gql`mutation updateUser{ 
-        updateUser( 
+    return gql`mutation updateAdminUser{ 
+        updateAdminUser( 
             userId: ${userId},
             input: {
-            activated: true
-        }
+                activated: true
+            }
         ){
-            activated          
+            id
+            pseudo
+            email         
         } 
     }`
 }

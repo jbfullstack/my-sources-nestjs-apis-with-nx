@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, } from "../actions/admin.action";
 
 
 
@@ -49,6 +49,26 @@ const adminReducer = createReducer(
         ({
             ...state,
             pending: true
+        })
+    ),
+
+    on(
+        activateSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id !== action.userId)
+        })
+    ),
+
+    on(
+        activateFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
         })
     ),
 

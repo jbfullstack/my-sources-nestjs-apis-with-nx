@@ -34,7 +34,7 @@ export const activateSuccessAction = createAction(
 
 export const activateFailureAction = createAction(
     ActionTypes.ACTIVATE_FAILURE,
-    props<{ errors: BackendErrorsInterface}>()
+    props<{ errors: string}>()
 );
 
 // export const logoutAction = createAction(
