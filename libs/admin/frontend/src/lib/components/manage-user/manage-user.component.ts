@@ -5,10 +5,13 @@ import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
-import { activateAction, deleteAction, desactivateAction } from '../../store/actions/admin.action';
+import { activateAction, deleteAction, desactivateAction, updateRoleAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
-
+interface Role {
+    value: number;
+    viewValue: string;
+  }
 
 @Component({
     selector: 'ms-manage-user',
@@ -18,9 +21,75 @@ import { activateAction, deleteAction, desactivateAction } from '../../store/act
 export class ManageUserComponent  implements OnInit {
     @Input() user!: CurrentUserInterface | null;
 
-    constructor(private store: Store) { }
+    loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
 
-    ngOnInit() {}
+    selectedRole!: number
+    roles: Role[] = [
+        {value: 0, viewValue: 'User'},
+        {value: 1, viewValue: 'Buddy'},
+        {value: 2, viewValue: 'Lord'},
+        {value: 3, viewValue: 'Admin'},
+    ];
+
+    constructor(private store: Store, private adminStore: AdminStore) { }
+
+    ngOnInit() {
+
+        this.loggedUserRoleId$.subscribe({
+            next: (roleId) => {                
+                if (roleId) {
+                    if (this.user?.id) {
+                        console.log('ManageUserComponent.ngOnInit() -> user.id known')
+            
+                        if (roleId < 4) {
+                            this.roles.splice(this.roles.length - 1, 1)
+                        } 
+                        if (roleId < 3) {
+                            this.roles.splice(this.roles.length - 1, 1)
+                        }
+                        if (roleId < 2) {
+                            this.roles.splice(this.roles.length - 1, 1)
+                        }
+                        if (roleId < 1) {
+                            this.roles.splice(this.roles.length - 1, 1)
+                        }
+            
+                        this.selectedRole = (this.user.role.id === null) ? 0 : this.user.role.id
+                    }
+                }             
+            }
+        })
+
+
+        // this.store.pipe(select(activatedUsersSelector)).subscribe( {
+        //     next: (allactivated) => {
+        //       console.log('allActivated: ', allactivated)
+        //       if (allactivated) {
+                
+        //         this.adminStore.loadActivatedUsers(allactivated)
+        //       }             
+        //     }
+        //   })
+        
+        // if (this.user?.id) {
+        //     console.log('ManageUserComponent.ngOnInit() -> user.id known')
+
+        //     // if ((this.user.role.id) && this.user.role.id < 4) {
+        //     //     this.roles.splice(this.roles.length - 1, 1)
+        //     // } 
+        //     if ((this.user.role.id) && this.user.role.id < 3) {
+        //         this.roles.splice(this.roles.length - 1, 1)
+        //     }
+        //     if ((this.user.role.id) && this.user.role.id < 2) {
+        //         this.roles.splice(this.roles.length - 1, 1)
+        //     }
+        //     if ((this.user.role.id) && this.user.role.id < 1) {
+        //         this.roles.splice(this.roles.length - 1, 1)
+        //     }
+
+        //     this.selectedRole = (this.user.role.id === null) ? 0 : this.user.role.id
+        // }
+    }
 
     desactivate(){
         if (this.user?.id) {
@@ -38,6 +107,12 @@ export class ManageUserComponent  implements OnInit {
     regeneratePassword(){
         if (this.user?.id) {
             this.store.dispatch(regeneratePasswordAction({userId: this.user.id}))
+        }
+    }
+
+    updateRole(){
+        if (this.user?.id) {
+            this.store.dispatch(updateRoleAction({userId: this.user.id, newRoleId: this.selectedRole}))
         }
     }
 }

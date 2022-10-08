@@ -85,6 +85,24 @@ export const deleteFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const updateRoleAction = createAction(
+    ActionTypes.UPDATE_ROLE,
+    props<{ userId: number, newRoleId: number }>()
+);
+
+export const updateRoleSuccessAction = createAction(
+    ActionTypes.UPDATE_ROLE_SUCCESS,
+    props<{ userId: number}>()
+);
+
+export const updateRoleFailureAction = createAction(
+    ActionTypes.UPDATE_ROLE_FAILURE,
+    props<{ errors: string}>()
+);
+
+
+updateRoleAction
+
 
 // export const logoutAction = createAction(
 //     ActionTypes.LOGOUT,

@@ -10,6 +10,7 @@ export interface AdminStateInterface {
    // searchInput: string 
    pending: boolean
    errors: string | null
+   loggedUserRoleId: number | null
 }
 
 

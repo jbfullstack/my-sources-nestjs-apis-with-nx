@@ -6,10 +6,21 @@
                 <mat-card-subtitle>{{ user.createdAt  | date:'short' }}</mat-card-subtitle>
                 <mat-card-title>{{ user.pseudo }}</mat-card-title>
                 <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+
+                <mat-form-field appearance="fill">
+                  <mat-label>Change role</mat-label>
+                  <mat-select [(ngModel)]="selectedRole" name="role">
+                    <mat-option *ngFor="let role of roles" [value]="role.value">
+                      {{role.viewValue}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
                 <mat-card-actions>
-                    <button mat-button (click)="desactivate()">DESACTIVATE</button>
-                    <button mat-button (click)="regeneratePassword()">REGENERATE PASSWORD</button>
-                    <button mat-button (click)="delete()">DELETE</button>
+                    <button mat-button (click)="desactivate()">Desactivate</button>
+                    <button mat-button (click)="updateRole()">Update role</button>
+                    <button mat-button [disabled]="true" (click)="regeneratePassword()">Regenerate password</button>
+                    <button mat-button (click)="delete()">Delete</button>
                 </mat-card-actions>
             </mat-card>
         </div>

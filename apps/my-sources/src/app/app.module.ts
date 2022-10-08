@@ -27,6 +27,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -49,6 +50,7 @@ import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
     RouterModule,
     AppRoutingModule,
     FlexLayoutModule,
+    FormsModule,
     // MyOwnMaterial modules there !!
     MaterialsModules,
     AuthModule,

@@ -13,7 +13,8 @@ export const initialState: AdminStateInterface = {
     activatedUsersList: [],
     // searchInput: '',
     pending: false,
-    errors: null
+    errors: null,
+    loggedUserRoleId: 0
 }
 
 @Injectable()
@@ -23,8 +24,14 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     pending$ = this.select(state => state.pending)
     desactivatedUsersList$ = this.select(state => state.desactivatedUsersList)
     activatedUsersList$ = this.select(state => state.activatedUsersList)
+    loggedUserRoleId$ = this.select(state => state.loggedUserRoleId)
+    
 
-
+    loadLoggedUserRoleId = this.updater( (state, roleId: number | null) => ({
+        ...state,
+        loggedUserRoleId: roleId || 0
+    })    
+)
 
     loadDesactivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
             ...state,

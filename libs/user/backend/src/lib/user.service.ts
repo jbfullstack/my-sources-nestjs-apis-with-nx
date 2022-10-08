@@ -4,10 +4,9 @@ import { Prisma, PrismaClient, Tag } from "@prisma/client";
 // import { JwtDto } from "libs/auth/src/lib/dto/jwt.dto";
 // import { CreateSourceInput, UpdateSourceInput, CreateSourceTypeInput, UpdateSourceTypeInput, CreateTagInput, UpdateTagInput } from "@jbhive_be/source"
 
-import { PrismaIncludes } from "../prisma-includes";
 import { LogService } from "libs/utils/log/backend/src";
 import { ForbiddenError } from "apollo-server-express";
-import { AdminUpdateUserInput, UpdateUserInput, roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from "@jbhive/types_be";
+import { AdminUpdateUserInput, UpdateUserInput, roles_dataset, users_dataset, PrismaIncludes } from "@jbhive/types_be";
 import { CryptHelper } from "@jbhive/crypt";
 
 

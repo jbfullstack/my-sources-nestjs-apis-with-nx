@@ -1,6 +1,6 @@
 import { UserService } from "@jbhive/user_be";
 import { LogService } from "@jbhive/log_be";
-import { Role, UpdateUserInput, AdminUpdateUserInput } from "@jbhive/types_be";
+import { Role, UpdateUserInput, AdminUpdateUserInput, PrismaIncludes } from "@jbhive/types_be";
 import { Injectable, Logger, MethodNotAllowedException, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { Prisma, PrismaClient, Tag } from "@prisma/client";
@@ -133,7 +133,8 @@ export class AdminService extends PrismaClient implements OnModuleInit, OnModule
                 roleId: {
                     lt: loggedFound.role.id
                 }
-            }
+            },
+            include: PrismaIncludes.userIncludes
         })
 
         Logger.error('loadAllDesactivatedUsers - found: ', found)
@@ -153,7 +154,8 @@ export class AdminService extends PrismaClient implements OnModuleInit, OnModule
                 roleId: {
                     lt: loggedFound.role.id
                 }
-            }
+            },
+            include: PrismaIncludes.userIncludes
         })
 
         Logger.error('loadAllActivatedUsers - found: ', found)

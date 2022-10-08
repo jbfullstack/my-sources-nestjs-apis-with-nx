@@ -20,6 +20,9 @@ export function loadAllActivatedUsersWithLessPrivilegesGqlRequest() {
             pseudo
             email
             createdAt
+            role {
+                id
+            }
         } 
     }`
 }
@@ -36,6 +39,19 @@ export function activateUserWithLessPrivilegesGqlRequest(userId: number, activat
             id
             pseudo
             email         
+        } 
+    }`
+}
+
+export function updateUserRoleGqlRequest(userId: number, newRoleId: number) {
+    return gql`mutation updateRoleUser{ 
+        updateRoleUser( 
+            userId: ${userId},
+            roleId: ${newRoleId}
+        ){
+            id
+            pseudo
+            email  
         } 
     }`
 }

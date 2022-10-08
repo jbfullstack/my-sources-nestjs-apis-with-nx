@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AdminService } from '../../services/admin.service';
 import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
-import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction } from '../actions/admin.action';
+import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction } from '../actions/admin.action';
 import { UsersListStateInterface } from 'libs/utils/types/frontend/src/lib/user-list-state.interface';
 
 
@@ -23,9 +23,6 @@ export class AdminEffect {
             switchMap( () => {
                 return this.adminService.loadAllDesactivatedUsers().pipe(
                     map((desactivatedUsers: CurrentUserInterface[]) => {
-                        // call backend
-                        // adminService.activate()
-
                         return loadDesactivatedUsersSuccessAction({ desactivatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -42,9 +39,6 @@ export class AdminEffect {
             switchMap( () => {
                 return this.adminService.loadAllActivatedUsers().pipe(
                     map((activatedUsers: CurrentUserInterface[]) => {
-                        // call backend
-                        // adminService.activate()
-
                         return loadActivatedUsersSuccessAction({ activatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -61,8 +55,6 @@ export class AdminEffect {
             switchMap( (action) => {
                 return this.adminService.activate(action.userId).pipe(
                     map((user: CurrentUserInterface) => {
-                        // call backend
-                        // adminService.activate()
                         return activateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -79,12 +71,26 @@ export class AdminEffect {
             switchMap( (action) => {
                 return this.adminService.desactivate(action.userId).pipe(
                     map((user: CurrentUserInterface) => {
-                        // call backend
-                        // adminService.activate()
                         return desactivateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
                         return of(desactivateFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    updateRole$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateRoleAction),
+            switchMap( (action) => {
+                return this.adminService.updateRole(action.userId, action.newRoleId).pipe(
+                    map((user: CurrentUserInterface) => {
+                        return updateRoleSuccessAction({ userId: action.userId })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(updateRoleFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

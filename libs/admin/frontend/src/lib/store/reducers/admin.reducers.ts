@@ -11,7 +11,8 @@ const initialState: AdminStateInterface = {
     activatedUsersList: [],
     // searchInput: '',
     pending: false,
-    errors: null
+    errors: null,
+    loggedUserRoleId: 0
 }
 
 const adminReducer = createReducer(

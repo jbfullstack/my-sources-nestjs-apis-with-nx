@@ -7,6 +7,7 @@ import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface, 
 import { loadActivatedUsersAction, loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction } from '../../store/actions/admin.action'
 import { activatedUsersSelector, desactivatedUsersSelector } from '../../store/selectors/admin.selector'
 import { AdminStore } from '../../store/stores/admin.store'
+import { loggedUserRole } from '@jbhive/auth_fe'
 
 @Component({
   selector: 'ms-admin',
@@ -23,6 +24,7 @@ export class AdminComponent implements OnInit{
   activatedUsers$ = this.adminStore.activatedUsersList$
   pending$ = this.adminStore.pending$
   errors$ = this.adminStore.errors$
+  loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
 
   constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore) { }
     
@@ -36,6 +38,15 @@ export class AdminComponent implements OnInit{
 
   initializeValues(): void {
     console.log('DISPATCH MTFKA')
+    this.store.pipe(select(loggedUserRole)).subscribe( {
+      next: (roleId) => {
+        if (roleId) {
+            console.log('roleId: ', roleId)
+            this.adminStore.loadLoggedUserRoleId(roleId)
+        }
+      }
+    })
+
     this.store.dispatch(loadDesactivatedUsersAction())
     this.store.dispatch(loadActivatedUsersAction())
     // this.adminStore.loadDesactivatedUsers(this.desactivatedUsers$)

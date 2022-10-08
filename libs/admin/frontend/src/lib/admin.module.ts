@@ -12,6 +12,7 @@ import { reducers } from './store/reducers/admin.reducers';
 import { AdminService } from './services/admin.service';
 import { WaitingListComponent } from './components/waiting-list/waiting-list.component';
 
+
 const routes = [
   {
     path: 'admin',
@@ -25,6 +26,7 @@ const routes = [
   // declarations: [ AdminComponent, WaitingListComponent],
   imports: [
     CommonModule,
+    // FormsModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('admin', reducers),
     EffectsModule.forFeature([AdminEffect]),
