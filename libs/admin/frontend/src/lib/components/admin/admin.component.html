@@ -21,7 +21,9 @@
                         <!-- <div *ngFor='let user of (this.desactivatedUsersSelector$ | async).users'>
                             {{user.email}}
                         </div> -->
+
                         <div *ngIf="desactivatedUsers$ | async" >
+                            {{ desactivatedUsers$ }}
                             <ms-waiting-list [users]="desactivatedUsers$ |async ">
                             </ms-waiting-list>
                         </div>

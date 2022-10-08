@@ -20,9 +20,7 @@ export class ActivateUserComponent  implements OnInit {
 
     constructor(private store: Store) { }
 
-    ngOnInit() {
-        console.log(this.user) // data from parent
-    }
+    ngOnInit() {}
 
     activate(){
         if (this.user?.id) {

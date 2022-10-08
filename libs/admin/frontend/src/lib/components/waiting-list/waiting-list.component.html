@@ -8,10 +8,14 @@
         </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div class="row">
+        <div *ngIf="usersToActivate()" class="row">
             <div *ngFor="let user of users">
-            <ms-activate-user [user]="user"> </ms-activate-user>
+                <ms-activate-user [user]="user"> </ms-activate-user>
             </div>
+        </div>
+        <div *ngIf="!usersToActivate()" class="row">
+            
+            <p>No user to activate..</p>
         </div>
 
     </mat-expansion-panel>

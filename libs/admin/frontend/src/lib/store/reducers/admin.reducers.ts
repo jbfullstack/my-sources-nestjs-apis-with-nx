@@ -1,6 +1,6 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 
-import { AdminStateInterface } from "@jbhive/types_fe";
+import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
 import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, } from "../actions/admin.action";
 
@@ -101,6 +101,18 @@ const adminReducer = createReducer(
         })
     ),
 )
+
+// export function getDesactivatedListForSuccessAction(userId: number, list : CurrentUserInterface[]) {
+//     console.log('getDesactivatedListForSuccessAction() -> list:', list)
+//     if (list.length === 1 && list[0].id === userId) {
+//         console.log('return []')
+//         return []
+//     } else {
+//         const res = list.filter( user => user.id !== userId)
+//         console.log('res filter: ', res)
+//         return res
+//     }
+// }
 
 export function reducers(state: AdminStateInterface, action: Action){
     return adminReducer(state, action)

@@ -20,4 +20,12 @@ export class WaitingListComponent  implements OnInit {
     ngOnInit() {
         console.log(this.users) // data from parent
     }
+
+    usersToActivate() {
+        if (this.users && this.users.length > 0) {
+            return true
+        } else {
+            return false
+        }
+    }
 }
