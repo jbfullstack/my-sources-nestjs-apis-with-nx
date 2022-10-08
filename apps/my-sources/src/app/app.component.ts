@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Message } from '@jbhive_ai/api-interfaces';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-import { isLoggedInSelector } from '@jbhive/auth_fe';
+import { isLoggedInSelector, loggedUserRole } from '@jbhive/auth_fe';
 import { ChildrenOutletContexts, Router } from '@angular/router';
 import { logoutAction } from '@jbhive/auth_fe';
 
@@ -15,6 +15,7 @@ import { logoutAction } from '@jbhive/auth_fe';
 export class AppComponent implements OnInit{
   // hello$ = this.http.get<Message>('/api/getData');
   userLoggedSelector$!: Observable<boolean | null>
+  userLoggedRoleSelector$!: Observable<number | null | undefined>
 
   constructor(
     private store: Store, 
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit{
 
   initializeValues(): void {
     this.userLoggedSelector$ = this.store.pipe(select(isLoggedInSelector))
+    this.userLoggedRoleSelector$ = this.store.pipe(select(loggedUserRole))
   }
 
   logout() {
@@ -37,6 +39,15 @@ export class AppComponent implements OnInit{
 
   isCurrentRoute(routeName: string) {
     return this.router.url === '/' + routeName;
+  }
+
+  // use to determine if some page are accessible or not in the nav-bar
+  isAtLeastLord( role : number | null | undefined) {
+    if ((role === null) || (role === undefined) || (role < 2)) {
+      return false
+    } else {
+      return true
+    }
   }
 
 }

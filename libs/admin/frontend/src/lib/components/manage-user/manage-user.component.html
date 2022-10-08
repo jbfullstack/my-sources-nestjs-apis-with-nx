@@ -1,0 +1,17 @@
+
+<div *ngIf="user" >
+    <div class="col-md-6 col-md-offset-3 login-form">
+        <div class="st-login-title text-center">
+            <mat-card>
+                <mat-card-subtitle>{{ user.createdAt  | date:'short' }}</mat-card-subtitle>
+                <mat-card-title>{{ user.pseudo }}</mat-card-title>
+                <mat-card-subtitle>{{ user.email }}</mat-card-subtitle>
+                <mat-card-actions>
+                    <button mat-button (click)="desactivate()">DESACTIVATE</button>
+                    <button mat-button (click)="regeneratePassword()">REGENERATE PASSWORD</button>
+                    <button mat-button (click)="delete()">DELETE</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

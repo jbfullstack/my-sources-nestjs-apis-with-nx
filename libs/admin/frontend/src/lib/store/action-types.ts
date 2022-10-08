@@ -3,6 +3,10 @@ export enum ActionTypes {
     LOAD_DESACTIVATED_SUCCESS = '[Admin] Load desactivated users success',
     LOAD_DESACTIVATED_FAILURE = '[Admin] Load desactivated users failure',
 
+    LOAD_ACTIVATED = '[Admin] Load activated users',
+    LOAD_ACTIVATED_SUCCESS = '[Admin] Load activated users success',
+    LOAD_ACTIVATED_FAILURE = '[Admin] Load activated users failure',
+
     ACTIVATE = '[Admin] Activate',
     ACTIVATE_SUCCESS = '[Admin] Activate success',
     ACTIVATE_FAILURE = '[Admin] Activate failure',

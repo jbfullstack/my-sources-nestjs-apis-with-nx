@@ -18,6 +18,11 @@ export const isLoggedInSelector = createSelector(
     (loginState: AuthStateInterface) => loginState.login?.isLoggedIn
 )
 
+export const loggedUserRole = createSelector(
+    loginFeatureSelector, 
+    (loginState: AuthStateInterface) => loginState.login.currentUser?.role?.id
+)
+
 export const currentUserSelector = createSelector(
     loginFeatureSelector, 
     (loginState: AuthStateInterface) => loginState.login.currentUser

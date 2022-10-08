@@ -20,6 +20,22 @@ export const loadDesactivatedUsersFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const loadActivatedUsersAction = createAction(
+    ActionTypes.LOAD_ACTIVATED
+);
+
+export const loadActivatedUsersSuccessAction = createAction(
+    ActionTypes.LOAD_ACTIVATED_SUCCESS,
+    props<{ activatedUsers: CurrentUserInterface[]}>()
+);
+
+export const loadActivatedUsersFailureAction = createAction(
+    ActionTypes.LOAD_ACTIVATED_FAILURE,
+    props<{ errors: string}>()
+);
+
+
+
 
 
 export const activateAction = createAction(
@@ -36,6 +52,23 @@ export const activateFailureAction = createAction(
     ActionTypes.ACTIVATE_FAILURE,
     props<{ errors: string}>()
 );
+
+export const desactivateAction = createAction(
+    ActionTypes.DESACTIVATE,
+    props<{ userId: number }>()
+);
+
+export const desactivateSuccessAction = createAction(
+    ActionTypes.DESACTIVATE_SUCCESS,
+    props<{ userId: number}>()
+);
+
+export const desactivateFailureAction = createAction(
+    ActionTypes.DESACTIVATE_FAILURE,
+    props<{ errors: string}>()
+);
+
+
 
 export const deleteAction = createAction(
     ActionTypes.DELETE,

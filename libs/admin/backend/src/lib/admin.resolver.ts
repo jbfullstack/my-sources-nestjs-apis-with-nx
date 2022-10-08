@@ -27,16 +27,16 @@ export class AdminResolver {
     @Mutation( () => [User], {nullable: true})
     async loadAllDesactivatedUsers(
         @CtxUser() user: User)  {
-        this.log.logMethod(`Resolver.loadAllDesactivatedUsers()`)
-        return this.service.loadAllDesactivatedUsers(user?.role?.id)
+        this.log.logMethod(`Resolver.loadAllDesactivatedUsers(${user.id})`)
+        return this.service.loadAllDesactivatedUsers(user.id)
     }
 
     @Roles(Role.Astek, Role.Admin, Role.Lord)
     @Mutation( () => [User], {nullable: true})
-    async loadAllUsers(
+    async loadAllActivatedUsers(
         @CtxUser() user: User)  {
-        this.log.logMethod(`Resolver.loadAllUsers()`)
-        return this.service.loadAllUsers(user?.role?.id)
+        this.log.logMethod(`Resolver.loadAllActivatedUsers(${user.id})`)
+        return this.service.loadAllActivatedUsers(user.id)
     }
 
     

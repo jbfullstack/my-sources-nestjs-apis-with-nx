@@ -120,26 +120,43 @@ export class AdminService extends PrismaClient implements OnModuleInit, OnModule
         return this.data.updateUser(id, input)
     }
 
-    async loadAllDesactivatedUsers(roleId: number) {
+    async loadAllDesactivatedUsers(id: number) {
+        const loggedFound = await this.data.findUserById(id)
+        if (!loggedFound) {
+            throw new NotFoundException(`Can't load all deactivated users, User ${id} not found`)
+        }
+
         const found = await this.user.findMany({
             where: {
                 activated: false,
                 hidden: false,
                 roleId: {
-                    lt: roleId
+                    lt: loggedFound.role.id
                 }
             }
         })
 
-        Logger.error('found: ', found)
+        Logger.error('loadAllDesactivatedUsers - found: ', found)
         return found
     }
 
-    async loadAllUsers(roleId: number) {
-        // Retrieve all user where 
-        const found = await this.data.loadAllUsersWithLessPrivilege(roleId)
+    async loadAllActivatedUsers(id: number) {
+        const loggedFound = await this.data.findUserById(id)
+        if (!loggedFound) {
+            throw new NotFoundException(`Can't load all activated users, User ${id} not found`)
+        }
 
+        const found = await this.user.findMany({
+            where: {
+                activated: true,
+                hidden: false,
+                roleId: {
+                    lt: loggedFound.role.id
+                }
+            }
+        })
 
+        Logger.error('loadAllActivatedUsers - found: ', found)
         return found
     }
 

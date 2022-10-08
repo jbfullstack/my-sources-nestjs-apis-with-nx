@@ -10,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AdminService } from '../../services/admin.service';
 import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
-import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction } from '../actions/admin.action';
+import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction } from '../actions/admin.action';
 import { UsersListStateInterface } from 'libs/utils/types/frontend/src/lib/user-list-state.interface';
 
 
@@ -36,6 +36,25 @@ export class AdminEffect {
         )
     )
 
+    loadActivatedUsers$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(loadActivatedUsersAction),
+            switchMap( () => {
+                return this.adminService.loadAllActivatedUsers().pipe(
+                    map((activatedUsers: CurrentUserInterface[]) => {
+                        // call backend
+                        // adminService.activate()
+
+                        return loadActivatedUsersSuccessAction({ activatedUsers })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(loadActivatedUsersFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
     activateUsers$ = createEffect( () => 
         this.actions$.pipe(
             ofType(activateAction),
@@ -48,6 +67,24 @@ export class AdminEffect {
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
                         return of(activateFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    desactivateUsers$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(desactivateAction),
+            switchMap( (action) => {
+                return this.adminService.desactivate(action.userId).pipe(
+                    map((user: CurrentUserInterface) => {
+                        // call backend
+                        // adminService.activate()
+                        return desactivateSuccessAction({ userId: action.userId })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(desactivateFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

@@ -10,7 +10,7 @@ import { Store } from "@ngrx/store";
 
 export const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
-    // manageUsersList: [],
+    activatedUsersList: [],
     // searchInput: '',
     pending: false,
     errors: null
@@ -22,14 +22,21 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     errors$ = this.select(state => state.errors)
     pending$ = this.select(state => state.pending)
     desactivatedUsersList$ = this.select(state => state.desactivatedUsersList)
+    activatedUsersList$ = this.select(state => state.activatedUsersList)
+
 
 
     loadDesactivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
-        ...state,
-        desactivatedUsersList: users || []
-    })
-    
+            ...state,
+            desactivatedUsersList: users || []
+        })    
     )
+
+    loadActivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
+        ...state,
+        activatedUsersList: users || []
+    })    
+)
 
     // loadDesactivatedUsers = this.effect( 
     //     // switchMap( () => {

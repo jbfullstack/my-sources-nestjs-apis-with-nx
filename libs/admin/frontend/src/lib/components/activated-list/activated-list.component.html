@@ -1,0 +1,22 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+        <mat-panel-title> User list </mat-panel-title>
+        <mat-panel-description>
+            Users activated you can manage
+            <mat-icon>account_circle</mat-icon>
+        </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div *ngIf="usersToActivate()" class="row">
+            <div *ngFor="let user of users">
+                <ms-manage-user [user]="user"> </ms-manage-user>
+            </div>
+        </div>
+        <div *ngIf="!usersToActivate()" class="row">
+            
+            <p>No user to activate..</p>
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>

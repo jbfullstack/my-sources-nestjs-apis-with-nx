@@ -25,13 +25,23 @@ import { AuthModule } from '@jbhive/auth_fe';
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
-import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule } from '@jbhive/admin_fe';
+import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
 
 
 
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, UptimeComponent, ProfileComponent, AdminComponent, WaitingListComponent, ActivateUserComponent],
+  declarations: [
+    AppComponent, 
+    NxWelcomeComponent, 
+    UptimeComponent, 
+    ProfileComponent, 
+    AdminComponent, 
+    WaitingListComponent, 
+    ActivateUserComponent, 
+    ManageUserComponent, 
+    ActivatedListComponent
+  ],
   imports: [
     BrowserModule, 
     ApolloModule,

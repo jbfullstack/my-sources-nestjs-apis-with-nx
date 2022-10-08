@@ -2,13 +2,13 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, } from "../actions/admin.action";
 
 
 
 const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
-    // manageUsersList: [],
+    activatedUsersList: [],
     // searchInput: '',
     pending: false,
     errors: null
@@ -44,6 +44,33 @@ const adminReducer = createReducer(
     ),
 
     on(
+        loadActivatedUsersAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on(
+        loadActivatedUsersSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            activatedUsersList: action.activatedUsers
+        })
+    ),
+    on(
+        loadActivatedUsersFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+
+    on(
         activateAction, 
         (state, action): AdminStateInterface => 
         ({
@@ -58,12 +85,45 @@ const adminReducer = createReducer(
         ({
             ...state,
             pending: false,
+            activatedUsersList: [...state.activatedUsersList, state.desactivatedUsersList.filter( user => user.id === action.userId)[0]],
             desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id !== action.userId)
         })
     ),
 
     on(
         activateFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+
+
+
+    on(
+        desactivateAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+
+    on(
+        desactivateSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            desactivatedUsersList: [...state.desactivatedUsersList, state.activatedUsersList.filter( user => user.id === action.userId)[0]],
+            activatedUsersList: state.activatedUsersList.filter( user => user.id !== action.userId),            
+        })
+    ),
+
+    on(
+        desactivateFailureAction, 
         (state, action): AdminStateInterface => 
         ({
             ...state,
@@ -87,7 +147,8 @@ const adminReducer = createReducer(
         ({
             ...state,
             pending: false,
-            desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id !== action.userId)
+            desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id !== action.userId),
+            activatedUsersList: state.activatedUsersList.filter( user => user.id !== action.userId)
         })
     ),
 

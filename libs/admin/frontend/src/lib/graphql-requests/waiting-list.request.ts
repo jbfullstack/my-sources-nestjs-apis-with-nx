@@ -1,6 +1,6 @@
 import { gql } from 'apollo-angular';
 
-export function loadAllUsersWithLessPrivilegesGqlRequest() {
+export function loadAllDesactivatedUsersWithLessPrivilegesGqlRequest() {
     return gql`mutation loadAllDesactivatedUsers{  
         loadAllDesactivatedUsers
         {
@@ -12,13 +12,25 @@ export function loadAllUsersWithLessPrivilegesGqlRequest() {
     }`
 }
 
+export function loadAllActivatedUsersWithLessPrivilegesGqlRequest() {
+    return gql`mutation loadAllActivatedUsers{  
+        loadAllActivatedUsers
+        {
+            id
+            pseudo
+            email
+            createdAt
+        } 
+    }`
+}
 
-export function activateUserWithLessPrivilegesGqlRequest(userId: number) {
+
+export function activateUserWithLessPrivilegesGqlRequest(userId: number, activate: boolean) {
     return gql`mutation updateAdminUser{ 
         updateAdminUser( 
             userId: ${userId},
             input: {
-                activated: true
+                activated: ${activate}
             }
         ){
             id

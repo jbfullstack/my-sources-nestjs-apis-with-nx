@@ -130,6 +130,7 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         return await this.user.findMany({
             where: {
                 hidden: false,
+                activated: true,
                 roleId: {
                     lt: userRoleId
                 }
@@ -188,7 +189,8 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         return this.user.findUnique({
             where: {
                 id: userId
-            }
+            },
+            include: PrismaIncludes.userIncludes
         })
     }
 
