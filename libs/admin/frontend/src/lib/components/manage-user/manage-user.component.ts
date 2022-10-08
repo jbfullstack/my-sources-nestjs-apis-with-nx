@@ -1,4 +1,4 @@
-import { Component, Directive, Input, OnInit } from '@angular/core'
+import { Component, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
@@ -19,9 +19,12 @@ interface Role {
     styleUrls: ['./manage-user.component.scss'],    
 })
 export class ManageUserComponent  implements OnInit {
-    @Input() user!: CurrentUserInterface | null;
+    @Input() user!: CurrentUserInterface | null
 
     loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
+
+    @Output("updateDisplayedUsers") updateDisplayedUsers: EventEmitter<any> = new EventEmitter();
+    
 
     selectedRole!: number
     roles: Role[] = [
@@ -59,48 +62,24 @@ export class ManageUserComponent  implements OnInit {
                 }             
             }
         })
-
-
-        // this.store.pipe(select(activatedUsersSelector)).subscribe( {
-        //     next: (allactivated) => {
-        //       console.log('allActivated: ', allactivated)
-        //       if (allactivated) {
-                
-        //         this.adminStore.loadActivatedUsers(allactivated)
-        //       }             
-        //     }
-        //   })
-        
-        // if (this.user?.id) {
-        //     console.log('ManageUserComponent.ngOnInit() -> user.id known')
-
-        //     // if ((this.user.role.id) && this.user.role.id < 4) {
-        //     //     this.roles.splice(this.roles.length - 1, 1)
-        //     // } 
-        //     if ((this.user.role.id) && this.user.role.id < 3) {
-        //         this.roles.splice(this.roles.length - 1, 1)
-        //     }
-        //     if ((this.user.role.id) && this.user.role.id < 2) {
-        //         this.roles.splice(this.roles.length - 1, 1)
-        //     }
-        //     if ((this.user.role.id) && this.user.role.id < 1) {
-        //         this.roles.splice(this.roles.length - 1, 1)
-        //     }
-
-        //     this.selectedRole = (this.user.role.id === null) ? 0 : this.user.role.id
-        // }
     }
 
-    desactivate(){
+    async desactivate(){
         if (this.user?.id) {
             console.log('this.store.dispatch(desactivateAction())')
             this.store.dispatch(desactivateAction({userId: this.user.id}))
+
+            // --- with search for users
+            // await delay(200);
+            // console.log('updateDisplayedUsers.emit()))')
+            // this.updateDisplayedUsers.emit();
         }
     }
 
     delete(){
         if (this.user?.id) {
             this.store.dispatch(deleteAction({userId: this.user.id}))
+            
         }
     }
 
@@ -119,4 +98,8 @@ export class ManageUserComponent  implements OnInit {
 
 function regeneratePasswordAction(arg0: { userId: number; }): any {
     throw new Error('Function not implemented.');
+}
+
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
 }

@@ -15,6 +15,10 @@ export enum ActionTypes {
     DESACTIVATE_SUCCESS = '[Admin] Desactivate success',
     DESACTIVATE_FAILURE = '[Admin] Desactivate failure',
 
+    UPDATE_SEARCH_INPUT = '[Admin] Update search input',
+    UPDATE_SEARCH_INPUT_SUCCESS = '[Admin] search input success',
+    UPDATE_SEARCH_INPUT_FAILURE = '[Admin] search input failure',
+
     UPDATE_ROLE = '[Admin] Update role',
     UPDATE_ROLE_SUCCESS = '[Admin] Update role success',
     UPDATE_ROLE_FAILURE = '[Admin] Update role failure',

@@ -8,6 +8,9 @@ export function loadAllDesactivatedUsersWithLessPrivilegesGqlRequest() {
             pseudo
             email
             createdAt
+            role {
+                id
+            }
         } 
     }`
 }

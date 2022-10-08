@@ -8,14 +8,18 @@
         </mat-panel-description>
         </mat-expansion-panel-header>
 
+        <!-- Search bar -->
+        <!-- <input [(ngModel)]="searchInput" (ngModelChange)="searchInputChange($event)">
+        <p>filter by pseudo or email</p> -->
+
         <div *ngIf="usersToActivate()" class="row">
             <div *ngFor="let user of users">
-                <ms-manage-user [user]="user"> </ms-manage-user>
+                <ms-manage-user (updateDisplayedUsers)="updateDisplayedUsers()" [user]="user"> </ms-manage-user>
             </div>
         </div>
         <div *ngIf="!usersToActivate()" class="row">
             
-            <p>No user to activate..</p>
+            <p>No user you are allowed to update..</p>
         </div>
 
     </mat-expansion-panel>

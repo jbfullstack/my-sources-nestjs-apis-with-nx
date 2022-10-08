@@ -7,7 +7,7 @@ import { UsersListStateInterface } from "./user-list-state.interface";
 export interface AdminStateInterface {
    desactivatedUsersList: CurrentUserInterface[] //UsersListStateInterface | null
    activatedUsersList: CurrentUserInterface[] //UsersListStateInterface | null
-   // searchInput: string 
+   searchInput: string 
    pending: boolean
    errors: string | null
    loggedUserRoleId: number | null

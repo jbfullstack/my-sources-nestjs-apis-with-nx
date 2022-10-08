@@ -15,8 +15,9 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction 
 } from '../actions/admin.action';
+import { AdminStore } from '../stores/admin.store';
 
 
 @Injectable()
@@ -102,6 +103,16 @@ export class AdminEffect {
         )
     )
 
+    updateSearchInput$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateSearchInputAction),
+            switchMap( (action) => {
+                this.adminStore.loadSearchInput(action.newValue)
+                return of(updateSearchInputSuccessAction())
+            })
+        )
+    )
+
     deleteUsers$ = createEffect( () => 
         this.actions$.pipe(
             ofType(deleteAction),
@@ -155,6 +166,7 @@ export class AdminEffect {
     constructor(
         private actions$: Actions, 
         private adminService: AdminService, 
+        private adminStore: AdminStore,
         private router: Router
     ) {}
 }

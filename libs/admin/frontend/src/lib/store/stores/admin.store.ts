@@ -11,7 +11,7 @@ import { Store } from "@ngrx/store";
 export const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
     activatedUsersList: [],
-    // searchInput: '',
+    searchInput: '',
     pending: false,
     errors: null,
     loggedUserRoleId: 0
@@ -25,25 +25,33 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     desactivatedUsersList$ = this.select(state => state.desactivatedUsersList)
     activatedUsersList$ = this.select(state => state.activatedUsersList)
     loggedUserRoleId$ = this.select(state => state.loggedUserRoleId)
+    searchInput$ = this.select(state => state.searchInput)
     
 
     loadLoggedUserRoleId = this.updater( (state, roleId: number | null) => ({
-        ...state,
-        loggedUserRoleId: roleId || 0
-    })    
-)
+            ...state,
+            loggedUserRoleId: roleId || 0
+        })    
+    )
 
     loadDesactivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
             ...state,
             desactivatedUsersList: users || []
         })    
     )
-
+    
     loadActivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
-        ...state,
-        activatedUsersList: users || []
-    })    
-)
+            ...state,
+            activatedUsersList: users || []
+        }) 
+    )
+    
+    loadSearchInput = this.updater( (state, search: string | null) => ({
+            ...state,
+            searchInput: search || ''
+        }) 
+    )
+
 
     // loadDesactivatedUsers = this.effect( 
     //     // switchMap( () => {

@@ -9,7 +9,7 @@ import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDe
 const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
     activatedUsersList: [],
-    // searchInput: '',
+    searchInput: '',
     pending: false,
     errors: null,
     loggedUserRoleId: 0

@@ -67,7 +67,19 @@ export const desactivateFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const updateSearchInputAction = createAction(
+    ActionTypes.UPDATE_SEARCH_INPUT,
+    props<{ newValue: string}>()
+);
 
+export const updateSearchInputSuccessAction = createAction(
+    ActionTypes.UPDATE_SEARCH_INPUT_SUCCESS
+);
+
+export const updateSearchInputFailureAction = createAction(
+    ActionTypes.UPDATE_SEARCH_INPUT_FAILURE,
+    props<{ errors: string}>()
+);
 
 export const deleteAction = createAction(
     ActionTypes.DELETE,

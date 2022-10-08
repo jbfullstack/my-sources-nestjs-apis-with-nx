@@ -7,9 +7,14 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 @NgModule({
-    exports: [MatIconModule, MatToolbarModule, MatMenuModule, MatTabsModule, MatCardModule, MatExpansionModule, MatSelectModule]
+    exports: [
+        MatIconModule, MatToolbarModule, MatMenuModule, 
+        MatTabsModule, MatCardModule, MatExpansionModule, 
+        MatSelectModule, ScrollingModule
+    ]
 })
 export class MaterialsModules {
 
