@@ -2,8 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { ActionTypes } from '../action-types';
 
-import { CurrentUserInterface, BackendErrorsInterface } from '@jbhive/types_fe';
-import { UsersListStateInterface } from 'libs/utils/types/frontend/src/lib/user-list-state.interface';
+import { CurrentUserInterface, BackendErrorsInterface, UsersListStateInterface } from '@jbhive/types_fe';
 
 
 export const loadDesactivatedUsersAction = createAction(

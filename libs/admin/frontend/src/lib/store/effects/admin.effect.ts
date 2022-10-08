@@ -8,10 +8,15 @@ import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AdminService } from '../../services/admin.service';
-import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
-import { loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction } from '../actions/admin.action';
-import { UsersListStateInterface } from 'libs/utils/types/frontend/src/lib/user-list-state.interface';
+import { 
+    loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, 
+    loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
+    deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
+    loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction 
+} from '../actions/admin.action';
 
 
 @Injectable()

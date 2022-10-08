@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core'
-import { BackendErrorsInterface } from '../../../../backend-errors.interface'
+import { BackendErrorsInterface } from '@jbhive/types_fe'
 
 @Component({
     selector: 'ms-backend-error-messages',
