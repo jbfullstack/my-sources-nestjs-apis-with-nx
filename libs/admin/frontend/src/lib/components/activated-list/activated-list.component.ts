@@ -17,7 +17,6 @@ import { updateSearchInputAction } from '../../store/actions/admin.action';
 export class ActivatedListComponent  implements OnInit {
     @Input() users!: CurrentUserInterface[] | null;
 
-    displayedUsers:  CurrentUserInterface[] = []
     searchInput: string = ''
     searchInput$ = this.adminStore.searchInput$
 
@@ -29,8 +28,6 @@ export class ActivatedListComponent  implements OnInit {
         while(this.users === undefined) {
             console.log('init wait')
         }
-        this.displayedUsers  = Object.assign([], this.users)
-        // this.searchInput = ''
     }
 
     getSearchInput() {
@@ -55,19 +52,8 @@ export class ActivatedListComponent  implements OnInit {
         this.searchInputChange(this.searchInput)
     }
 
-    searchInputChange(newValue: string) {
-        // this.store.dispatch(updateSearchInputAction({newValue}))
-        if (this.searchInput === null || this.searchInput === undefined || this.searchInput.trim() === '') {
-            if (this.displayedUsers.length !== this.users?.length) {
-                // Reload
-                this.displayedUsers  = Object.assign([], this.users);
-            }
-        } else {
-            // apply filter
-            if (this.users) {
-                this.displayedUsers  = this.users?.filter( user => user.pseudo.includes(newValue) || user.email.includes(newValue))
-            }
-        }
+    searchInputChange(searchInput: string) {
+        this.adminStore.patchState({searchInput})
     }
 }
 

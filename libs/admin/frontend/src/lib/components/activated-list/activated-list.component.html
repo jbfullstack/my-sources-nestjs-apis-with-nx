@@ -9,8 +9,8 @@
         </mat-expansion-panel-header>
 
         <!-- Search bar -->
-        <!-- <input [(ngModel)]="searchInput" (ngModelChange)="searchInputChange($event)">
-        <p>filter by pseudo or email</p> -->
+        <input [(ngModel)]="searchInput" (ngModelChange)="searchInputChange($event)">
+        <p>filter by pseudo or email</p>
 
         <div *ngIf="usersToActivate()" class="row">
             <div *ngFor="let user of users">

@@ -14,8 +14,8 @@
                 </div>
 
             <br>
-                <div *ngIf="activatedUsers$ | async" >
-                    <ms-activated-list [users]="activatedUsers$ | async">
+                <div *ngIf="filteredActivatedUsers$ | async" >
+                    <ms-activated-list [users]="filteredActivatedUsers$ | async">
                     </ms-activated-list>
                 </div>
             </div>

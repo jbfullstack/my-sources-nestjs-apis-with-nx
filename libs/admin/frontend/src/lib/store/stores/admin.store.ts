@@ -26,6 +26,11 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     activatedUsersList$ = this.select(state => state.activatedUsersList)
     loggedUserRoleId$ = this.select(state => state.loggedUserRoleId)
     searchInput$ = this.select(state => state.searchInput)
+    filteredActivatedUsers$ = this.select( 
+        ({activatedUsersList, searchInput}) => activatedUsersList.filter( 
+            (user) => user.pseudo.toLowerCase().includes(searchInput.toLowerCase()) || user.email.toLowerCase().includes(searchInput.toLowerCase())
+        )
+    )
     
 
     loadLoggedUserRoleId = this.updater( (state, roleId: number | null) => ({

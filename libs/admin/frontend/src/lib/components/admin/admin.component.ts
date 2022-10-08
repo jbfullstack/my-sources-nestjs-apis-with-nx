@@ -22,6 +22,7 @@ export class AdminComponent implements OnInit{
 
   desactivatedUsers$ = this.adminStore.desactivatedUsersList$
   activatedUsers$ = this.adminStore.activatedUsersList$
+  filteredActivatedUsers$ = this.adminStore.filteredActivatedUsers$
   pending$ = this.adminStore.pending$
   errors$ = this.adminStore.errors$
   loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
