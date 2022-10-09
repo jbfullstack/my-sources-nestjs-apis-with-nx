@@ -17,10 +17,10 @@
                 </mat-form-field>
 
                 <mat-card-actions>
-                    <button mat-button (click)="desactivate()">Desactivate</button>
-                    <button mat-button (click)="updateRole()">Update role</button>
-                    <button mat-button (click)="regeneratePassword()">Generate password</button>
-                    <button mat-button (click)="delete()">Delete</button>
+                    <button mat-stroked-button  matTooltip="Ban {{ user.pseudo }}" (click)="desactivate()">Desactivate</button>
+                    <button mat-stroked-button  matTooltip="Grant {{ user.pseudo }} to {{ getSelectedRole() }}" (click)="updateRole()">Update role</button>
+                    <button mat-stroked-button  matTooltip="Create a new password for {{ user.pseudo }}" (click)="regeneratePassword()">Generate password</button>
+                    <button mat-stroked-button  matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button>
                 </mat-card-actions>
                 
                 <mat-accordion class="example-headers-align" multi *ngIf="passwordHasBeenGenerated()">

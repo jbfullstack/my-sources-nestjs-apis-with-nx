@@ -107,8 +107,8 @@ export class ManageUserComponent  implements OnInit {
             return true
         }
     }
-}
 
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+    getSelectedRole(){
+        return this.roles[this.selectedRole].viewValue
+    }
 }

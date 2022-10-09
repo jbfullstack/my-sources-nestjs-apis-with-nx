@@ -237,11 +237,11 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         if (found) {
             return true
         }
-        Logger.debug(`Initialize Admin user AIGHT..`)
+        Logger.debug(`Initialize Admin user`)
         const created = await this.createActivatedUser(this.default_admin)
         
         for (var user of users_dataset) {
-            Logger.debug(`Initialize Admin user..`)
+            Logger.debug(`Initialize ${user.pseudo} user`)
             await this.createActivatedUser({ email: user.email, nickname: user.nickname, pseudo: user.pseudo, password: this.default_admin.password, roleId: user.roleId })
         }
 
