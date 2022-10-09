@@ -1,11 +1,12 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { generatePassword } from '@jbhive/math'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
-import { activateAction, deleteAction, desactivateAction, updateRoleAction } from '../../store/actions/admin.action';
+import { activateAction, deleteAction, desactivateAction, generatePasswordAction, updateRoleAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 interface Role {
@@ -24,6 +25,8 @@ export class ManageUserComponent  implements OnInit {
     loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
 
     @Output("updateDisplayedUsers") updateDisplayedUsers: EventEmitter<any> = new EventEmitter();
+
+    generatedPassword: string = ''
     
 
     selectedRole!: number
@@ -85,7 +88,8 @@ export class ManageUserComponent  implements OnInit {
 
     regeneratePassword(){
         if (this.user?.id) {
-            this.store.dispatch(regeneratePasswordAction({userId: this.user.id}))
+            this.generatedPassword = generatePassword()
+            this.store.dispatch(generatePasswordAction({userId: this.user.id, password: ''+this.generatedPassword}))
         }
     }
 
@@ -94,10 +98,14 @@ export class ManageUserComponent  implements OnInit {
             this.store.dispatch(updateRoleAction({userId: this.user.id, newRoleId: this.selectedRole}))
         }
     }
-}
 
-function regeneratePasswordAction(arg0: { userId: number; }): any {
-    throw new Error('Function not implemented.');
+    passwordHasBeenGenerated(){
+        if (this.generatedPassword === '') {
+            return false
+        } else {
+            return true
+        }
+    }
 }
 
 function delay(ms: number) {

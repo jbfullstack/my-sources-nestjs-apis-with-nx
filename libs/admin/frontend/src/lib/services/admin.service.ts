@@ -3,11 +3,10 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
-        
     
     loadAllDesactivatedUsers() {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: loadAllDesactivatedUsersWithLessPrivilegesGqlRequest() })
@@ -42,7 +41,13 @@ export class AdminService {
         console.log('delete: ', id)
         return this.apollo.mutate<any>({ mutation: deleteUserWithLessPrivilegesGqlRequest(id) })
         .pipe(map((response: any) => response.data))
-    }    
+    }  
+    
+    generatePassword(userId: number, password: string) {
+        console.log(`generatePassword(${userId}, ${password})`)
+        return this.apollo.mutate<any>({ mutation: updatePasswordGqlRequest(userId, password) })
+        .pipe(map((response: any) => response.data))
+    }
 
     constructor(private apollo: Apollo) { }
 }

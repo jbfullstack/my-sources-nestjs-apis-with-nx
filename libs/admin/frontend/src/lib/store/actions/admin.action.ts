@@ -112,6 +112,21 @@ export const updateRoleFailureAction = createAction(
 );
 
 
+export const generatePasswordAction = createAction(
+    ActionTypes.REGENERATE_PASSWORD,
+    props<{ userId: number, password: string }>()
+);
+
+export const generatePasswordSuccessAction = createAction(
+    ActionTypes.REGENERATE_PASSWORD_SUCCESS
+);
+
+export const generatePasswordFailureAction = createAction(
+    ActionTypes.REGENERATE_PASSWORD_FAILURE,
+    props<{ errors: string}>()
+);
+
+
 updateRoleAction
 
 

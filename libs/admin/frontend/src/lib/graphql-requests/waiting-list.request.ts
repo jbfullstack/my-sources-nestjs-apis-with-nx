@@ -64,3 +64,19 @@ export function  deleteUserWithLessPrivilegesGqlRequest(userId: number) {
         deleteUser(userId: ${userId})
     }`
 }
+
+
+export function updatePasswordGqlRequest(userId: number, password: string) {
+    return gql`mutation updateUser{ 
+        updateUser( 
+            userId: ${userId},
+            input: {
+                password: "${password}"
+            }
+        ){
+            id
+            pseudo
+            email
+        } 
+    }`
+}

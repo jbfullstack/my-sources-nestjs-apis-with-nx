@@ -19,9 +19,23 @@
                 <mat-card-actions>
                     <button mat-button (click)="desactivate()">Desactivate</button>
                     <button mat-button (click)="updateRole()">Update role</button>
-                    <button mat-button [disabled]="true" (click)="regeneratePassword()">Regenerate password</button>
+                    <button mat-button (click)="regeneratePassword()">Regenerate password</button>
                     <button mat-button (click)="delete()">Delete</button>
                 </mat-card-actions>
+                
+                <mat-accordion class="example-headers-align" multi *ngIf="passwordHasBeenGenerated()">
+                  <mat-expansion-panel>
+                      <mat-expansion-panel-header>
+                      <mat-panel-title>Password </mat-panel-title>
+                      <mat-panel-description>
+                          <mat-icon>key</mat-icon>
+                      </mat-panel-description>
+                      </mat-expansion-panel-header>              
+                      {{ generatedPassword }}              
+                  </mat-expansion-panel>
+              </mat-accordion>
+
+
             </mat-card>
         </div>
     </div>

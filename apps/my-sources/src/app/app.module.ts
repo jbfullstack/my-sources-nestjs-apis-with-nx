@@ -27,6 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
+import { MathModule } from '@jbhive/math';
+
 import { FormsModule } from '@angular/forms';
 
 
@@ -56,6 +58,7 @@ import { FormsModule } from '@angular/forms';
     AuthModule,
     AdminModule,
     ProfileModule,
+    MathModule,
     GraphQLModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({

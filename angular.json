@@ -10,6 +10,7 @@
     "auth_fe": "libs/security/auth/frontend",
     "config_be": "libs/utils/config/backend",
     "crypt": "libs/security/crypt",
+    "graphql": "libs/data/graphql",
     "log_be": "libs/utils/log/backend",
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
@@ -20,6 +21,6 @@
     "types_fe": "libs/utils/types/frontend",
     "uptime": "libs/utils/uptime/frontend",
     "user_be": "libs/user/backend",
-    "graphql": "libs/data/graphql"
+    "math": "libs/utils/math"
   }
 }

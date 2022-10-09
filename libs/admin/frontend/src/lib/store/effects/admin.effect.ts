@@ -15,7 +15,7 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 
@@ -125,6 +125,22 @@ export class AdminEffect {
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
                         return of(deleteFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    generatePassword$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(generatePasswordAction),
+            switchMap( (action) => {
+                return this.adminService.generatePassword(action.userId, action.password).pipe(
+                    map((user: CurrentUserInterface) => {
+                        return generatePasswordSuccessAction()
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        return of(generatePasswordFailureAction({errors: errorResponse.message}))
                     })
                 )
             })
