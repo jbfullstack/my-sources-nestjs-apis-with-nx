@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest, loadAllTagsGqlRequest, updateTagGqlRequest, createTagGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest, loadAllTagsGqlRequest, updateTagGqlRequest, createTagGqlRequest, deleteTagGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
@@ -70,6 +70,12 @@ export class AdminService {
     createTag(title: string, description: string) {
         console.log('createTag: ', title)
         return this.apollo.mutate<any>({ mutation: createTagGqlRequest(title, description) })
+        .pipe(map((response: any) => response.data.createTag))
+    }
+
+    deleteTag(id: number) {
+        console.log('deleteTag: ', id)
+        return this.apollo.mutate<any>({ mutation: deleteTagGqlRequest(id) })
         .pipe(map((response: any) => response.data.createTag))
     }
 

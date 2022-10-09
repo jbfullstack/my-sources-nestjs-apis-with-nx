@@ -184,6 +184,21 @@ export const updateTagFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const deleteTagAction = createAction(
+    ActionTypes.DELETE_TAG,
+    props<{ id: number}>()
+);
+
+export const deleteTagSuccessAction = createAction(
+    ActionTypes.UPDATE_TAG_SUCCESS,
+    props<{ tagId: number }>()
+);
+
+export const deleteTagFailureAction = createAction(
+    ActionTypes.UPDATE_TAG_FAILURE,
+    props<{ errors: string}>()
+);
+
 
 
 

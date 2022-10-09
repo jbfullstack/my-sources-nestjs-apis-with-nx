@@ -15,7 +15,7 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction, loadTagsAction, loadTagsSuccessAction, loadTagsFailureAction, updateTagAction, updateTagFailureAction, updateTagSuccessAction, createTagAction, createTagFailureAction, createTagSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction, loadTagsAction, loadTagsSuccessAction, loadTagsFailureAction, updateTagAction, updateTagFailureAction, updateTagSuccessAction, createTagAction, createTagFailureAction, createTagSuccessAction, deleteTagAction, deleteTagFailureAction, deleteTagSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
@@ -232,6 +232,24 @@ export class AdminEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't create tag: \n ${errorResponse.message}`)
                         return of(createTagFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    deleteTag$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(deleteTagAction),
+            switchMap( (action) => {
+                return this.adminService.deleteTag(action.id).pipe(
+                    map((tag: TagInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: tag deleted'`)
+                        return deleteTagSuccessAction({tagId: action.id})
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't delete tag: \n ${errorResponse.message}`)
+                        return of(deleteTagFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

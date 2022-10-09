@@ -59,4 +59,8 @@ export enum ActionTypes {
     CREATE_TAG = '[Admin] Create tag',
     CREATE_TAG_SUCCESS = '[Admin] Create tag success',
     CREATE_TAG_FAILURE = '[Admin] Create tag failure',
+
+    DELETE_TAG = '[Admin] Delete tag',
+    DELETE_TAG_SUCCESS = '[Admin] Delete tag success',
+    DELETE_TAG_FAILURE = '[Admin] Delete tag failure',
 }

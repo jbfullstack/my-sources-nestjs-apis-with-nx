@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
-import { activateAction, deleteAction, hideAction, updateTagAction } from '../../store/actions/admin.action';
+import { activateAction, deleteAction, deleteTagAction, hideAction, updateTagAction } from '../../store/actions/admin.action';
 import { FormBuilder, FormGroup } from '@angular/forms';
 // import { AdminStore } from '../../store/stores/admin.store';
 
@@ -33,6 +33,12 @@ export class ManageTagrComponent  implements OnInit {
     save(){
         if (this.tag?.id) {
             this.store.dispatch(updateTagAction({id: this.tag.id, title: this.title, description: this.description}))
+        }
+    }
+
+    delete(){
+        if (this.tag?.id) {
+            this.store.dispatch(deleteTagAction({id: this.tag.id}))
         }
     }
 

@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, createTagSuccessAction, createTagAction, createTagFailureAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, createTagSuccessAction, createTagAction, createTagFailureAction, deleteTagAction, deleteTagFailureAction, deleteTagSuccessAction, } from "../actions/admin.action";
 
 
 
@@ -259,6 +259,34 @@ const adminReducer = createReducer(
     ),
     on(
         createTagFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+
+
+    on(
+        deleteTagAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: true,
+        })
+    ),
+    on(
+        deleteTagSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            tags: state.tags.filter( tag => tag.id !== action.tagId)
+        })
+    ),
+    on(
+        deleteTagFailureAction, 
         (state, action): AdminStateInterface => 
         ({
             ...state,

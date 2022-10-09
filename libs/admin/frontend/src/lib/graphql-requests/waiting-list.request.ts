@@ -150,6 +150,12 @@ export function createTagGqlRequest(title: string, description: string) {
     }`
 }
 
+export function deleteTagGqlRequest(id: number){
+    return gql`mutation deleteTag{    
+        deleteTag ( id: ${id})
+    }`
+}
+
 
 
 
