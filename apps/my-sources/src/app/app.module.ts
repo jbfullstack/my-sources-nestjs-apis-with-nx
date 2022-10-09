@@ -35,7 +35,7 @@ import { SnackBarComponent, SnackbarModule } from '@jbhive/snackbar';
 
 import {MatTabsModule} from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -62,6 +62,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     FlexLayoutModule,
     FormsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatTabsModule,
     // MyOwnMaterial modules there !!
@@ -107,6 +108,7 @@ import { FormsModule } from '@angular/forms';
   ],
   exports: [
     FormsModule,
+    ReactiveFormsModule,
     MatInputModule,
     MatTabsModule
   ],

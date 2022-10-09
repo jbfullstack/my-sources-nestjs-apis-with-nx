@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest, loadAllTagsGqlRequest, updateTagGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest, loadAllTagsGqlRequest, updateTagGqlRequest, createTagGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
@@ -57,14 +57,20 @@ export class AdminService {
     generatePassword(userId: number, password: string) {
         console.log(`generatePassword(${userId}, ${password})`)
         return this.apollo.mutate<any>({ mutation: updatePasswordGqlRequest(userId, password) })
-        .pipe(map((response: any) => response.data))
+        .pipe(map((response: any) => response.data.updateUser))
     }
 
 
     updateTag(id: number, title: string, description: string) {
         console.log('updateTag: ', id)
         return this.apollo.mutate<any>({ mutation: updateTagGqlRequest(id, title, description) })
-        .pipe(map((response: any) => response.data))
+        .pipe(map((response: any) => response.data.updateTag))
+    }
+
+    createTag(title: string, description: string) {
+        console.log('createTag: ', title)
+        return this.apollo.mutate<any>({ mutation: createTagGqlRequest(title, description) })
+        .pipe(map((response: any) => response.data.createTag))
     }
 
     constructor(private apollo: Apollo) { }

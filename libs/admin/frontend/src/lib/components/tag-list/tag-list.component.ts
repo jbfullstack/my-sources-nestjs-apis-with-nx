@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector';
 import { AdminStore } from '../../store/stores/admin.store';
-import { loadActivatedUsersAction, loadTagsAction } from '../../store/actions/admin.action';
+import { createTagAction, loadActivatedUsersAction, loadTagsAction } from '../../store/actions/admin.action';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -15,14 +16,21 @@ import { loadActivatedUsersAction, loadTagsAction } from '../../store/actions/ad
     styleUrls: ['./tag-list.component.scss'],    
 })
 export class TagListComponent  implements OnInit {
+    form!: FormGroup
+    title: string = ''
+    description: string = ''
     @Input() tags!: TagInterface[] | null;
 
     searchTagInput: string = ''
     searchTagInput$ = this.adminStore.searchTagInput$
 
-    constructor(private store: Store, private adminStore: AdminStore) { }
+    
+
+    constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore) { }
 
     ngOnInit() {
+        this.initializeForm()
+
         this.store.dispatch(loadTagsAction())
         this.store.pipe(select(tagsSelector)).subscribe( {
             next: (tags) => {
@@ -32,6 +40,23 @@ export class TagListComponent  implements OnInit {
                 }             
             }
         })        
+    }
+
+    initializeForm(): void {
+        this.form = this.formBuilder.group({
+            title: ['', [Validators.required, Validators.minLength(2)]],
+            description: ['', [Validators.required, , Validators.minLength(6)]],
+        })
+    }
+
+    onSubmit(): void {
+        // console.log("submit", this.form.value, this.form.valid)
+        // console.log("submit", this.form.value, this.form.controls['nickame'])
+        // const request : LoginRequestInterface = {...this.form.value}
+        // this.store.dispatch(loginAction( {request: request} ))
+        // const request = {title: this.title, description: this.description}
+        // console.log('create tag: ', request)
+        this.store.dispatch(createTagAction( {title: this.title, description: this.description} ))
     }
 
 

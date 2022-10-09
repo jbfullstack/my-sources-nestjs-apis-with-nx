@@ -15,7 +15,7 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction, loadTagsAction, loadTagsSuccessAction, loadTagsFailureAction, updateTagAction, updateTagFailureAction, updateTagSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction, loadTagsAction, loadTagsSuccessAction, loadTagsFailureAction, updateTagAction, updateTagFailureAction, updateTagSuccessAction, createTagAction, createTagFailureAction, createTagSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
@@ -214,6 +214,24 @@ export class AdminEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't update tag: \n ${errorResponse.message}`)
                         return of(updateTagFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    createTag$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(createTagAction),
+            switchMap( (action) => {
+                return this.adminService.createTag(action.title, action.description).pipe(
+                    map((tag: TagInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: tag created'`)
+                        return createTagSuccessAction({tag})
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't create tag: \n ${errorResponse.message}`)
+                        return of(createTagFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

@@ -1,11 +1,11 @@
 <mat-accordion class="example-headers-align" multi>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
-        <mat-panel-title> Tag list </mat-panel-title>
-        <mat-panel-description>
-            All tags
-            <mat-icon>tag</mat-icon>
-        </mat-panel-description>
+            <mat-panel-title> Tag list </mat-panel-title>
+            <mat-panel-description>
+                All tags
+                <mat-icon>tag</mat-icon>
+            </mat-panel-description>
         </mat-expansion-panel-header>
 
         <!-- Search bar -->
@@ -21,6 +21,54 @@
             <p>No tag found..</p>
         </div>
 
+    </mat-expansion-panel>
+
+    <br>
+
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title> Create </mat-panel-title>
+            <mat-panel-description>    
+                Tag            
+                <mat-icon>create</mat-icon>
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <form id="tag"  [formGroup]="form" (ngSubmit)="onSubmit()">  
+            <mat-card>
+                <div *ngIf="this.form.controls['title'].invalid && (this.form.controls['title'].dirty || this.form.controls['title'].touched)" class="alert">
+                    <div *ngIf="this.form.controls['title'].errors?.['required']">Title is required.</div>
+                    <div *ngIf="this.form.controls['title'].errors?.['minlength']">Title must be at least 2 characters long.</div>
+                </div>
+
+                <div *ngIf="this.form.controls['description'].invalid && (this.form.controls['description'].dirty || this.form.controls['description'].touched)" class="alert">
+                    <div *ngIf="this.form.controls['description'].errors?.['required']">Description is required.</div>
+                    <div *ngIf="this.form.controls['description'].errors?.['minlength']">Description must be at least 6 characters long. </div>      
+                </div> 
+
+                <mat-form-field class="example-form-field" appearance="fill" >
+                    <mat-label>Title</mat-label>
+                    <input matInput class="input-title" type="text" [(ngModel)]="title" formControlName="title">
+                    <button *ngIf="title" matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
+                        <mat-icon>close</mat-icon>
+                    </button>                    
+                </mat-form-field>            
+
+                <mat-form-field class="example-form-field" appearance="fill" [style.width.rem]=10 >
+                    <mat-label>Description</mat-label>
+                    <input matInput class="input-description" type="text" [(ngModel)]="description" formControlName="description">
+                    <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+                        <mat-icon>close</mat-icon>
+                    </button>     
+                        
+                </mat-form-field>     
+                
+                <mat-card-actions>
+                    <button mat-stroked-button  matTooltip="Create tag {{ this.title }}" [disabled]="!this.form.valid" type="submit" >Create</button>
+                </mat-card-actions>
+            </mat-card>
+
+        </form>
     </mat-expansion-panel>
 </mat-accordion>
 

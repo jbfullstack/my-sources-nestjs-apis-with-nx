@@ -35,4 +35,10 @@ export class ManageTagrComponent  implements OnInit {
             this.store.dispatch(updateTagAction({id: this.tag.id, title: this.title, description: this.description}))
         }
     }
+
+    titleChanged(value: any) {
+        console.log('changed !!!: ', value)
+    }
+
+    
 }

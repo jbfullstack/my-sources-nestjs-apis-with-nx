@@ -185,6 +185,24 @@ export const updateTagFailureAction = createAction(
 );
 
 
+
+
+export const createTagAction = createAction(
+    ActionTypes.CREATE_TAG,
+    props<{ title: string, description: string }>()
+);
+
+export const createTagSuccessAction = createAction(
+    ActionTypes.CREATE_TAG_SUCCESS,
+    props<{tag: TagInterface}>()
+);
+
+export const createTagFailureAction = createAction(
+    ActionTypes.CREATE_TAG_FAILURE,
+    props<{ errors: string}>()
+);
+
+
 // export const logoutAction = createAction(
 //     ActionTypes.LOGOUT,
 // );

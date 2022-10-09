@@ -50,8 +50,8 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     loggedUserRoleId$ = this.select(state => state.loggedUserRoleId)
     searchUserInput$ = this.select(state => state.searchUserInput)
     filteredActivatedUsers$ = this.select( 
-        ({activatedUsersList, searchUserInput: searchInput}) => activatedUsersList.filter( 
-            (user) => user.pseudo.toLowerCase().includes(searchInput.toLowerCase()) || user.email.toLowerCase().includes(searchInput.toLowerCase())
+        ({activatedUsersList, searchUserInput: searchUserInput}) => activatedUsersList.filter( 
+            (user) => user.pseudo.toLowerCase().includes(searchUserInput.toLowerCase()) || user.email.toLowerCase().includes(searchUserInput.toLowerCase())
         )
     )
 

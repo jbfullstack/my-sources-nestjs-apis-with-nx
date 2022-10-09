@@ -1,7 +1,7 @@
 import { User } from "@jbhive/auth_be";
 import { UserService } from "@jbhive/user_be";
 import { LogService } from "@jbhive/log_be";
-import { Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { ForbiddenException, Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { CreateSourceInput } from "./dto/create-source-input";
 import { CreateSourceTypeInput } from "./dto/create-source-type-input";
@@ -227,6 +227,14 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
         })
     }
 
+    findTagByTitle(title: string) {
+        return this.tag.findUnique({
+            where: {
+                title: title
+            }
+        })
+    }
+
     findTag(id: number) {
         return this.tag.findUnique({
             where: {
@@ -255,6 +263,12 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             throw new NotFoundException(`User ${userId} not found, can"t create the tag: ${JSON.stringify(input)}`);
         }
 
+        const tagFound = await this.findTagByTitle(input.title)
+        if (tagFound) {
+            // this.log.err(`user ${userId} not found, can"t create the tag: ${JSON.stringify(input)}`)
+            throw new ForbiddenException(`Tag ${input.title} already exists}`);
+        }
+
         const created = await this.tag.create({
             data: {
                 ...input,
@@ -262,7 +276,8 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             }
         })
 
-        return created
+        const createTagFound = await this.findTag(created.id)
+        return createTagFound
     }
 
     async updateTag(userId: number, id: number, input: UpdateTagInput) {

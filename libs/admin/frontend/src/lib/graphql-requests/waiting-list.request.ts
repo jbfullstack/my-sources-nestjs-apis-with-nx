@@ -131,6 +131,27 @@ export function updateTagGqlRequest(id: number, title: string, description: stri
     }`
 }
 
+export function createTagGqlRequest(title: string, description: string) {
+    return gql`mutation createTag{    
+        createTag (
+            input : {
+                title: "${title}",
+                description: "${description}"
+            }) 
+            {
+                id
+                title
+                description
+                author {
+                    id
+                    pseudo
+                }
+            }
+    }`
+}
+
+
+
 
 
 

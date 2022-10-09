@@ -6,7 +6,7 @@
                 <mat-card-subtitle>created by {{ tag.author.pseudo }}</mat-card-subtitle>
                 <mat-form-field class="example-form-field" appearance="fill">                    
                     <mat-label>Title</mat-label>
-                    <input matInput type="text" [(ngModel)]="title">
+                    <input matInput type="text" [(ngModel)]="title" (ngModelChange)="titleChanged($event)">
                     <button *ngIf="title" matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
                         <mat-icon>close</mat-icon>
                     </button>

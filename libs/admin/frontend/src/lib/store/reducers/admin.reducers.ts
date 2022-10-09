@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, createTagSuccessAction, createTagAction, createTagFailureAction, } from "../actions/admin.action";
 
 
 
@@ -237,6 +237,33 @@ const adminReducer = createReducer(
         ({
             ...state,
             pending: false,
+        })
+    ),
+
+    on(
+        createTagAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: true,
+        })
+    ),
+    on(
+        createTagSuccessAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            tags: [...state.tags, action.tag]
+        })
+    ),
+    on(
+        createTagFailureAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
         })
     ),
 )
