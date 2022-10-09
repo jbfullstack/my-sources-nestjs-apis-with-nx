@@ -7,6 +7,7 @@ import { desactivatedUsersSelector } from '../../store/selectors/admin.selector'
 import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
 import { activateAction, deleteAction, desactivateAction, generatePasswordAction, updateRoleAction } from '../../store/actions/admin.action';
+import { SnackBarComponent } from '@jbhive/snackbar'
 // import { AdminStore } from '../../store/stores/admin.store';
 
 interface Role {
@@ -89,7 +90,7 @@ export class ManageUserComponent  implements OnInit {
     regeneratePassword(){
         if (this.user?.id) {
             this.generatedPassword = generatePassword()
-            this.store.dispatch(generatePasswordAction({userId: this.user.id, password: ''+this.generatedPassword}))
+            this.store.dispatch(generatePasswordAction({userId: this.user.id, password: this.generatedPassword}))
         }
     }
 

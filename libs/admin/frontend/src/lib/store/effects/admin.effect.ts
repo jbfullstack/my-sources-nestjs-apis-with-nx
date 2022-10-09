@@ -18,6 +18,7 @@ import {
     updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
+import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 
 
 @Injectable()
@@ -28,11 +29,12 @@ export class AdminEffect {
             ofType(loadDesactivatedUsersAction),
             switchMap( () => {
                 return this.adminService.loadAllDesactivatedUsers().pipe(
-                    map((desactivatedUsers: CurrentUserInterface[]) => {
+                    map((desactivatedUsers: CurrentUserInterface[]) => {                            
                         return loadDesactivatedUsersSuccessAction({ desactivatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        return of(loadDesactivatedUsersFailureAction({errors: JSON.parse(errorResponse.message).errors}))
+                        this.snackbar.openSnackBarError(`Error: can't retrieve desactivated users from server: ${errorResponse.message}`)
+                        return of(loadDesactivatedUsersFailureAction({errors: errorResponse.message}))
                     })
                 )
             })
@@ -48,6 +50,7 @@ export class AdminEffect {
                         return loadActivatedUsersSuccessAction({ activatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't retrieve activated users from server: ${errorResponse.message}`)
                         return of(loadActivatedUsersFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -64,6 +67,7 @@ export class AdminEffect {
                         return activateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't activate the user: ${errorResponse.message}`)
                         return of(activateFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -80,6 +84,7 @@ export class AdminEffect {
                         return desactivateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't desactivate the user: ${errorResponse.message}`)
                         return of(desactivateFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -93,9 +98,11 @@ export class AdminEffect {
             switchMap( (action) => {
                 return this.adminService.updateRole(action.userId, action.newRoleId).pipe(
                     map((user: CurrentUserInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: user's role updated'`)
                         return updateRoleSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't update the user's role: ${errorResponse.message}`)
                         return of(updateRoleFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -124,6 +131,7 @@ export class AdminEffect {
                         return deleteSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't delete the user: ${errorResponse.message}`)
                         return of(deleteFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -137,9 +145,11 @@ export class AdminEffect {
             switchMap( (action) => {
                 return this.adminService.generatePassword(action.userId, action.password).pipe(
                     map((user: CurrentUserInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: user's password updated'`)
                         return generatePasswordSuccessAction()
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't update the user's password: ${errorResponse.message}`)
                         return of(generatePasswordFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -147,42 +157,11 @@ export class AdminEffect {
         )
     )
 
-    // activate$ = createEffect( () => 
-    //     this.actions$.pipe(
-    //         ofType(activateAction),
-    //         switchMap(({request}) => {
-    //             // pipe map => bcs login is an asynchronous call (and so produce an observable)
-    //             return this.adminService.activate(request.userId).pipe(
-    //                 map((currentUser: CurrentUserInterface) => {
-    //                     // register the Jwt token
-    //                     // this.persistanceService.set('accessToken', currentUser.token)
-    //                     //
-    //                     return activateSuccessAction({currentUser.id})
-    //                 }),
-
-    //                 catchError( (errorResponse: HttpErrorResponse) => {
-    //                     // of => produce an observable, bcs the action is not an  observable
-    //                     return of(activateFailureAction({errors: JSON.parse(errorResponse.message).errors}))
-    //                 })
-    //             )
-    //         })
-    //     ) 
-    // )
-
-    // redirectAfterSubmit$ = createEffect( () => 
-    //     this.actions$.pipe(
-    //         ofType(loginSuccessAction),
-    //         tap( () => {
-    //             this.router.navigateByUrl('/profile')
-    //         })
-    //     ),
-    //     {dispatch: false}
-    // )
-
     constructor(
         private actions$: Actions, 
         private adminService: AdminService, 
         private adminStore: AdminStore,
-        private router: Router
+        private router: Router,
+        private snackbar: SnackBarComponent
     ) {}
 }

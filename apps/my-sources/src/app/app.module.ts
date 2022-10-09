@@ -15,6 +15,9 @@ import {InMemoryCache} from '@apollo/client/core';
 
 import { RouterModule, } from '@angular/router';
 
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatIconModule} from '@angular/material/icon';
+
 import { AppRoutingModule} from './app-routing.module'
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
@@ -28,6 +31,8 @@ import { ProfileComponent, ProfileModule } from '@jbhive/profile';
 import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
 import { MathModule } from '@jbhive/math';
+import { SnackBarComponent, SnackbarModule } from '@jbhive/snackbar';
+
 
 import { FormsModule } from '@angular/forms';
 
@@ -43,7 +48,8 @@ import { FormsModule } from '@angular/forms';
     WaitingListComponent, 
     ActivateUserComponent, 
     ManageUserComponent, 
-    ActivatedListComponent
+    ActivatedListComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule, 
@@ -55,10 +61,13 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     // MyOwnMaterial modules there !!
     MaterialsModules,
+    MatSnackBarModule,
+    MatIconModule,
     AuthModule,
     AdminModule,
     ProfileModule,
     MathModule,
+    SnackbarModule,
     GraphQLModule,
     StoreModule.forRoot({}),
     StoreDevtoolsModule.instrument({
@@ -83,12 +92,13 @@ import { FormsModule } from '@angular/forms';
       deps: [HttpLink],
     },
     MaterialsModules,
-    FormBuilder,
+    FormBuilder, 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApolloInterceptor,
       multi: true
-    }
+    },
+    SnackBarComponent 
   ],
   bootstrap: [AppComponent],
 })
