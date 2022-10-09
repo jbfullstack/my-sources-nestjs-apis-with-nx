@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store'
 
 import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
 import { loadActivatedUsersAction, loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction } from '../../store/actions/admin.action'
-import { activatedUsersSelector, desactivatedUsersSelector } from '../../store/selectors/admin.selector'
+import { activatedUsersSelector, desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector'
 import { AdminStore } from '../../store/stores/admin.store'
 import { loggedUserRole } from '@jbhive/auth_fe'
 
@@ -26,6 +26,8 @@ export class AdminComponent implements OnInit{
   pending$ = this.adminStore.pending$
   errors$ = this.adminStore.errors$
   loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
+  tags$ = this.adminStore.tags$
+  filteredTags$ = this.adminStore.filteredTags$
 
   constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore) { }
     
@@ -50,6 +52,7 @@ export class AdminComponent implements OnInit{
 
     this.store.dispatch(loadDesactivatedUsersAction())
     this.store.dispatch(loadActivatedUsersAction())
+   
     // this.adminStore.loadDesactivatedUsers(this.desactivatedUsers$)
 
     this.store.pipe(select(desactivatedUsersSelector)).subscribe( {
@@ -64,12 +67,13 @@ export class AdminComponent implements OnInit{
     this.store.pipe(select(activatedUsersSelector)).subscribe( {
       next: (allactivated) => {
         console.log('allActivated: ', allactivated)
-        if (allactivated) {
-          
+        if (allactivated) {          
           this.adminStore.loadActivatedUsers(allactivated)
         }             
       }
     })
+
+    
     
   }
 
@@ -82,3 +86,7 @@ export class AdminComponent implements OnInit{
 
 
 }
+function loadTagsAction(): any {
+  throw new Error('Function not implemented.')
+}
+

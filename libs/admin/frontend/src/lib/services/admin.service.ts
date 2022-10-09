@@ -3,11 +3,10 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest, loadAllTagsGqlRequest, updateTagGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
-    
     
     loadAllDesactivatedUsers() {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: loadAllDesactivatedUsersWithLessPrivilegesGqlRequest() })
@@ -17,6 +16,11 @@ export class AdminService {
     loadAllActivatedUsers(){
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: loadAllActivatedUsersWithLessPrivilegesGqlRequest() })
         .pipe(map((response: any) => response.data.loadAllActivatedUsers))
+    }
+
+    loadAllTags(){
+        return this.apollo.query<AuthRegisterResponseInterface>({ query: loadAllTagsGqlRequest() })
+        .pipe(map((response: any) => response.data.tags))
     }
 
     activate(id: number) {
@@ -53,6 +57,13 @@ export class AdminService {
     generatePassword(userId: number, password: string) {
         console.log(`generatePassword(${userId}, ${password})`)
         return this.apollo.mutate<any>({ mutation: updatePasswordGqlRequest(userId, password) })
+        .pipe(map((response: any) => response.data))
+    }
+
+
+    updateTag(id: number, title: string, description: string) {
+        console.log('updateTag: ', id)
+        return this.apollo.mutate<any>({ mutation: updateTagGqlRequest(id, title, description) })
         .pipe(map((response: any) => response.data))
     }
 

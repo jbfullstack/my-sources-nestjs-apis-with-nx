@@ -14,12 +14,10 @@
 
         <div *ngIf="tagsToDisplay()" class="row">
             <div *ngFor="let tag of tags">
-                <!-- <ms-manage-user" [user]="user"> </ms-manage-user> -->
-                1 tag
+                <ms-manage-tag [tag]="tag"> </ms-manage-tag>
             </div>
         </div>
-        <div *ngIf="!tagsToDisplay()" class="row">
-            
+        <div *ngIf="!tagsToDisplay()" class="row">            
             <p>No tag found..</p>
         </div>
 

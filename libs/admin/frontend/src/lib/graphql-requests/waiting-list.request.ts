@@ -30,6 +30,21 @@ export function loadAllActivatedUsersWithLessPrivilegesGqlRequest() {
     }`
 }
 
+export function loadAllTagsGqlRequest() {
+    return gql`query tags{   
+        tags 
+        {
+            id
+            title
+            description
+            author {        
+                id
+                pseudo
+            }      
+        }
+    }`
+}
+
 
 export function activateUserWithLessPrivilegesGqlRequest(userId: number, activate: boolean) {
     return gql`mutation updateAdminUser{ 
@@ -98,3 +113,24 @@ export function updatePasswordGqlRequest(userId: number, password: string) {
         } 
     }`
 }
+
+export function updateTagGqlRequest(id: number, title: string, description: string) {
+    return gql`mutation updateTag{    
+        updateTag (
+            id: ${id}
+            input : {
+                title: "${title}",
+                description: "${description}"
+            }
+        ) 
+        {
+            id
+            title
+            description
+        }
+    }`
+}
+
+
+
+

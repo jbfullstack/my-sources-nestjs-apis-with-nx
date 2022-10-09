@@ -18,7 +18,7 @@ export class ActivatedListComponent  implements OnInit {
     @Input() users!: CurrentUserInterface[] | null;
 
     searchInput: string = ''
-    searchInput$ = this.adminStore.searchInput$
+    searchInput$ = this.adminStore.searchUserInput$
 
     constructor(private store: Store, private adminStore: AdminStore) { }
 

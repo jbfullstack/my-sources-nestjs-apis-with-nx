@@ -1,5 +1,9 @@
 export interface TagInterface {
     id: number,
-    name: string,
+    title: string,
     description: string,
+    author: {
+        id: number,
+        pseudo: string
+    }
 }

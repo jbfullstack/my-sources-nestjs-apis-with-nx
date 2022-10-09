@@ -8,14 +8,14 @@ import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AdminService } from '../../services/admin.service';
-import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, CurrentUserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
 import { 
     loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, 
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction, loadTagsAction, loadTagsSuccessAction, loadTagsFailureAction, updateTagAction, updateTagFailureAction, updateTagSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
@@ -52,6 +52,23 @@ export class AdminEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't retrieve activated users from server: \n ${errorResponse.message}`)
                         return of(loadActivatedUsersFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    loadTags$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(loadTagsAction),
+            switchMap( () => {
+                return this.adminService.loadAllTags().pipe(
+                    map((tags: TagInterface[]) => {
+                        return loadTagsSuccessAction({ tags })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't retrieve tags from server: \n ${errorResponse.message}`)
+                        return of(loadTagsFailureAction({errors: errorResponse.message}))
                     })
                 )
             })
@@ -179,6 +196,24 @@ export class AdminEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't hide the user: \n ${errorResponse.message}`)
                         return of(hideFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    updateTag$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateTagAction),
+            switchMap( (action) => {
+                return this.adminService.updateTag(action.id, action.title, action.description).pipe(
+                    map((tag: TagInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: tag updated'`)
+                        return updateTagSuccessAction({ tagId: tag.id })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't update tag: \n ${errorResponse.message}`)
+                        return of(updateTagFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

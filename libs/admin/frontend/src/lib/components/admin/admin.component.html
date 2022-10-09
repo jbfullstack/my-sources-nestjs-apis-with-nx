@@ -30,9 +30,11 @@
             [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
             
             <div class="color-overlay"></div><!-- /COLOR OVERLY -->
-            <div class="container">
-                <ms-tag-list>
-                </ms-tag-list>
+            <div class="container">       
+                <div *ngIf="filteredTags$ | async" >         
+                    <ms-tag-list [tags]="filteredTags$ | async ">
+                    </ms-tag-list>
+                </div>
             </div>
         </section>
     </mat-tab> 

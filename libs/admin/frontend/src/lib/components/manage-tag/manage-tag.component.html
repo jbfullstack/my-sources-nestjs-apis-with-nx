@@ -1,0 +1,29 @@
+
+<div *ngIf="tag" >
+    <div class="col-md-6 col-md-offset-3 login-form">
+        <div class="st-login-title text-center">
+            <mat-card>
+                <mat-card-subtitle>created by {{ tag.author.pseudo }}</mat-card-subtitle>
+                <mat-form-field class="example-form-field" appearance="fill">                    
+                    <mat-label>Title</mat-label>
+                    <input matInput type="text" [(ngModel)]="title">
+                    <button *ngIf="title" matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <!-- <mat-card-title>#{{ tag.title }}</mat-card-title> -->
+
+                <mat-form-field class="example-form-field" appearance="fill" [style.width.rem]=30 >
+                    <mat-label>Description</mat-label>
+                    <input matInput class="input-description" type="text" [(ngModel)]="description">
+                    <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-card-actions>
+                    <button mat-stroked-button matTooltip="Save changes for {{ tag.title }}" (click)="save()">Save</button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -7,6 +7,11 @@ export enum ActionTypes {
     LOAD_ACTIVATED_SUCCESS = '[Admin] Load activated users success',
     LOAD_ACTIVATED_FAILURE = '[Admin] Load activated users failure',
 
+    LOAD_TAGS = '[Admin] Load tags',
+    LOAD_TAGS_SUCCESS = '[Admin] Load tags success',
+    LOAD_TAGS_FAILURE = '[Admin] Load tags failure',
+    
+
     ACTIVATE = '[Admin] Activate',
     ACTIVATE_SUCCESS = '[Admin] Activate success',
     ACTIVATE_FAILURE = '[Admin] Activate failure',
@@ -46,4 +51,8 @@ export enum ActionTypes {
     REGENERATE_PASSWORD = '[Admin] Regenerate password',
     REGENERATE_PASSWORD_SUCCESS = '[Admin] Regenerate password success',
     REGENERATE_PASSWORD_FAILURE = '[Admin] Regenerate password failure',
+
+    UPDATE_TAG = '[Admin] Update tag',
+    UPDATE_TAG_SUCCESS = '[Admin] Update tag success',
+    UPDATE_TAG_FAILURE = '[Admin] Update tag failure',
 }

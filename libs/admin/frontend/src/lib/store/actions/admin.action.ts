@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { ActionTypes } from '../action-types';
 
-import { CurrentUserInterface, BackendErrorsInterface, UsersListStateInterface } from '@jbhive/types_fe';
+import { CurrentUserInterface, BackendErrorsInterface, UsersListStateInterface, TagInterface } from '@jbhive/types_fe';
 
 
 export const loadDesactivatedUsersAction = createAction(
@@ -33,6 +33,19 @@ export const loadActivatedUsersFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const loadTagsAction = createAction(
+    ActionTypes.LOAD_TAGS
+);
+
+export const loadTagsSuccessAction = createAction(
+    ActionTypes.LOAD_TAGS_SUCCESS,
+    props<{ tags: TagInterface[]}>()
+);
+
+export const loadTagsFailureAction = createAction(
+    ActionTypes.LOAD_TAGS_FAILURE,
+    props<{ errors: string}>()
+);
 
 
 
@@ -155,6 +168,21 @@ export const hideFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+
+export const updateTagAction = createAction(
+    ActionTypes.UPDATE_TAG,
+    props<{ id: number, title: string, description: string }>()
+);
+
+export const updateTagSuccessAction = createAction(
+    ActionTypes.UPDATE_TAG_SUCCESS,
+    props<{ tagId: number }>()
+);
+
+export const updateTagFailureAction = createAction(
+    ActionTypes.UPDATE_TAG_FAILURE,
+    props<{ errors: string}>()
+);
 
 
 // export const logoutAction = createAction(

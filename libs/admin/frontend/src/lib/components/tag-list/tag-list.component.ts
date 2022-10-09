@@ -2,8 +2,9 @@ import { Component, Directive, Input, OnInit } from '@angular/core'
 import { CurrentUserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
-import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
+import { desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector';
 import { AdminStore } from '../../store/stores/admin.store';
+import { loadActivatedUsersAction, loadTagsAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -22,7 +23,15 @@ export class TagListComponent  implements OnInit {
     constructor(private store: Store, private adminStore: AdminStore) { }
 
     ngOnInit() {
-        console.log(this.tags) // data from parent
+        this.store.dispatch(loadTagsAction())
+        this.store.pipe(select(tagsSelector)).subscribe( {
+            next: (tags) => {
+                console.log('tags: ', tags)
+                if (tags) {          
+                this.adminStore.loadTags(tags)
+                }             
+            }
+        })        
     }
 
 

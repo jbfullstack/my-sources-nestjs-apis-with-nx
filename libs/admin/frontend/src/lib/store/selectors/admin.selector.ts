@@ -18,6 +18,10 @@ export const activatedUsersSelector = createSelector(
     (adminState: AdminStateInterface) => adminState.activatedUsersList
 )
 
+export const tagsSelector = createSelector(
+    loginFeatureSelector, 
+    (adminState: AdminStateInterface) => adminState.tags
+)
 // export const validationErrorSelector = createSelector(
 //     loginFeatureSelector, 
 //     (loginState: AuthStateInterface) => loginState.login.validationErrors

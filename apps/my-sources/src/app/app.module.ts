@@ -28,12 +28,13 @@ import { AuthModule } from '@jbhive/auth_fe';
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
-import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent, TagListComponent } from '@jbhive/admin_fe';
+import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent, TagListComponent, ManageTagrComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
 import { MathModule } from '@jbhive/math';
 import { SnackBarComponent, SnackbarModule } from '@jbhive/snackbar';
 
-
+import {MatTabsModule} from '@angular/material/tabs';
+import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 
@@ -50,7 +51,8 @@ import { FormsModule } from '@angular/forms';
     ManageUserComponent, 
     ActivatedListComponent,
     SnackBarComponent,
-    TagListComponent
+    TagListComponent,
+    ManageTagrComponent
   ],
   imports: [
     BrowserModule, 
@@ -60,6 +62,8 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     FlexLayoutModule,
     FormsModule,
+    MatInputModule,
+    MatTabsModule,
     // MyOwnMaterial modules there !!
     MaterialsModules,
     MatSnackBarModule,
@@ -100,6 +104,11 @@ import { FormsModule } from '@angular/forms';
       multi: true
     },
     SnackBarComponent 
+  ],
+  exports: [
+    FormsModule,
+    MatInputModule,
+    MatTabsModule
   ],
   bootstrap: [AppComponent],
 })
