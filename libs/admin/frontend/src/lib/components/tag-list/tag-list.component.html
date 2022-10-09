@@ -1,0 +1,28 @@
+<mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+        <mat-panel-title> Tag list </mat-panel-title>
+        <mat-panel-description>
+            All tags
+            <mat-icon>tag</mat-icon>
+        </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <!-- Search bar -->
+        <input [(ngModel)]="searchTagInput" (ngModelChange)="searchTagInputChange($event)">
+        <p>filter by name or description</p>
+
+        <div *ngIf="tagsToDisplay()" class="row">
+            <div *ngFor="let tag of tags">
+                <!-- <ms-manage-user" [user]="user"> </ms-manage-user> -->
+                1 tag
+            </div>
+        </div>
+        <div *ngIf="!tagsToDisplay()" class="row">
+            
+            <p>No tag found..</p>
+        </div>
+
+    </mat-expansion-panel>
+</mat-accordion>
+

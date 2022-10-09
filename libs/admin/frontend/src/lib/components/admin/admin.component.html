@@ -22,27 +22,19 @@
         </section>
     </mat-tab>
 
-   <mat-tab label="Tags">
-     <!-- 
-        <section class="login reset">
-            <div class="color-overlay"></div>
+    <mat-tab label="Tags">
+        <section class="login">
+
+            <!-- <ms-backend-error-messages 
+            *ngIf="backendErrorsSelector$ | async"
+            [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
+            
+            <div class="color-overlay"></div><!-- /COLOR OVERLY -->
             <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-md-offset-3 login-form">
-                        <div class="st-login-title text-center">
-                            <h3>  loginResetMainText  </h3>
-                            <p>   loginResetParaText  </p>
-                        </div>
-                        <form [formGroup]="resetPasswordForm" (ngSubmit)="resetPassword()">
-                            <input type="email" value="" name="resend-email" id="st-email" placeholder="Enter your e-mail" formControlName="email" type="partsize-input" value="" name="resend-email" id="st-email">
-                            <input [disabled]="isResetFormValids()" type="submit" name="resend-submit" value="Resend e-mail">
-                            <label for="st-email" class="st-resend-message"></label>
-                        </form>
-                    </div>
-                </div>
+                <ms-tag-list>
+                </ms-tag-list>
             </div>
         </section>
-        -->
     </mat-tab> 
 
 </mat-tab-group>

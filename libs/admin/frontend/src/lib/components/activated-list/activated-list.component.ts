@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminStore } from '../../store/stores/admin.store';
-import { updateSearchInputAction } from '../../store/actions/admin.action';
+import { updateSearchUserInputAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -46,17 +46,7 @@ export class ActivatedListComponent  implements OnInit {
         }
     }
 
-    updateDisplayedUsers() {
-        console.log('updateDisplayedUsers.received()))')
-        this.searchInput = ''
-        this.searchInputChange(this.searchInput)
-    }
-
     searchInputChange(searchInput: string) {
-        this.adminStore.patchState({searchInput})
+        this.adminStore.patchState({searchUserInput: searchInput})
     }
-}
-
-function delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
 }

@@ -11,10 +11,11 @@ import { Store } from "@ngrx/store";
 export const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
     activatedUsersList: [],
-    searchInput: '',
+    searchUserInput: '',
     pending: false,
     errors: null,
-    loggedUserRoleId: 0
+    loggedUserRoleId: 0,
+    searchTagInput: ''
 }
 
 @Injectable()
@@ -25,12 +26,19 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     desactivatedUsersList$ = this.select(state => state.desactivatedUsersList)
     activatedUsersList$ = this.select(state => state.activatedUsersList)
     loggedUserRoleId$ = this.select(state => state.loggedUserRoleId)
-    searchInput$ = this.select(state => state.searchInput)
+    searchInput$ = this.select(state => state.searchUserInput)
     filteredActivatedUsers$ = this.select( 
-        ({activatedUsersList, searchInput}) => activatedUsersList.filter( 
+        ({activatedUsersList, searchUserInput: searchInput}) => activatedUsersList.filter( 
             (user) => user.pseudo.toLowerCase().includes(searchInput.toLowerCase()) || user.email.toLowerCase().includes(searchInput.toLowerCase())
         )
     )
+
+    searchTagInput$ = this.select(state => state.searchTagInput)
+    // filteredTags$ = this.select( 
+    //     ({activatedUsersList, searchUserInput: searchInput}) => activatedUsersList.filter( 
+    //         (user) => user.pseudo.toLowerCase().includes(searchInput.toLowerCase()) || user.email.toLowerCase().includes(searchInput.toLowerCase())
+    //     )
+    // )
     
 
     loadLoggedUserRoleId = this.updater( (state, roleId: number | null) => ({
@@ -51,11 +59,18 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
         }) 
     )
     
-    loadSearchInput = this.updater( (state, search: string | null) => ({
+    loadSearchUserInput = this.updater( (state, search: string | null) => ({
             ...state,
-            searchInput: search || ''
+            searchUserInput: search || ''
         }) 
     )
+
+    loadSearchTagInput = this.updater( (state, search: string | null) => ({
+        ...state,
+        searchTagInput: search || ''
+    }) 
+)
+    
 
 
     // loadDesactivatedUsers = this.effect( 

@@ -28,7 +28,7 @@ import { AuthModule } from '@jbhive/auth_fe';
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
-import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent } from '@jbhive/admin_fe';
+import { AdminComponent, WaitingListComponent, ActivateUserComponent, AdminModule, ManageUserComponent, ActivatedListComponent, TagListComponent } from '@jbhive/admin_fe';
 import { ApolloInterceptor, GraphQLModule } from '@jbhive/graphql';
 import { MathModule } from '@jbhive/math';
 import { SnackBarComponent, SnackbarModule } from '@jbhive/snackbar';
@@ -49,7 +49,8 @@ import { FormsModule } from '@angular/forms';
     ActivateUserComponent, 
     ManageUserComponent, 
     ActivatedListComponent,
-    SnackBarComponent
+    SnackBarComponent,
+    TagListComponent
   ],
   imports: [
     BrowserModule, 

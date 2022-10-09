@@ -25,7 +25,7 @@ export class ManageUserComponent  implements OnInit {
 
     loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
 
-    @Output("updateDisplayedUsers") updateDisplayedUsers: EventEmitter<any> = new EventEmitter();
+    // @Output("updateDisplayedUsers") updateDisplayedUsers: EventEmitter<any> = new EventEmitter();
 
     generatedPassword: string = ''
     

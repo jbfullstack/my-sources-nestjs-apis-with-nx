@@ -2,17 +2,18 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchInputAction, hideSuccessAction, hideAction, hideFailureAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, } from "../actions/admin.action";
 
 
 
 const initialState: AdminStateInterface = {
     desactivatedUsersList: [],
     activatedUsersList: [],
-    searchInput: '',
+    searchUserInput: '',
     pending: false,
     errors: null,
-    loggedUserRoleId: 0
+    loggedUserRoleId: 0,
+    searchTagInput: ''
 }
 
 const adminReducer = createReducer(
@@ -135,12 +136,21 @@ const adminReducer = createReducer(
 
 
     on(
-        updateSearchInputAction, 
+        updateSearchUserInputAction, 
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            pending: false,
-            searchInput: action.newValue
+            // pending: false,
+            searchUserInput: action.newValue
+        })
+    ),
+
+    on(
+        updateSearchTagInputAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            searchTagInput: action.newValue
         })
     ),
 

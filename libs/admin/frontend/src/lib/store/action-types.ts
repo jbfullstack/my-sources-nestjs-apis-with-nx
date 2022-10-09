@@ -15,17 +15,23 @@ export enum ActionTypes {
     DESACTIVATE_SUCCESS = '[Admin] Desactivate success',
     DESACTIVATE_FAILURE = '[Admin] Desactivate failure',
 
-    UPDATE_SEARCH_INPUT = '[Admin] Update search input',
-    UPDATE_SEARCH_INPUT_SUCCESS = '[Admin] search input success',
-    UPDATE_SEARCH_INPUT_FAILURE = '[Admin] search input failure',
+    UPDATE_SEARCH_INPUT_USER = '[Admin] Update search input user',
+    UPDATE_SEARCH_INPUT_USER_SUCCESS = '[Admin] search input user success',
+    UPDATE_SEARCH_INPUT_USER_FAILURE = '[Admin] search input user failure',
+
+    UPDATE_SEARCH_INPUT_TAG = '[Admin] Update search input tag',
+    UPDATE_SEARCH_INPUT_TAG_SUCCESS = '[Admin] search input tag success',
+    UPDATE_SEARCH_INPUT_TAG_FAILURE = '[Admin] search input tag failure',
 
     UPDATE_ROLE = '[Admin] Update role',
     UPDATE_ROLE_SUCCESS = '[Admin] Update role success',
     UPDATE_ROLE_FAILURE = '[Admin] Update role failure',
 
-    SEARCH = '[Admin] Search',
-    SEARCH_SUCCESS = '[Admin] Search success',
-    SEARCH_FAILURE = '[Admin] Search failure',
+    SEARCH_USER = '[Admin] Search',
+    SEARCH_USER_SUCCESS = '[Admin] Search success',
+    SEARCH_USER_FAILURE = '[Admin] Search failure',
+
+   
 
     RESET_SEARCH = '[Admin] Reset search',
 

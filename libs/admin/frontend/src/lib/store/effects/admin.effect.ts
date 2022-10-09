@@ -15,7 +15,7 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchUserInputAction, updateSearchUserInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction, updateSearchTagInputAction, updateSearchTagInputSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
@@ -110,12 +110,22 @@ export class AdminEffect {
         )
     )
 
-    updateSearchInput$ = createEffect( () => 
+    updateSearchUserInput$ = createEffect( () => 
         this.actions$.pipe(
-            ofType(updateSearchInputAction),
+            ofType(updateSearchUserInputAction),
             switchMap( (action) => {
-                this.adminStore.loadSearchInput(action.newValue)
-                return of(updateSearchInputSuccessAction())
+                this.adminStore.loadSearchUserInput(action.newValue)
+                return of(updateSearchUserInputSuccessAction())
+            })
+        )
+    )
+
+    updateSearchTagInput$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateSearchTagInputAction),
+            switchMap( (action) => {
+                this.adminStore.loadSearchTagInput(action.newValue)
+                return of(updateSearchTagInputSuccessAction())
             })
         )
     )

@@ -14,7 +14,7 @@
 
         <div *ngIf="usersToActivate()" class="row">
             <div *ngFor="let user of users">
-                <ms-manage-user (updateDisplayedUsers)="updateDisplayedUsers()" [user]="user"> </ms-manage-user>
+                <ms-manage-user [user]="user"> </ms-manage-user>
             </div>
         </div>
         <div *ngIf="!usersToActivate()" class="row">
