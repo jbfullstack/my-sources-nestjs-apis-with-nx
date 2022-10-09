@@ -15,7 +15,7 @@ import {
     loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, deleteAction, 
     deleteFailureAction, deleteSuccessAction, loadActivatedUsersAction, loadActivatedUsersSuccessAction, 
     loadActivatedUsersFailureAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, 
-    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction 
+    updateRoleAction, updateRoleFailureAction, updateRoleSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, generatePasswordAction, generatePasswordFailureAction, generatePasswordSuccessAction, hideAction, hideFailureAction, hideSuccessAction 
 } from '../actions/admin.action';
 import { AdminStore } from '../stores/admin.store';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
@@ -50,7 +50,7 @@ export class AdminEffect {
                         return loadActivatedUsersSuccessAction({ activatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't retrieve activated users from server: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't retrieve activated users from server: \n ${errorResponse.message}`)
                         return of(loadActivatedUsersFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -67,7 +67,7 @@ export class AdminEffect {
                         return activateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't activate the user: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't activate the user: \n ${errorResponse.message}`)
                         return of(activateFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -84,7 +84,7 @@ export class AdminEffect {
                         return desactivateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't desactivate the user: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't desactivate the user: \n ${errorResponse.message}`)
                         return of(desactivateFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -102,7 +102,7 @@ export class AdminEffect {
                         return updateRoleSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't update the user's role: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't update the user's role: \n ${errorResponse.message}`)
                         return of(updateRoleFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -131,7 +131,7 @@ export class AdminEffect {
                         return deleteSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't delete the user: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't delete the user: \n ${errorResponse.message}`)
                         return of(deleteFailureAction({errors: errorResponse.message}))
                     })
                 )
@@ -149,8 +149,26 @@ export class AdminEffect {
                         return generatePasswordSuccessAction()
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
-                        this.snackbar.openSnackBarError(`Error: can't update the user's password: ${errorResponse.message}`)
+                        this.snackbar.openSnackBarError(`Error: can't update the user's password: \n ${errorResponse.message}`)
                         return of(generatePasswordFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    hideUser$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(hideAction),
+            switchMap( (action) => {
+                return this.adminService.hideUser(action.userId).pipe(
+                    map((user: CurrentUserInterface) => {
+                        this.snackbar.openDefaultSnackBar(`This dude '${user.pseudo}' will no longer be a trouble ;)`)
+                        return hideSuccessAction({userId: user.id})
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't hide the user: \n ${errorResponse.message}`)
+                        return of(hideFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

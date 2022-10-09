@@ -126,8 +126,21 @@ export const generatePasswordFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const hideAction = createAction(
+    ActionTypes.HIDE,
+    props<{ userId: number }>()
+);
 
-updateRoleAction
+export const hideSuccessAction = createAction(
+    ActionTypes.HIDE_SUCCESS,
+    props<{ userId: number }>()
+);
+
+export const hideFailureAction = createAction(
+    ActionTypes.HIDE_FAILURE,
+    props<{ errors: string}>()
+);
+
 
 
 // export const logoutAction = createAction(

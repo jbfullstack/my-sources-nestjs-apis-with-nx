@@ -2,7 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 
-import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchInputAction, } from "../actions/admin.action";
+import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchInputAction, hideSuccessAction, hideAction, hideFailureAction, } from "../actions/admin.action";
 
 
 
@@ -171,6 +171,32 @@ const adminReducer = createReducer(
             ...state,
             pending: false,
             errors: action.errors
+        })
+    ),
+
+    on(
+        hideAction,
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+        })
+    ),
+    on(
+        hideSuccessAction,
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            desactivatedUsersList: state.desactivatedUsersList.filter( user => user.id === action.userId)
+        })
+    ),
+    on(
+        hideFailureAction,
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            pending: false,
         })
     ),
 )

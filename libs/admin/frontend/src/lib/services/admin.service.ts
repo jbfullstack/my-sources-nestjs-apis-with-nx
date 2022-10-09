@@ -3,10 +3,11 @@ import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/admin-response.interface";
-import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest } from "../graphql-requests/waiting-list.request";
+import { loadAllDesactivatedUsersWithLessPrivilegesGqlRequest, activateUserWithLessPrivilegesGqlRequest, deleteUserWithLessPrivilegesGqlRequest, loadAllActivatedUsersWithLessPrivilegesGqlRequest, updateUserRoleGqlRequest, updatePasswordGqlRequest, hideUserIfDesactivatedAndLessPrivilegesGqlRequest } from "../graphql-requests/waiting-list.request";
 
 @Injectable()
 export class AdminService {
+    
     
     loadAllDesactivatedUsers() {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: loadAllDesactivatedUsersWithLessPrivilegesGqlRequest() })
@@ -21,6 +22,12 @@ export class AdminService {
     activate(id: number) {
         console.log('activate: ', id)
         return this.apollo.mutate<any>({ mutation: activateUserWithLessPrivilegesGqlRequest(id, true) })
+        .pipe(map((response: any) => response.data))
+    }
+
+    hideUser(id: number) {
+        console.log('hideUser: ', id)
+        return this.apollo.mutate<any>({ mutation: hideUserIfDesactivatedAndLessPrivilegesGqlRequest(id) })
         .pipe(map((response: any) => response.data))
     }
 

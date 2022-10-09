@@ -46,6 +46,24 @@ export function activateUserWithLessPrivilegesGqlRequest(userId: number, activat
     }`
 }
 
+/**
+ * TODO: Manage backend side: 'only if user is desactivated'
+ */
+export function hideUserIfDesactivatedAndLessPrivilegesGqlRequest(userId: number) {
+    return gql`mutation updateAdminUser{ 
+        updateAdminUser( 
+            userId: ${userId},
+            input: {
+                hidden: true
+            }
+        ){
+            id
+            pseudo
+            email  
+        } 
+    }`
+}
+
 export function updateUserRoleGqlRequest(userId: number, newRoleId: number) {
     return gql`mutation updateRoleUser{ 
         updateRoleUser( 

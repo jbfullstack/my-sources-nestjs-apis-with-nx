@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
 import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
-import { activateAction, deleteAction } from '../../store/actions/admin.action';
+import { activateAction, deleteAction, hideAction } from '../../store/actions/admin.action';
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -26,13 +26,17 @@ export class ActivateUserComponent  implements OnInit {
         if (this.user?.id) {
             this.store.dispatch(activateAction({userId: this.user.id}))
         }
-        // TODO : manage error
     }
 
     delete(){
         if (this.user?.id) {
             this.store.dispatch(deleteAction({userId: this.user.id}))
         }
-        // TODO : manage error
+    }
+
+    hide() {
+        if (this.user?.id) {
+            this.store.dispatch(hideAction({userId: this.user.id}))
+        }
     }
 }
