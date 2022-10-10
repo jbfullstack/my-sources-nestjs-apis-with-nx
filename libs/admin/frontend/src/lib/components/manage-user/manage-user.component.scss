@@ -1,4 +1,10 @@
 .mat-card {
     width: 25rem;
     margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    box-shadow: none;
+}
+
+.mat-card:hover{
+    box-shadow: 2px 2px 4px 4px lightgray;
 }

@@ -13,6 +13,17 @@
 
 .scrollbar{
     overflow-y: scroll;
-    height: 60rem;
     overflow-x: hidden;
+    height: 60rem;
+    
+}
+
+.mat-card {
+    width: 25rem;
+    margin-top: 1.5rem;
+    box-shadow: none;
+}
+
+.mat-card:hover{
+    box-shadow: 2px 2px 4px 4px lightgray;
 }

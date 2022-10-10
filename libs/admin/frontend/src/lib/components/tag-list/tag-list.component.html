@@ -1,8 +1,8 @@
 <mat-accordion class="example-headers-align" multi>
 
+    <hr>
     <br>
 
-    
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title> Create </mat-panel-title>
@@ -11,9 +11,8 @@
                 <mat-icon>create</mat-icon>
             </mat-panel-description>
         </mat-expansion-panel-header>
-        
         <form id="tag"  [formGroup]="form" (ngSubmit)="onSubmit()">  
-            <mat-card>
+            <mat-card class="mat-card">
                 <div *ngIf="this.form.controls['title'].invalid && (this.form.controls['title'].dirty || this.form.controls['title'].touched)" class="alert">
                     <div *ngIf="this.form.controls['title'].errors?.['required']">Title is required.</div>
                     <div *ngIf="this.form.controls['title'].errors?.['minlength']">Title must be at least 2 characters long.</div>
@@ -66,13 +65,16 @@
     <br>
     <hr>
     <div >
-        <!-- Search bar -->
-        <input [(ngModel)]="searchTagInput" (ngModelChange)="searchTagInputChange($event)">
-        <p>filter by name or description</p>
-        <br>
-        <div class="scrollbar" >       
+        <div >
+            <!-- Search bar -->     
+            <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matSuffix></mat-icon>
+            <input [(ngModel)]="searchTagInput" (ngModelChange)="searchTagInputChange($event)">
+            <p>filter by name or description</p>
+        </div>
 
-        
+        <br>
+
+        <div class="scrollbar" > 
             <div *ngIf="tagsToDisplay()" class="row">
                 <div *ngFor="let tag of tags">
                     <ms-manage-tag [tag]="tag"> </ms-manage-tag>

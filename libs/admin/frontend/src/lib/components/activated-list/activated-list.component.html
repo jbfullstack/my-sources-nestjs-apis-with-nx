@@ -2,9 +2,14 @@
     <hr>
     <div >
 
-        <!-- Search bar -->
-        <input [(ngModel)]="searchInput" (ngModelChange)="searchInputChange($event)">
-        <p>filter by pseudo or email</p>
+        <div >
+            <!-- Search bar -->     
+            <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
+            <input [(ngModel)]="searchUserInput" (ngModelChange)="searchInputChange($event)">
+            <p>filter by pseudo or email</p>
+        </div>
+
+        <br>
 
         <div class="scrollbar" >       
             <div *ngIf="usersToActivate()" class="row">

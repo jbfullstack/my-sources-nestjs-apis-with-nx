@@ -17,8 +17,8 @@ import { updateSearchUserInputAction } from '../../store/actions/admin.action';
 export class ActivatedListComponent  implements OnInit {
     @Input() users!: CurrentUserInterface[] | null;
 
-    searchInput: string = ''
-    searchInput$ = this.adminStore.searchUserInput$
+    searchUserInput: string = ''
+    searchUserInput$ = this.adminStore.searchUserInput$
 
     constructor(private store: Store, private adminStore: AdminStore) { }
 
@@ -31,10 +31,10 @@ export class ActivatedListComponent  implements OnInit {
     }
 
     getSearchInput() {
-        if (this.searchInput === null || this.searchInput === undefined) {
+        if (this.searchUserInput === null || this.searchUserInput === undefined) {
             return 'N/A'
         } else {
-            return this.searchInput
+            return this.searchUserInput
         }
     }
 

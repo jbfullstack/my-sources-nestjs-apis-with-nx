@@ -2,29 +2,44 @@
 <div *ngIf="tag" >
     <div class="col-md-6 col-md-offset-3 login-form">
         <div class="st-login-title text-center">
-            <mat-card>
-                <mat-card-subtitle>created by {{ tag.author.pseudo }}</mat-card-subtitle>
-                <mat-form-field class="example-form-field" appearance="fill">                    
-                    <mat-label>Title</mat-label>
-                    <input matInput type="text" [(ngModel)]="title" (ngModelChange)="titleChanged($event)">
-                    <button *ngIf="title" matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-form-field>
-                <!-- <mat-card-title>#{{ tag.title }}</mat-card-title> -->
+            <mat-card class="mat-card">
+                
+                <mat-card-title>{{ capitalizeFirstLetter(title) }}</mat-card-title> 
+                <mat-card-subtitle>{{ description }}</mat-card-subtitle>
+                
+
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Edit </mat-panel-title>
+                        <!-- <mat-panel-description>    
+                            Tag            
+                            <mat-icon>edit</mat-icon>
+                        </mat-panel-description> -->
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field class="example-form-field" appearance="fill">                    
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" [(ngModel)]="title" (ngModelChange)="titleChanged($event)">
+                        <button *ngIf="title" matSuffix mat-icon-button aria-label="Clear" (click)="title=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <!-- <mat-card-title>#{{ tag.title }}</mat-card-title> -->
+                    <br>
+                    <mat-form-field class="example-form-field" appearance="fill" [style.width.rem]=25 >
+                        <mat-label>Description</mat-label>
+                        <input matInput class="input-description" type="text" [(ngModel)]="description">
+                        <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-card-actions>
+                        <button mat-stroked-button matTooltip="Save changes for {{ tag.title }}" (click)="save()">Save</button>
+                        <button mat-stroked-button matTooltip="Delete tag {{ tag.title }}" (click)="delete()">Delete</button>
+                    </mat-card-actions>                
+                </mat-expansion-panel> 
                 <br>
-                <mat-form-field class="example-form-field" appearance="fill" [style.width.rem]=25 >
-                    <mat-label>Description</mat-label>
-                    <input matInput class="input-description" type="text" [(ngModel)]="description">
-                    <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
-                        <mat-icon>close</mat-icon>
-                    </button>
-                </mat-form-field>
-                <mat-card-actions>
-                    <button mat-stroked-button matTooltip="Save changes for {{ tag.title }}" (click)="save()">Save</button>
-                    <button mat-stroked-button matTooltip="Delete tag {{ tag.title }}" (click)="delete()">Delete</button>
-                </mat-card-actions>
-            </mat-card>
+                <mat-card-subtitle>created by {{ tag.author.pseudo }}</mat-card-subtitle>
+            </mat-card>             
         </div>
     </div>
-</div>
