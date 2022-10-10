@@ -5,7 +5,6 @@
     "admin_be": "libs/admin/backend",
     "admin_fe": "libs/admin/frontend",
     "api": "apps/api",
-    "api-interfaces": "libs/api-interfaces",
     "auth_be": "libs/security/auth/backend",
     "auth_fe": "libs/security/auth/frontend",
     "config_be": "libs/utils/config/backend",

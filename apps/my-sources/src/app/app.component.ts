@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Message } from '@jbhive_ai/api-interfaces';
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { isLoggedInSelector, loggedUserRole } from '@jbhive/auth_fe';
-import { ChildrenOutletContexts, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { logoutAction } from '@jbhive/auth_fe';
 
 @Component({
@@ -13,7 +11,6 @@ import { logoutAction } from '@jbhive/auth_fe';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit{
-  // hello$ = this.http.get<Message>('/api/getData');
   userLoggedSelector$!: Observable<boolean | null>
   userLoggedRoleSelector$!: Observable<number | null | undefined>
 

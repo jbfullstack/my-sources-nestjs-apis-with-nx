@@ -20,28 +20,7 @@ export const initialState: AdminStateInterface = {
 }
 
 @Injectable()
-export class AdminStore extends ComponentStore<AdminStateInterface> {
-    //                 (desactivatedUsers: CurrentUserInterface[]) => {
-    //                     this.setState({
-    //                         desactivatedUsersList: desactivatedUsers,
-    //                         pending: false,
-    //                         errors: null,
-    //                     })
-    //                     this.adminService.dispatch(loadDesactivatedUsersSuccessAction({desactivatedUsers}))
-    //                 },
-    //                 (errorResponse: HttpErrorResponse) => {
-    //                     this.setState({
-    //                         desactivatedUsersList: [],
-    //                         pending: false,
-    //                         errors: errorResponse.message,
-    //                     })  
-    //                     this.adminService.dispatch(loadDesactivatedUsersFailureAction({errors: errorResponse.message}))           
-    //                 }
-    //             )
-    //         )
-    //     // })
-    // )
-    
+export class AdminStore extends ComponentStore<AdminStateInterface> {    
 
     errors$ = this.select(state => state.errors)
     pending$ = this.select(state => state.pending)
@@ -100,36 +79,7 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
     }) 
 )
     
-
-
-    // loadDesactivatedUsers = this.effect( 
-    //     // switchMap( () => {
-    //         return this.adminService.loadAllDesactivatedUsers().pipe(
-    //             tapResponse(
-    //                 (desactivatedUsers: CurrentUserInterface[]) => {
-    //                     this.setState({
-    //                         desactivatedUsersList: desactivatedUsers,
-    //                         pending: false,
-    //                         errors: null,
-    //                     })
-    //                     this.adminService.dispatch(loadDesactivatedUsersSuccessAction({desactivatedUsers}))
-    //                 },
-    //                 (errorResponse: HttpErrorResponse) => {
-    //                     this.setState({
-    //                         desactivatedUsersList: [],
-    //                         pending: false,
-    //                         errors: errorResponse.message,
-    //                     })  
-    //                     this.adminService.dispatch(loadDesactivatedUsersFailureAction({errors: errorResponse.message}))           
-    //                 }
-    //             )
-    //         )
-    //     // })
-    // )
-
     constructor(private adminService : AdminService){
         super(initialState)
     }
-
-    // desactivatedUsers$: Observable<CurrentUserInterface[]> = this.select( (state) => state.desactivatedUsersList)
 }

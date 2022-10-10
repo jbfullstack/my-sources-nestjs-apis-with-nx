@@ -1,22 +1,23 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { AdminStateInterface, CurrentUserInterface } from '@jbhive/types_fe'
+import { AdminStateInterface, } from '@jbhive/types_fe'
+import { ProfileStateInterface } from '../../profile-state.interface'
 
-// export const loginFeatureSelector = createFeatureSelector<AdminStateInterface>('profile')
+export const loginFeatureSelector = createFeatureSelector<ProfileStateInterface>('profile')
 
-// export const isLoadingSelector = createSelector(
-//     loginFeatureSelector, 
-//     (adminState: AdminStateInterface) => adminState.pending
-// )
+export const isPendingSelector = createSelector(
+    loginFeatureSelector, 
+    (adminState: ProfileStateInterface) => adminState.pending
+)
 
-// export const desactivatedUsersSelector = createSelector(
-//     loginFeatureSelector, 
-//     (adminState: AdminStateInterface) => adminState.desactivatedUsersList
-// )
+export const pseudoSelector = createSelector(
+    loginFeatureSelector, 
+    (adminState: ProfileStateInterface) => adminState.pseudo
+)
 
-// export const activatedUsersSelector = createSelector(
-//     loginFeatureSelector, 
-//     (adminState: AdminStateInterface) => adminState.activatedUsersList
-// )
+export const emailSelector = createSelector(
+    loginFeatureSelector, 
+    (adminState: ProfileStateInterface) => adminState.email
+)
 
 // export const tagsSelector = createSelector(
 //     loginFeatureSelector, 

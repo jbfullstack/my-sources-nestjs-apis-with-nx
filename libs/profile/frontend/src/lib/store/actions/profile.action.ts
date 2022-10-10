@@ -8,7 +8,7 @@ import { CurrentUserInterface } from '@jbhive/types_fe'
 
 export const updateUserProfileAction = createAction(
     ActionTypes.UPDATE_USER_PROFILE,
-    props<{ request: UpdateUserProfileRequestInterface}>()
+    props<{ pseudo: string, nickname: string, email: string, password: string}>()
 );
 
 export const updateUserProfileSuccessAction = createAction(

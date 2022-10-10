@@ -33,7 +33,7 @@
             <div class="col-md-6 col-md-offset-3 register-form">                  
                 <div class="st-login-title text-center">
                     <mat-card class="mat-card">     
-                    <form id="register" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <form id="register" [formGroup]="form">
                         Pseudo
                         <fieldset class="form-group">
                             <input matInput formControlName="pseudo"  [(ngModel)]="pseudo_input" name="register-pseudo" id="st-pseudo">                        
@@ -72,11 +72,9 @@
                                 <p><mat-checkbox formControlName="edit_password" (change)="onChangeCheckbox($event)">Edit password</mat-checkbox></p>
                             </section>
 
-                            <input (change)="onChangeCheckbox($event)" matInput formControlName="password"  value="" name="register-password" id="st-password">
-                            <button mat-stroked-button  matTooltip="Save {{ pseudo() }}'s profile" [disabled]="!this.form.valid" type="submit" >Save</button>
+                            <input (change)="onChangeCheckbox($event)" matInput [(ngModel)]="password_input" formControlName="password"  value="" name="register-password" id="st-password">
+                            <button mat-stroked-button  matTooltip="Save {{ pseudo() }}'s profile" [disabled]="!this.form.valid" (click)="save()" >Save</button>
                         </fieldset>
-            
-                            
                     </form>                    
                     </mat-card>
                     

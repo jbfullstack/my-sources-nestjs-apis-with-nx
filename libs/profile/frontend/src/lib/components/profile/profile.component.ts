@@ -8,6 +8,7 @@ import { LoginRequestInterface, loginAction, isSubmittingSelector, validationErr
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UpdateUserProfileRequestInterface } from '../../update-user-profile-request.interface';
 import { updateUserProfileAction } from '../../store/actions/profile.action';
+import { ProfileStore } from '../../store/store/profile.store';
 
 @Component({
   selector: 'ms-profile',
@@ -32,7 +33,12 @@ export class ProfileComponent implements OnInit{
   // currentUserSelector$!: Observable<
   backendErrors$!: Observable<BackendErrorsInterface | null>
 
-  constructor(private formBuilder : FormBuilder, private store: Store) {}
+  pending$ = this.profileStore.pending$
+  // errors$ = this.adminStore.errors$
+  pseudo$ = this.profileStore.pseudo$
+  email$ = this.profileStore.email$
+
+  constructor(private formBuilder : FormBuilder, private store: Store, private profileStore: ProfileStore) {}
 
   ngOnInit(): void {
     this.initializeForm()
@@ -49,14 +55,18 @@ export class ProfileComponent implements OnInit{
   }
 
   initializeValues(): void {
-    this.isSubmittings$ = this.store.pipe(select(isSubmittingSelector))
-    this.backendErrors$ = this.store.pipe(select(validationErrorSelector))
-    this.currentUserSelector$ = this.store.pipe(select(currentUserSelector))
+    // this.isSubmittings$ = this.store.pipe(select(isSubmittingSelector))
+    // this.backendErrors$ = this.store.pipe(select(validationErrorSelector))
+    // this.currentUserSelector$ = this.store.pipe(select(currentUserSelector))
     
 
     this.store.select(currentUserSelector).subscribe(
       (data) => {
-        this.currentUser = data
+        this.currentUser = data       
+
+        this.profileStore.loadPseudo(""+data?.pseudo)
+        this.profileStore.loadEmail(""+data?.nickname)
+
         this.pseudo_input = ""+data?.pseudo
         this.nickname_input = ""+data?.nickname
         this.email_input = ""+data?.email
@@ -109,31 +119,25 @@ export class ProfileComponent implements OnInit{
     }
   }
 
-  canActivate(): Observable<boolean> {
-    return this.store.pipe(
-      select(currentUserSelector),
-      tap((loaded: CurrentUserInterface | null) => {
-        if (!loaded) {
-          // this.store.dispatch(new LoadOrdersRequested());
-          // this.router.navigate(['login']);
-        }
-      }),
-      filter((loaded: any) => loaded),
-      first()
-    )
-  }
+  save(){
+    if (this.pseudo_input===null || this.nickname_input===null || this.email_input===null || this.password_input===null ||
+      this.pseudo_input===undefined || this.nickname_input===undefined || this.email_input===undefined || this.password_input===undefined) {
+      console.error('at least one field is null')
+      return
+    }else {
+      const pseudo: string = this.pseudo_input
+      const nickname: string = this.nickname_input
+      const email: string = this.email_input
+      const password: string = this.password_input
 
-  onSubmit(){
-    const request: UpdateUserProfileRequestInterface = {
-      pseudo: this.pseudo_input,
-      nickname: this.nickname_input,
-      email: this.pseudo_input,
-      password: this.password_input,
+      console.log('$$$ > checked: ', this.isEditPasswordChecked())
+      console.log('$$$ > password: ', password)
+
+      if( this.isEditPasswordChecked() ){
+        this.store.dispatch(updateUserProfileAction( { pseudo: pseudo, nickname: nickname, email: email, password: password} ))
+      } else {
+        this.store.dispatch(updateUserProfileAction( { pseudo: pseudo, nickname: nickname, email: email, password: '' } ))
+      }
     }
-    if( ! this.isEditPasswordChecked() ){
-      delete request.password
-    }
-    
-    this.store.dispatch(updateUserProfileAction( {request: request} ))
   }
 }

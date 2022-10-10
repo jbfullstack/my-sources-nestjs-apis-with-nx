@@ -47,7 +47,7 @@ export class AdminResolver {
         @CtxUser() user: User,
         @Args('userId') userId: number,
         @Args('input') input: UpdateUserInput)  {
-        this.log.logMethod(`Resolver.updateRoleUser(${userId}`)
+        this.log.logMethod(`Resolver.updateUser(${userId}`)
         return this.service.updateUser(user.id, userId, input)
     }
 
@@ -57,7 +57,7 @@ export class AdminResolver {
         @CtxUser() user: User,
         @Args('userId') userId: number,
         @Args('input') input: AdminUpdateUserInput)  {
-        this.log.logMethod(`Resolver.updateRoleUser(${userId}`)
+        this.log.logMethod(`Resolver.updateAdminUser(${userId}`)
         return this.service.updateAdminUser(user.id, userId, input)
     }
 
@@ -65,7 +65,7 @@ export class AdminResolver {
     async updateMyself(
         @CtxUser() user: User,
         @Args('input') input: UpdateUserInput)  {
-        this.log.logMethod(`Resolver.updateRoleUser(${user.id}`)
+        this.log.logMethod(`Resolver.updateMyself(${user.id}`)
         return this.service.updateMyself(user.id, input)
     }
 

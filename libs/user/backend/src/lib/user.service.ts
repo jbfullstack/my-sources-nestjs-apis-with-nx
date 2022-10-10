@@ -150,6 +150,7 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
     }
 
     async updateUser(userId: number, input: UpdateUserInput) {
+        console.log('userservice.updateUser: ', input)
 
         let data = { ...input }
         if (input?.password) {

@@ -117,6 +117,28 @@ export class AdminService extends PrismaClient implements OnModuleInit, OnModule
         if (!userFound) {
             throw new NotFoundException(`Can't update User ${id}, user not found`)
         }
+
+        if( userFound.pseudo !== input.pseudo){
+            const userPseudoFound = await this.data.findUserByPseudo(input.pseudo)
+            if (userPseudoFound) {
+                throw new NotFoundException(`User with pseudo ${input.pseudo} already exist`)
+            }
+        }
+
+        if( userFound.email !== input.email){
+            const userEmailFound = await this.data.findUserByEmail(input.email)
+            if (userEmailFound) {
+                throw new NotFoundException(`User with email ${input.email} already exist`)
+            }
+        }
+
+        if( userFound.nickname !== input.nickname){
+            const userNicknameFound = await this.data.findUserByNickname(input.nickname)
+            if (userNicknameFound) {
+                throw new NotFoundException(`User with nickname ${input.nickname} already exist`)
+            }
+        }
+
         return this.data.updateUser(id, input)
     }
 

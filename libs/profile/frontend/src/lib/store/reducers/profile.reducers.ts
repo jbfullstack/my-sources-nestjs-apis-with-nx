@@ -2,13 +2,13 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 
 import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
 import { updateUserProfileAction, updateUserProfileFailureAction, updateUserProfileSuccessAction } from "../actions/profile.action";
+import { ProfileStateInterface } from "../../profile-state.interface";
 
-interface ProfileStateInterface {
-    pending: boolean
-}
 
 const initialState : ProfileStateInterface = {    
     pending: false,
+    pseudo: '',
+    email: ''
 }
 
 const profileReducer = createReducer(
@@ -26,7 +26,9 @@ const profileReducer = createReducer(
         (state, action): ProfileStateInterface => 
         ({
             ...state,
-            pending: false
+            pending: false,
+            pseudo: action.user.pseudo,
+            email: action.user.email,
         })
     ),
     on(
@@ -39,6 +41,6 @@ const profileReducer = createReducer(
     ),
 )
 
-export function reducers(state: AdminStateInterface, action: Action){
+export function reducers(state: ProfileStateInterface, action: Action){
     return profileReducer(state, action)
 }
