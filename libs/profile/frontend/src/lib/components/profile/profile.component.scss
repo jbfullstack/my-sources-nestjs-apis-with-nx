@@ -7,3 +7,21 @@
     border-color: #ebccd1;
     color: #a94442;
 }
+
+.scrollbar{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 60rem;
+    
+}
+
+.mat-card {
+    width: 25rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
+}
+
+.mat-card:hover{
+    box-shadow: 2px 2px 4px 4px lightgray;
+}

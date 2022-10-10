@@ -1,67 +1,90 @@
-<div class="auth-page">
-    <div class="container page">
-        <div class="row">
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Consult">
+        <section class="register">
 
-            <div *ngIf="isCurrentUSerLoaded(); else loggedOut">     
+            <br>
 
-                <div class="clo-md-6 col-xs-12">
-                    <h1 class="text-xs-center">Welcome {{ pseudo() }}</h1>
-                    <p class="text-xs-center"> Nice to see you ! </p>
-
-                    <div>
-                        email: {{ email() }}
-                    </div>
-                    <div>
-                        role: {{ roleName() }}
-                    </div>
-                    <!-- <ms-backend-error-messages
-                    *ngIf="backendErrors$ | async"
-                    [backendErrors]="backendErrors$ | async"
-                    ></ms-backend-error-messages> -->
-
-                    <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">           
-                        <fieldset class="form-group">
-                            <input
-                                type="text"
-                                class="form-control form-control-lg"
-                                placeholder="Nickname"
-                                formControlName="nickname"
-                            />
-                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
-                                class="alert">
-                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
-                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
-                                </div>
+            <div class="auth-page">
+                <div class="container page">
+                    <div class="row">
+                        <div class="clo-md-6 col-xs-12">
+                            <div *ngIf="isCurrentUSerLoaded(); else loggedOut">     
+                                <mat-card>
+                                    <mat-card-title>{{ pseudo() }} [{{ roleName() }}]</mat-card-title>
+                                    <mat-card-subtitle>{{ email() }}</mat-card-subtitle>     
+                                    <mat-card-content>{{ createdAt()  | date:'short' }}</mat-card-content>
+                                </mat-card>
                             </div>
-                        </fieldset>
-                        <fieldset class="form-group">
-                            <input
-                                type="password"
-                                class="form-control form-control-lg"
-                                placeholder="Password"
-                                formControlName="password"
-                            />
-                            <div *ngIf="this.form.controls['password'].invalid && (this.form.controls['password'].dirty || this.form.controls['password'].touched)"
-                                class="alert">
-                                <div *ngIf="this.form.controls['password'].errors?.['required']">Password is required.</div>
-                                <div *ngIf="this.form.controls['password'].errors?.['minlength']">Password must be at least 4 characters long.
-                                </div>
-                            </div>
-                        </fieldset>
-                        <button
-                            class="btn btn-lg btn-primary pull-xs-right"
-                            type="submit"
-                            [disabled]="(isSubmittings$ | async) || !this.form.valid" >
-                            Sign in
-                        </button>
-                        </fieldset>
-                    </form> -->
+                        </div>
+                    </div>
+            
+                    <ng-template #loggedOut>
+                        You need to sign in :)
+                    </ng-template>
                 </div>
             </div>
-        </div>
+        </section>
+    </mat-tab>
 
-        <ng-template #loggedOut>
-            You need to sign in :)
-        </ng-template>
-    </div>
-</div>
+    <mat-tab label="Edit">
+        <section class="register">
+
+            <br>
+            <div class="col-md-6 col-md-offset-3 register-form">                  
+                <div class="st-login-title text-center">
+                    <mat-card class="mat-card">     
+                    <form id="register" [formGroup]="form" (ngSubmit)="onSubmit()">
+                        Pseudo
+                        <fieldset class="form-group">
+                            <input matInput formControlName="pseudo"  [(ngModel)]="pseudo_input" name="register-pseudo" id="st-pseudo">                        
+                            <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
+                            class="alert">
+                                <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
+                                <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.
+                            </div>
+                        </div>
+                        </fieldset>
+
+                        Nickname
+                        <fieldset class="form-group">                            
+                            <input matInput formControlName="nickname" [(ngModel)]="nickname_input" name="register-nickname" id="st-nickname">
+                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
+                            class="alert">
+                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
+                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
+                            </div>
+                        </div>   
+                        </fieldset>
+
+                        Email 
+                        <fieldset class="form-group">                                                           
+                            <input matInput formControlName="email" [(ngModel)]="email_input" name="register-email" id="st-email">
+                            <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
+                            class="alert">
+                                <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
+                                <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
+                            <div *ngIf="this.form.controls['email'].errors?.['email']">Wrong format email.</div>
+                        </div>
+                        </fieldset>
+
+                        <fieldset class="form-group">
+                            <section class="example-section" [formGroup]="enable">
+                                <p><mat-checkbox formControlName="edit_password" (change)="onChangeCheckbox($event)">Edit password</mat-checkbox></p>
+                            </section>
+
+                            <input (change)="onChangeCheckbox($event)" matInput formControlName="password"  value="" name="register-password" id="st-password">
+                            <button mat-stroked-button  matTooltip="Save {{ pseudo() }}'s profile" [disabled]="!this.form.valid" type="submit" >Save</button>
+                        </fieldset>
+            
+                            
+                    </form>                    
+                    </mat-card>
+                    
+                </div>
+            </div>
+
+
+        </section>
+    </mat-tab> 
+
+</mat-tab-group>
