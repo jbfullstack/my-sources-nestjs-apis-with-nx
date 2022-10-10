@@ -21,4 +21,20 @@
     color: #a94442;
 }
 
+ .viewport {
+    display: contents;
+    overflow-y: scroll;
+    // height: 60rem;
+    // width: 100%;
+    // border: 1px solid black;
+    // max-width: 100% !important;
+    // scrollbar-width: 10px;
+}
+
+.scrollbar{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 60rem;
+    
+}
 

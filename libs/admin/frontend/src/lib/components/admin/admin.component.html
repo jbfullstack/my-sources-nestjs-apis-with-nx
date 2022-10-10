@@ -1,12 +1,14 @@
 <mat-tab-group dynamicHeight>
     <mat-tab label="Users">
-        <section class="login">
+        <section class="register">
+
+            <br>
 
             <!-- <ms-backend-error-messages 
             *ngIf="backendErrorsSelector$ | async"
             [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
             
-            <div class="color-overlay"></div><!-- /COLOR OVERLY -->
+            <!-- <div class="color-overlay"></div> -->
             <div class="container">
                 <div *ngIf="desactivatedUsers$ | async" >
                     <ms-waiting-list [users]="desactivatedUsers$ | async ">
@@ -23,13 +25,13 @@
     </mat-tab>
 
     <mat-tab label="Tags">
-        <section class="login">
+        <section class="register">
 
             <!-- <ms-backend-error-messages 
             *ngIf="backendErrorsSelector$ | async"
             [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
             
-            <div class="color-overlay"></div><!-- /COLOR OVERLY -->
+            <!-- <div class="color-overlay"></div> -->
             <div class="container">       
                 <div *ngIf="filteredTags$ | async" >         
                     <ms-tag-list [tags]="filteredTags$ | async ">

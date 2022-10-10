@@ -135,6 +135,18 @@ p {
 
 /* 5. SUBSCRIBE */
 
+.tag {
+    height: 1400px;
+    padding-top: 100px;
+    padding-bottom: 120px;
+    position: relative;
+    background-image: url(../../styles/images/tag2-bg.jpg);
+    background-position: 50% 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    // background-attachment: fixed;
+}
+
 .login {
     height: 1400px;
     padding-top: 100px;

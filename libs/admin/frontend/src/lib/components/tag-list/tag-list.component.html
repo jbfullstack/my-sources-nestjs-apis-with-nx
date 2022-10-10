@@ -1,30 +1,8 @@
 <mat-accordion class="example-headers-align" multi>
-    <mat-expansion-panel>
-        <mat-expansion-panel-header>
-            <mat-panel-title> Tag list </mat-panel-title>
-            <mat-panel-description>
-                All tags
-                <mat-icon>tag</mat-icon>
-            </mat-panel-description>
-        </mat-expansion-panel-header>
-
-        <!-- Search bar -->
-        <input [(ngModel)]="searchTagInput" (ngModelChange)="searchTagInputChange($event)">
-        <p>filter by name or description</p>
-
-        <div *ngIf="tagsToDisplay()" class="row">
-            <div *ngFor="let tag of tags">
-                <ms-manage-tag [tag]="tag"> </ms-manage-tag>
-            </div>
-        </div>
-        <div *ngIf="!tagsToDisplay()" class="row">            
-            <p>No tag found..</p>
-        </div>
-
-    </mat-expansion-panel>
 
     <br>
 
+    
     <mat-expansion-panel>
         <mat-expansion-panel-header>
             <mat-panel-title> Create </mat-panel-title>
@@ -70,5 +48,39 @@
 
         </form>
     </mat-expansion-panel>
+    <br>
+
+    <!-- <div class="container">
+        <div *ngIf="tagsToDisplay()" class="row">
+            <cdk-virtual-scroll-viewport itemSize="50" class="viewport" autosize>
+                <div *cdkVirtualFor="let tag of tags;" class="item" [style.height.px]="75">
+                    <ms-manage-tag [tag]="tag"> </ms-manage-tag>
+                </div>
+                <div *ngIf="!tagsToDisplay()" class="row">            
+                    <p>No tag found..</p>
+                </div>
+            </cdk-virtual-scroll-viewport>
+        </div>
+    </div> -->
+
+    <br>
+    <hr>
+    <div >
+        <!-- Search bar -->
+        <input [(ngModel)]="searchTagInput" (ngModelChange)="searchTagInputChange($event)">
+        <p>filter by name or description</p>
+        <br>
+        <div class="scrollbar" >       
+
+        
+            <div *ngIf="tagsToDisplay()" class="row">
+                <div *ngFor="let tag of tags">
+                    <ms-manage-tag [tag]="tag"> </ms-manage-tag>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </mat-accordion>
 
