@@ -1,5 +1,5 @@
 import { Component, Directive, Input, OnInit } from '@angular/core'
-import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { UserInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
@@ -13,7 +13,7 @@ import { desactivatedUsersSelector } from '../../store/selectors/admin.selector'
     styleUrls: ['./waiting-list.component.scss'],    
 })
 export class WaitingListComponent  implements OnInit {
-    @Input() users!: CurrentUserInterface[] | null;
+    @Input() users!: UserInterface[] | null;
 
     constructor() { }
 

@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { registerAction, registerFailureAction, registerSuccessAction } from "../actions/register-action";
 import { AuthService } from '../../services/auth.service';
-import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, UserInterface } from '@jbhive/types_fe';
 import { PersistanceService } from '../../services/persistance.service';
 import { Router } from '@angular/router';
 
@@ -23,7 +23,7 @@ export class RegisterEffect {
             switchMap(({request}) => {
                 // pipe map => bcs register is an asynchronous call (and so produce an observable)
                 return this.authService.register(request).pipe(
-                    map((currentUser: CurrentUserInterface) => {
+                    map((currentUser: UserInterface) => {
                         
                         //
                         return registerSuccessAction({currentUser})

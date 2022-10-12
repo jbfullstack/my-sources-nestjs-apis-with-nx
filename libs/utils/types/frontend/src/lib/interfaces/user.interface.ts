@@ -1,4 +1,4 @@
-export interface CurrentUserInterface {
+export interface UserInterface {
     id: number,
     pseudo: string,
     email: string,

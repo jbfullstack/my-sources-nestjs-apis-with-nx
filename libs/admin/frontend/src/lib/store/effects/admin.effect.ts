@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
 import { AdminService } from '../../services/admin.service';
-import { BackendErrorsInterface, CurrentUserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, UserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
 import { 
     loadDesactivatedUsersAction, activateAction, activateFailureAction, activateSuccessAction, 
@@ -29,7 +29,7 @@ export class AdminEffect {
             ofType(loadDesactivatedUsersAction),
             switchMap( () => {
                 return this.adminService.loadAllDesactivatedUsers().pipe(
-                    map((desactivatedUsers: CurrentUserInterface[]) => {                            
+                    map((desactivatedUsers: UserInterface[]) => {                            
                         return loadDesactivatedUsersSuccessAction({ desactivatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -46,7 +46,7 @@ export class AdminEffect {
             ofType(loadActivatedUsersAction),
             switchMap( () => {
                 return this.adminService.loadAllActivatedUsers().pipe(
-                    map((activatedUsers: CurrentUserInterface[]) => {
+                    map((activatedUsers: UserInterface[]) => {
                         return loadActivatedUsersSuccessAction({ activatedUsers })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -80,7 +80,7 @@ export class AdminEffect {
             ofType(activateAction),
             switchMap( (action) => {
                 return this.adminService.activate(action.userId).pipe(
-                    map((user: CurrentUserInterface) => {
+                    map((user: UserInterface) => {
                         return activateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -97,7 +97,7 @@ export class AdminEffect {
             ofType(desactivateAction),
             switchMap( (action) => {
                 return this.adminService.desactivate(action.userId).pipe(
-                    map((user: CurrentUserInterface) => {
+                    map((user: UserInterface) => {
                         return desactivateSuccessAction({ userId: action.userId })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -114,7 +114,7 @@ export class AdminEffect {
             ofType(updateRoleAction),
             switchMap( (action) => {
                 return this.adminService.updateRole(action.userId, action.newRoleId).pipe(
-                    map((user: CurrentUserInterface) => {
+                    map((user: UserInterface) => {
                         this.snackbar.openDefaultSnackBar(`Success: user's role updated'`)
                         return updateRoleSuccessAction({ userId: action.userId })
                     }),
@@ -171,7 +171,7 @@ export class AdminEffect {
             ofType(generatePasswordAction),
             switchMap( (action) => {
                 return this.adminService.generatePassword(action.userId, action.password).pipe(
-                    map((user: CurrentUserInterface) => {
+                    map((user: UserInterface) => {
                         this.snackbar.openDefaultSnackBar(`Success: user's password updated'`)
                         return generatePasswordSuccessAction()
                     }),
@@ -189,7 +189,7 @@ export class AdminEffect {
             ofType(hideAction),
             switchMap( (action) => {
                 return this.adminService.hideUser(action.userId).pipe(
-                    map((user: CurrentUserInterface) => {
+                    map((user: UserInterface) => {
                         this.snackbar.openDefaultSnackBar(`This dude '${user.pseudo}' will no longer be a trouble ;)`)
                         return hideSuccessAction({userId: user.id})
                     }),

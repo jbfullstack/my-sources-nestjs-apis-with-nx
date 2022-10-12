@@ -1,8 +1,8 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 
-import { AuthStateInterface } from "@jbhive/types_fe";
+import { AuthStateInterface, UserInterface } from "@jbhive/types_fe";
 
-import { loginAction, loginFailureAction, loginSuccessAction, logoutAction } from "../actions/login-action";
+import { loginAction, loginFailureAction, loginSuccessAction, logoutAction, updateCurentUserAction } from "../actions/login-action";
 import { registerAction, registerSuccessAction, registerFailureAction } from "../actions/register-action";
 
 
@@ -124,6 +124,15 @@ const authReducer = createReducer(
             },
         })
     ),
+
+    on(
+        updateCurentUserAction,
+        (state, action): AuthStateInterface => 
+        ({
+            ...state,
+            login: action.authState.login
+        })
+    )
 )
 
 export function reducers(state: AuthStateInterface, action: Action){

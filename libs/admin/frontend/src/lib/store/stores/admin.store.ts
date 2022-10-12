@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
-import { AdminStateInterface, CurrentUserInterface, TagInterface } from "@jbhive/types_fe";
+import { AdminStateInterface, UserInterface, TagInterface } from "@jbhive/types_fe";
 import { catchError, map, Observable, of, switchMap } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
 import { loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction } from "../actions/admin.action";
@@ -49,13 +49,13 @@ export class AdminStore extends ComponentStore<AdminStateInterface> {
         })    
     )
 
-    loadDesactivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
+    loadDesactivatedUsers = this.updater( (state, users: UserInterface[] | null) => ({
             ...state,
             desactivatedUsersList: users || []
         })    
     )
     
-    loadActivatedUsers = this.updater( (state, users: CurrentUserInterface[] | null) => ({
+    loadActivatedUsers = this.updater( (state, users: UserInterface[] | null) => ({
             ...state,
             activatedUsersList: users || []
         }) 

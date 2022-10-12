@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 import { registerAction, registerFailureAction, registerSuccessAction } from "../actions/register-action";
 import { AuthService } from '../../services/auth.service';
-import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, UserInterface } from '@jbhive/types_fe';
 import { PersistanceService } from '../../services/persistance.service';
 import { Router } from '@angular/router';
 import { loginAction, loginFailureAction, loginSuccessAction } from '../actions/login-action';
@@ -24,7 +24,7 @@ export class LoginEffect {
             switchMap(({request}) => {
                 // pipe map => bcs login is an asynchronous call (and so produce an observable)
                 return this.authService.login(request).pipe(
-                    map((currentUser: CurrentUserInterface) => {
+                    map((currentUser: UserInterface) => {
                         // register the Jwt token
                         this.persistanceService.set('accessToken', currentUser.token)
                         //

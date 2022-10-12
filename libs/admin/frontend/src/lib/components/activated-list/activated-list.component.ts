@@ -1,5 +1,5 @@
 import { Component, Directive, Input, OnInit } from '@angular/core'
-import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { UserInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
@@ -15,7 +15,7 @@ import { updateSearchUserInputAction } from '../../store/actions/admin.action';
     styleUrls: ['./activated-list.component.scss'],    
 })
 export class ActivatedListComponent  implements OnInit {
-    @Input() users!: CurrentUserInterface[] | null;
+    @Input() users!: UserInterface[] | null;
 
     searchUserInput: string = ''
     searchUserInput$ = this.adminStore.searchUserInput$

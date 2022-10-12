@@ -1,5 +1,5 @@
 import { Component, Directive, EventEmitter, Input, OnInit, Output } from '@angular/core'
-import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { UserInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { generatePassword } from '@jbhive/math'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
@@ -21,7 +21,7 @@ interface Role {
     styleUrls: ['./manage-user.component.scss'],    
 })
 export class ManageUserComponent  implements OnInit {
-    @Input() user!: CurrentUserInterface | null
+    @Input() user!: UserInterface | null
 
     loggedUserRoleId$ = this.adminStore.loggedUserRoleId$
 

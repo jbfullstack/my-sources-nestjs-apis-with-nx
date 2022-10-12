@@ -1,5 +1,5 @@
 import { Component, Directive, Input, OnInit } from '@angular/core'
-import { CurrentUserInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { UserInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector } from '../../store/selectors/admin.selector';
@@ -16,7 +16,7 @@ import { activateAction, deleteAction, hideAction } from '../../store/actions/ad
     styleUrls: ['./activate-user.component.scss'],    
 })
 export class ActivateUserComponent  implements OnInit {
-    @Input() user!: CurrentUserInterface | null;
+    @Input() user!: UserInterface | null;
 
     constructor(private store: Store) { }
 

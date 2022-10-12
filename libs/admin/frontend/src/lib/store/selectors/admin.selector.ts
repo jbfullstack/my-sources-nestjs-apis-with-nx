@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store'
-import { AdminStateInterface, CurrentUserInterface } from '@jbhive/types_fe'
+import { AdminStateInterface, UserInterface } from '@jbhive/types_fe'
 
 export const loginFeatureSelector = createFeatureSelector<AdminStateInterface>('admin')
 

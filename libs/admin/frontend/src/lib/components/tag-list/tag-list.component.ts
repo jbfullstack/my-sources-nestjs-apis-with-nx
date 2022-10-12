@@ -1,5 +1,5 @@
 import { Component, Directive, Input, OnInit } from '@angular/core'
-import { CurrentUserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe'
+import { UserInterface, TagInterface, UsersListStateInterface } from '@jbhive/types_fe'
 import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store'
 import { desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector';

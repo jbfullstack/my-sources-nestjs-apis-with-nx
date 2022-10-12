@@ -8,7 +8,7 @@ import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
 
-import { CurrentUserInterface} from '@jbhive/types_fe';
+import { UserInterface} from '@jbhive/types_fe';
 import { SnackBarComponent } from '@jbhive/snackbar';
 import { updateUserProfileAction, updateUserProfileFailureAction, updateUserProfileSuccessAction } from '../actions/profile.action';
 import { ProfileService } from '../../profile.service';
@@ -25,8 +25,8 @@ export class ProfileEffect {
                 console.log('updateUserProfile>: ', action)
                 return this.profileService.updateUserProfile(action)
                 .pipe(
-                    map((user: CurrentUserInterface) => {
-                        this.snackbar.openDefaultSnackBar(`Success: profile update (you may need to re-loggin to see changes)`)
+                    map((user: UserInterface) => {
+                        this.snackbar.openDefaultSnackBar(`Success: profile update \n You will need to re-loggin to regenerate access token :)`)
                         return updateUserProfileSuccessAction({user})
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {
@@ -37,6 +37,17 @@ export class ProfileEffect {
             })
         )
     )
+
+    // updateCurrentUser$ = createEffect( () => 
+    // this.actions$.pipe(
+    //     ofType(updateUserProfileSuccessAction),
+    //     switchMap( (action) => {
+    //         console.log('updateCurrentUser$ : ', action)
+    //         return updateCurentUserAction({action.})
+    //     })
+    // )
+    //)
+
 
     constructor(
         private actions$: Actions, 

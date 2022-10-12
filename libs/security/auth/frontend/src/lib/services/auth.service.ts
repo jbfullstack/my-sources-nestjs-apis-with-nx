@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { RegisterRequestInterface } from "../types/register-request.interface";
-import { CurrentUserInterface } from '@jbhive/types_fe'
+import { UserInterface } from '@jbhive/types_fe'
 import { Apollo, gql } from 'apollo-angular';
 import { AuthRegisterResponseInterface } from "../types/auth-response.interface";
 import { LoginRequestInterface } from "../types/login-request.interface";
@@ -25,12 +25,12 @@ export class AuthService {
     //     return uptime
     // }
 
-    register(data: RegisterRequestInterface) : Observable<CurrentUserInterface> {
+    register(data: RegisterRequestInterface) : Observable<UserInterface> {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: createRequestGqlRequest(data) })
         .pipe(map((response: any) => response.data.register))
     }
 
-    login(data: LoginRequestInterface) : Observable<CurrentUserInterface> {
+    login(data: LoginRequestInterface) : Observable<UserInterface> {
         return this.apollo.mutate<AuthRegisterResponseInterface>({ mutation: createLoginGqlRequest(data) })
         .pipe(map((response: any) => response.data.login ))
     }

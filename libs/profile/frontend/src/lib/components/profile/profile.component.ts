@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { tap, filter, first, map } from 'rxjs/operators';
-import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe'
-import { LoginRequestInterface, loginAction, isSubmittingSelector, validationErrorSelector, currentUserSelector } from '@jbhive/auth_fe'
+import { BackendErrorsInterface, UserInterface, ProfileUserStateInterface, AuthStateInterface } from '@jbhive/types_fe'
+import { LoginRequestInterface, loginAction, isSubmittingSelector, validationErrorSelector, currentUserSelector, updateCurentUserAction } from '@jbhive/auth_fe'
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { UpdateUserProfileRequestInterface } from '../../update-user-profile-request.interface';
 import { updateUserProfileAction } from '../../store/actions/profile.action';
@@ -28,8 +28,8 @@ export class ProfileComponent implements OnInit{
   password_input: string = ''
 
   isSubmittings$!: Observable<boolean>
-  currentUserSelector$!: Observable<CurrentUserInterface | null>
-  currentUser!: CurrentUserInterface | null
+  currentUserSelector$!: Observable<UserInterface | null>
+  currentUser!: UserInterface | null
   // currentUserSelector$!: Observable<
   backendErrors$!: Observable<BackendErrorsInterface | null>
 
@@ -37,6 +37,8 @@ export class ProfileComponent implements OnInit{
   // errors$ = this.adminStore.errors$
   pseudo$ = this.profileStore.pseudo$
   email$ = this.profileStore.email$
+  roleName$ = this.profileStore.roleName$
+  createdAt$ = this.profileStore.createdAt$
 
   constructor(private formBuilder : FormBuilder, private store: Store, private profileStore: ProfileStore) {}
 
@@ -62,16 +64,23 @@ export class ProfileComponent implements OnInit{
 
     this.store.select(currentUserSelector).subscribe(
       (data) => {
-        this.currentUser = data       
-
-        this.profileStore.loadPseudo(""+data?.pseudo)
-        this.profileStore.loadEmail(""+data?.nickname)
-
-        this.pseudo_input = ""+data?.pseudo
-        this.nickname_input = ""+data?.nickname
-        this.email_input = ""+data?.email
+        this.currentUser = data    
+        console.log('retrieved user :', this.currentUser)
+        if ( this.currentUser !== null) {
+          this.profileStore.loadProfileUser(this.currentUser)
+          this.pseudo_input = this.currentUser.pseudo
+          this.nickname_input = this.getValue(this.currentUser.nickname)
+          this.email_input = this.currentUser.email
+        }
       }
     );
+  }
+  getValue(element: string | undefined | null): string {
+    if (element === undefined || element == null) {
+      return 'N/A'
+    } else {
+      return element
+    }
   }
 
 
@@ -82,21 +91,21 @@ export class ProfileComponent implements OnInit{
     return true
   }
 
-  email() {
-    return this.currentUser?.email
-  }
+  // email() {
+  //   return this.email$
+  // }
 
-  pseudo() {
-    return this.currentUser?.pseudo
-  }
+  // pseudo() {
+  //   return this.currentUser?.pseudo
+  // }
 
-  roleId() {
-    return this.currentUser?.role?.id
-  }
+  // roleId() {
+  //   return this.currentUser?.role?.id
+  // }
 
-  roleName() {
-    return this.currentUser?.role?.name
-  }
+  // roleName() {
+  //   return this.currentUser?.role?.name
+  // }
 
   createdAt(){
     return this.currentUser?.createdAt
@@ -138,6 +147,57 @@ export class ProfileComponent implements OnInit{
       } else {
         this.store.dispatch(updateUserProfileAction( { pseudo: pseudo, nickname: nickname, email: email, password: '' } ))
       }
+    
+      const newUserProfile: ProfileUserStateInterface = {
+        user: {
+          id: (this.currentUser?.id) ? this.currentUser.id : 0,
+          pseudo: pseudo,
+          email: email,
+          nickname: nickname,
+          createdAt: (this.currentUser?.createdAt) ? this.currentUser.createdAt : '',
+          role: (this.currentUser?.role) ? this.currentUser?.role : { id: 0, name: 'user'}
+        },
+        pending: false
+      }
+      
+      this.profileStore.patchState({
+        user: newUserProfile.user
+      })
+
+
+      const newCurrentUser : UserInterface = {
+        id: newUserProfile.user.id,
+        pseudo: newUserProfile.user.pseudo,
+        email: newUserProfile.user.email,
+        nickname: newUserProfile.user.nickname,
+        createdAt: newUserProfile.user.createdAt,
+        role: {
+          id: newUserProfile.user.role.id,
+          name: newUserProfile.user.role.name
+        },
+        image: null,
+        token: null
+      }
+      const authState: AuthStateInterface = {
+        login: {
+          isLoggedIn: true,
+          isSubmitting: false,
+          validationErrors: null,
+          currentUser: newCurrentUser
+        },
+        register: {
+          isAccountCreated: false,
+          isSubmitting: false,
+          validationErrors: null
+        }
+      }
+
+      this.store.dispatch(updateCurentUserAction({ authState}))
+
+      // !!! TODO : Regenerate token !!!
     }
+    
+
+
   }
 }

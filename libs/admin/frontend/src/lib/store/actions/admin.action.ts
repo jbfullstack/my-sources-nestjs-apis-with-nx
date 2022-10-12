@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { ActionTypes } from '../action-types';
 
-import { CurrentUserInterface, BackendErrorsInterface, UsersListStateInterface, TagInterface } from '@jbhive/types_fe';
+import { UserInterface, BackendErrorsInterface, UsersListStateInterface, TagInterface } from '@jbhive/types_fe';
 
 
 export const loadDesactivatedUsersAction = createAction(
@@ -11,7 +11,7 @@ export const loadDesactivatedUsersAction = createAction(
 
 export const loadDesactivatedUsersSuccessAction = createAction(
     ActionTypes.LOAD_DESACTIVATED_SUCCESS,
-    props<{ desactivatedUsers: CurrentUserInterface[]}>()
+    props<{ desactivatedUsers: UserInterface[]}>()
 );
 
 export const loadDesactivatedUsersFailureAction = createAction(
@@ -25,7 +25,7 @@ export const loadActivatedUsersAction = createAction(
 
 export const loadActivatedUsersSuccessAction = createAction(
     ActionTypes.LOAD_ACTIVATED_SUCCESS,
-    props<{ activatedUsers: CurrentUserInterface[]}>()
+    props<{ activatedUsers: UserInterface[]}>()
 );
 
 export const loadActivatedUsersFailureAction = createAction(

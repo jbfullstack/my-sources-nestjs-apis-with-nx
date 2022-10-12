@@ -10,8 +10,8 @@
                         <div class="clo-md-6 col-xs-12">
                             <div *ngIf="isCurrentUSerLoaded(); else loggedOut">     
                                 <mat-card>
-                                    <mat-card-title>{{ pseudo() }} [{{ roleName() }}]</mat-card-title>
-                                    <mat-card-subtitle>{{ email() }}</mat-card-subtitle>     
+                                    <mat-card-title>{{  this.pseudo$ | async }} [{{  this.roleName$ | async }}]</mat-card-title>
+                                    <mat-card-subtitle>{{ this.email$ | async }}</mat-card-subtitle>     
                                     <mat-card-content>{{ createdAt()  | date:'short' }}</mat-card-content>
                                 </mat-card>
                             </div>
@@ -73,7 +73,7 @@
                             </section>
 
                             <input (change)="onChangeCheckbox($event)" matInput [(ngModel)]="password_input" formControlName="password"  value="" name="register-password" id="st-password">
-                            <button mat-stroked-button  matTooltip="Save {{ pseudo() }}'s profile" [disabled]="!this.form.valid" (click)="save()" >Save</button>
+                            <button mat-stroked-button  matTooltip="Save {{  this.pseudo$ | async }}'s profile" [disabled]="!this.form.valid" (click)="save()" >Save</button>
                         </fieldset>
                     </form>                    
                     </mat-card>

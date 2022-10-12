@@ -2,7 +2,7 @@ import { createAction, props } from '@ngrx/store';
 import { UpdateUserProfileRequestInterface } from '../../update-user-profile-request.interface';
 
 import { ActionTypes } from '../action-types';
-import { CurrentUserInterface } from '@jbhive/types_fe'
+import { UserInterface } from '@jbhive/types_fe'
 
 
 
@@ -13,7 +13,7 @@ export const updateUserProfileAction = createAction(
 
 export const updateUserProfileSuccessAction = createAction(
     ActionTypes.UPDATE_USER_PROFILE_SUCCESS,
-    props<{ user: CurrentUserInterface}>()
+    props<{ user: UserInterface}>()
 );
 
 export const updateUserProfileFailureAction = createAction(

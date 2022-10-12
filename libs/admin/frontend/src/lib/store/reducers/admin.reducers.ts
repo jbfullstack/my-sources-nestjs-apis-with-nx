@@ -1,21 +1,22 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 
-import { AdminStateInterface, CurrentUserInterface } from "@jbhive/types_fe";
+import { AdminStateInterface, UserInterface } from "@jbhive/types_fe";
 
 import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, createTagSuccessAction, createTagAction, createTagFailureAction, deleteTagAction, deleteTagFailureAction, deleteTagSuccessAction, } from "../actions/admin.action";
+import { initialState } from "../stores/admin.store";
 
 
 
-const initialState: AdminStateInterface = {
-    desactivatedUsersList: [],
-    activatedUsersList: [],
-    searchUserInput: '',
-    pending: false,
-    errors: null,
-    loggedUserRoleId: 0,
-    tags: [],
-    searchTagInput: ''
-}
+// const initialState: AdminStateInterface = {
+//     desactivatedUsersList: [],
+//     activatedUsersList: [],
+//     searchUserInput: '',
+//     pending: false,
+//     errors: null,
+//     loggedUserRoleId: 0,
+//     tags: [],
+//     searchTagInput: ''
+// }
 
 const adminReducer = createReducer(
     initialState, 
@@ -296,7 +297,7 @@ const adminReducer = createReducer(
     ),
 )
 
-// export function getDesactivatedListForSuccessAction(userId: number, list : CurrentUserInterface[]) {
+// export function getDesactivatedListForSuccessAction(userId: number, list : UserInterface[]) {
 //     console.log('getDesactivatedListForSuccessAction() -> list:', list)
 //     if (list.length === 1 && list[0].id === userId) {
 //         console.log('return []')

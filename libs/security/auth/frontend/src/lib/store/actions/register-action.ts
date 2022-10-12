@@ -3,7 +3,7 @@ import { createAction, props } from '@ngrx/store';
 import { RegisterRequestInterface } from '../../types/register-request.interface';
 import { ActionTypes } from '../action-types';
 
-import { BackendErrorsInterface, CurrentUserInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, UserInterface } from '@jbhive/types_fe';
 
 export const registerAction = createAction(
     ActionTypes.REGISTER,
@@ -12,7 +12,7 @@ export const registerAction = createAction(
 
 export const registerSuccessAction = createAction(
     ActionTypes.REGISTER_SUCCESS,
-    props<{ currentUser: CurrentUserInterface}>()
+    props<{ currentUser: UserInterface}>()
 );
 
 export const registerFailureAction = createAction(

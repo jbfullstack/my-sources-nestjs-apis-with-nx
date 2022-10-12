@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
-import { BackendErrorsInterface, CurrentUserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
+import { BackendErrorsInterface, UserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
 import { loadActivatedUsersAction, loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction } from '../../store/actions/admin.action'
 import { activatedUsersSelector, desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector'
 import { AdminStore } from '../../store/stores/admin.store'
@@ -18,7 +18,7 @@ import { loggedUserRole } from '@jbhive/auth_fe'
 export class AdminComponent implements OnInit{
   // desactivatedUsersSelector$!: Observable<UsersListStateInterface | null>
   // desactivatedListSubscription!: Subscription
-  // desactivatedList!: CurrentUserInterface[] | undefined
+  // desactivatedList!: UserInterface[] | undefined
 
   desactivatedUsers$ = this.adminStore.desactivatedUsersList$
   activatedUsers$ = this.adminStore.activatedUsersList$
@@ -85,8 +85,5 @@ export class AdminComponent implements OnInit{
   }
 
 
-}
-function loadTagsAction(): any {
-  throw new Error('Function not implemented.')
 }
 
