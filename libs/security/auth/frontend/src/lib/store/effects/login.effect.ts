@@ -45,7 +45,7 @@ export class LoginEffect {
         this.actions$.pipe(
             ofType(loginSuccessAction),
             tap( () => {
-                this.router.navigateByUrl('/profile')
+                this.router.navigateByUrl('/source')
             })
         ),
         {dispatch: false}

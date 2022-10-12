@@ -15,6 +15,7 @@
     "my-sources": "apps/my-sources",
     "my-sources-e2e": "apps/my-sources-e2e",
     "profile": "libs/profile/frontend",
+    "source_fe": "libs/source/frontend",
     "source_be": "libs/source/backend",
     "styles": "libs/styles",
     "type_be": "libs/utils/types/backend",

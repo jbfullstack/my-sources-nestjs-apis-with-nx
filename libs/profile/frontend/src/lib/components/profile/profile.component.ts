@@ -204,7 +204,7 @@ export class ProfileComponent implements OnInit{
         }
       }
 
-      this.store.dispatch(updateCurentUserAction({ authState}))
+      this.store.dispatch(updateCurentUserAction({authState}))
 
   }
 }

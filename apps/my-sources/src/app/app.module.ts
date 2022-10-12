@@ -25,6 +25,8 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 
 import { UptimeComponent } from '@jbhive/uptime';
 import { AuthModule } from '@jbhive/auth_fe';
+import { SourceModule } from '@jbhive/source_fe';
+
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProfileComponent, ProfileModule } from '@jbhive/profile';
@@ -73,6 +75,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AuthModule,
     AdminModule,
     ProfileModule,
+    SourceModule,
     MathModule,
     SnackbarModule,
     GraphQLModule,

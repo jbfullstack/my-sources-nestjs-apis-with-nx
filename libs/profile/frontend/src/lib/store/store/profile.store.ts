@@ -23,7 +23,7 @@ export const initialState: ProfileUserStateInterface = {
 export class ProfileStore extends ComponentStore<ProfileUserStateInterface> {    
 
 
-   userProfile$ = this.select(state => state.user)
+    // userProfile$ = this.select(state => state.user)
     pending$ = this.select(state => state.pending)
     pseudo$ = this.select(state => state.user.pseudo)
     email$ = this.select(state => state.user.email)

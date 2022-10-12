@@ -5,7 +5,7 @@ import { select, Store } from '@ngrx/store'
 
 import { BackendErrorsInterface, UserInterface, UsersListStateInterface, } from '@jbhive/types_fe'
 import { loadActivatedUsersAction, loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction } from '../../store/actions/admin.action'
-import { activatedUsersSelector, desactivatedUsersSelector, tagsSelector } from '../../store/selectors/admin.selector'
+import { activatedUsersSelector, desactivatedUsersSelector, isLoadingSelector, tagsSelector } from '../../store/selectors/admin.selector'
 import { AdminStore } from '../../store/stores/admin.store'
 import { loggedUserRole } from '@jbhive/auth_fe'
 
@@ -38,9 +38,9 @@ export class AdminComponent implements OnInit{
   ngOnDestroy() {
     // this.desactivatedListSubscription.unsubscribe();
   }
+  
 
   initializeValues(): void {
-    console.log('DISPATCH MTFKA')
     this.store.pipe(select(loggedUserRole)).subscribe( {
       next: (roleId) => {
         if (roleId) {
@@ -72,9 +72,6 @@ export class AdminComponent implements OnInit{
         }             
       }
     })
-
-    
-    
   }
 
   onSubmit(): void {

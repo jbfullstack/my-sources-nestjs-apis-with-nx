@@ -11,13 +11,14 @@ import {ScrollingModule} from '@angular/cdk/scrolling';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
     exports: [
         MatIconModule, MatToolbarModule, MatMenuModule, 
         MatTabsModule, MatCardModule, MatExpansionModule, 
         MatSelectModule, ScrollingModule, MatTooltipModule,
-        MatButtonModule, MatCheckboxModule
+        MatButtonModule, MatCheckboxModule, MatProgressBarModule
     ]
 })
 export class MaterialsModules {

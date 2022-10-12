@@ -9,6 +9,9 @@ export * from './lib/interfaces/admin-state.interface'
 export * from './lib/interfaces/user-list-state.interface'
 export * from './lib/interfaces/tag.interface'
 export * from './lib/interfaces/profile-user.interface'
+export * from './lib/interfaces/source-type.interface'
+export * from './lib/interfaces/source-state.interface'
+export * from './lib/interfaces/source.interface'
 
 
 export * from './lib/modules/backendErrorMessages/backend-error-message.module'

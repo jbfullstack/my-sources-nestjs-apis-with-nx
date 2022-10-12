@@ -220,7 +220,7 @@ const adminReducer = createReducer(
         (state, action): AdminStateInterface => 
         ({
             ...state,
-            pending: false,
+            pending: true,
         })
     ),
     on(
