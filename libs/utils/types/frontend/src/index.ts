@@ -13,6 +13,10 @@ export * from './lib/interfaces/source-type.interface'
 export * from './lib/interfaces/source-state.interface'
 export * from './lib/interfaces/source.interface'
 
+export * from './lib/interfaces/create-source-request.interface'
+export * from './lib/interfaces/update-source-request.interface'
+
+
 
 export * from './lib/modules/backendErrorMessages/backend-error-message.module'
 

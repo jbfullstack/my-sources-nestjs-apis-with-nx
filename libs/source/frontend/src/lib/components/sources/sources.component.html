@@ -1,0 +1,13 @@
+
+
+<div class="scrollbar" >       
+    <div *ngIf="sourcesToActivate()" class="row">
+         <div *ngFor="let source of sources">
+            <ms-source [source]="source"> </ms-source> 
+        </div> 
+    </div>
+    <div *ngIf="!sourcesToActivate()" class="row">
+        
+        <p>No source you are allowed to consult..</p>
+    </div>
+</div>

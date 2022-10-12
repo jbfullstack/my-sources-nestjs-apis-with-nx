@@ -1,1 +1,33 @@
-Sources Page MGL
+
+<div *ngIf="source" >
+    <div class="col-md-6 col-md-offset-3 login-form">
+        <div class="st-login-title text-center">
+            <mat-card [ngClass]="{
+                'private': !source.public,
+                'public': source.public,
+                'mat-card': true
+            }" matTooltip="{{ isPublicMessage() }}">
+                <mat-card-header>
+                    <img src="{{retrieveHeaderImage()}}"  mat-card-avatar />
+                    <mat-card-subtitle>{{ source.createdAt  | date:'short' }}</mat-card-subtitle>
+                    <mat-card-subtitle>{{  printTagList() }}</mat-card-subtitle>
+                    <mat-card-title>{{ source.title }}</mat-card-title>
+                    <mat-card-title>{{ source.type.id }}</mat-card-title>
+                </mat-card-header>
+                <mat-card-content>
+                    <mat-card-subtitle>url: {{ source.url }}</mat-card-subtitle>
+                    <mat-card-content>content: {{ source.content }}</mat-card-content>
+                    <mat-card-content>description: {{ source.description }}</mat-card-content>
+                    <mat-card-content>public: {{ source.public }}</mat-card-content>
+
+                    <mat-card-subtitle>owner: {{ source.owner.pseudo }}</mat-card-subtitle>
+                </mat-card-content>
+                <mat-card-actions>
+                <!-- <button mat-stroked-button matTooltip="Allow {{ user.pseudo }} inside the app" (click)="activate()">Activate</button>
+                <button mat-stroked-button matTooltip="Ban {{ user.pseudo }} for ever" (click)="hide()">Hide</button>
+                <button mat-stroked-button matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button> -->
+                </mat-card-actions>
+            </mat-card>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,7 @@ export interface SourceInterface {
     public: boolean,
     url: string,
     description: string,
+    content: string,
 
     type: SourceTypeInterface,
 

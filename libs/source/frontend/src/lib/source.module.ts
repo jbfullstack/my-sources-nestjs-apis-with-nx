@@ -9,13 +9,13 @@ import { StoreModule } from '@ngrx/store';
 import { SourceEffect } from './store/effects/source.effect';
 import { reducers } from './store/reducers/source.reducers';
 import { SourceService } from './services/source.service';
-import { SourceComponent } from './components/source/source.component';
+import { SourcePageComponent } from './components/source-page/source-page.component';
 import { SourceStore } from './store/source.store';
 
 const routes = [
   {
     path: 'source',
-    component: SourceComponent,
+    component: SourcePageComponent,
     canActivate: [AuthGuard],
   }
 ]

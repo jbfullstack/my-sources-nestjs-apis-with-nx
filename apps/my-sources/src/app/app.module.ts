@@ -39,6 +39,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/source_fe';
+
 
 
 
@@ -55,7 +57,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ActivatedListComponent,
     SnackBarComponent,
     TagListComponent,
-    ManageTagrComponent
+    ManageTagrComponent,
+    SourcePageComponent,
+    SourcesComponent,
+    SourceComponent
   ],
   imports: [
     BrowserModule, 

@@ -1,0 +1,19 @@
+.mat-card {
+    width: 20rem;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: none;
+}
+
+.mat-card:hover{
+    box-shadow: 2px 2px 4px 4px lightgray;
+}
+
+.public {
+    background-color: lightblue;
+}
+
+.private {
+    background-color: blanchedalmond;
+}

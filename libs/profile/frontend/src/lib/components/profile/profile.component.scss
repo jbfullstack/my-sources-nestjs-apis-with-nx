@@ -20,8 +20,24 @@
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: none;
+    // animation-duration: 1.5s;
+    // animation-name: slidein;
 }
 
 .mat-card:hover{
     box-shadow: 2px 2px 4px 4px lightgray;
+
+}
+
+
+@keyframes slidein {
+    from {
+        margin-left: 100%;
+        width: 300%;
+    }
+
+    to {
+        margin-left: 0%;
+        width: 100%;
+    }
 }

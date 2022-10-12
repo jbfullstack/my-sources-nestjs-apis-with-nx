@@ -1,0 +1,42 @@
+<mat-tab-group dynamicHeight>
+    <mat-tab label="Search">
+        <section class="register">
+            <br>
+
+            <!-- <ms-backend-error-messages 
+            *ngIf="backendErrorsSelector$ | async"
+            [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
+            
+            <!-- <div class="color-overlay"></div> -->
+            <div class="container">
+
+
+                <hr>
+                <div >
+
+                    <div class="search">
+                        <!-- Search bar -->     
+                        <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
+                        <input [(ngModel)]="searchSourceInput" (ngModelChange)="searchInputChange($event)">
+                        <p>filter by title or description</p>
+                        {{ searchSourceInput }}
+                    </div>
+
+                    <br>
+
+                    <div *ngIf="sources$ | async" >
+                        <ms-sources [sources]="sources$ | async ">
+                        </ms-sources>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </mat-tab>
+    <mat-tab label="Create">
+        <section class="register">
+            <br>
+
+        </section>
+    </mat-tab>
+
+</mat-tab-group>

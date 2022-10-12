@@ -6,7 +6,7 @@ import { Tag } from "../models/tag";
 
 @InputType()
 export class UpdateSourceInput {
-    @Field()
+    @Field({nullable: true})
     title?: string
 
     @Field({nullable: true})

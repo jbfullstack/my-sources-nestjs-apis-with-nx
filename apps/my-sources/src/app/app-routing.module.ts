@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { RegisterComponent } from "@jbhive/auth_fe";
 import { AuthGuard } from "@jbhive/auth_fe";
-import { SourceComponent } from "@jbhive/source_fe";
+import { SourcesComponent } from "@jbhive/source_fe";
 
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
     // }
     {
         path: '',
-        component: SourceComponent,
+        component: SourcesComponent,
         canActivate: [AuthGuard],
     }
 ]

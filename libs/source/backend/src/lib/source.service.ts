@@ -1,7 +1,7 @@
 import { User } from "@jbhive/auth_be";
 import { UserService } from "@jbhive/user_be";
 import { LogService } from "@jbhive/log_be";
-import { ForbiddenException, Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, Logger, NotFoundException, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
 import { ForbiddenError } from "apollo-server-express";
 import { CreateSourceInput } from "./dto/create-source-input";
 import { CreateSourceTypeInput } from "./dto/create-source-type-input";
@@ -135,6 +135,10 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             throw new NotFoundException(`user ${userId} not found, can"t create the source: ${JSON.stringify(input)}`);
         }
 
+        if (!this.notEmptyAndWithMinimumSize(input.title, 2)){
+            throw new BadRequestException(`Can't create source, title must be set and 2 characters longs at least`)
+        }
+
         const created = await this.source.create({
             data: {
                 ...input,
@@ -257,6 +261,15 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
     }
 
     async createTag(userId: number, input: CreateTagInput) {
+
+        if (!this.notEmptyAndWithMinimumSize(input.title, 3)){
+            throw new BadRequestException(`Can't create tag, title must be set and 3 characters longs at least`)
+        }
+
+        if (!this.notEmptyAndWithMinimumSize(input.description, 6)){
+            throw new BadRequestException(`Can't create tag, description must be set and 6 characters longs at least`)
+        }
+
         const userFound = await this.data.findUserById(userId)
         if (!userFound) {
             // this.log.err(`user ${userId} not found, can"t create the tag: ${JSON.stringify(input)}`)
@@ -333,6 +346,14 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
     }
 
     async createSourceType(input: CreateSourceTypeInput) {
+        if (!this.notEmptyAndWithMinimumSize(input.title, 2)){
+            throw new BadRequestException(`Can't create source type, title must be set and 2 characters longs at least`)
+        }
+
+        if (!this.notEmptyAndWithMinimumSize(input.description, 6)){
+            throw new BadRequestException(`Can't create source type, description must be set and 6 characters longs at least`)
+        }
+
         return await this.sourceType.create({
             data: {
                 ...input
@@ -473,6 +494,15 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
         // create roles
         for (var type of types_dataset) {
             await this.createSourceType({ title: type.title, description: type.description })
+        }
+    }
+
+
+    private notEmptyAndWithMinimumSize(value: string, minimalSize: number) {
+        if (value === null || value.trim().length === 0 || value.length < minimalSize){
+            return false
+        } else {
+            return true
         }
     }
 

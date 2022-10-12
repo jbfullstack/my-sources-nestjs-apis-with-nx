@@ -5,7 +5,8 @@ import { UserInterface } from "./user.interface"
 
 export interface SourceStateInterface {
     pending: boolean
-    sources: SourceInterface[] | null
-    tagsFilter: string[] | null // null means not known yet
-    searchInput: string | null
+    sources: SourceInterface[] 
+    tagsFilterIds: number[]  // null means not known yet
+    searchInput: string
+    errors: string
 }
