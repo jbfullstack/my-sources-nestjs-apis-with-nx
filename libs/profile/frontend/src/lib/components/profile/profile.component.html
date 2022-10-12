@@ -10,7 +10,7 @@
                         <div class="clo-md-6 col-xs-12">
                             <div *ngIf="isCurrentUSerLoaded(); else loggedOut">     
                                 <mat-card>
-                                    <mat-card-title>{{  this.pseudo$ | async }} [{{  this.roleName$ | async }}]</mat-card-title>
+                                    <mat-card-title>{{ this.id$ | async }} - {{  this.pseudo$ | async }} [{{  this.roleName$ | async }}]</mat-card-title>
                                     <mat-card-subtitle>{{ this.email$ | async }}</mat-card-subtitle>     
                                     <mat-card-content>{{ createdAt()  | date:'short' }}</mat-card-content>
                                 </mat-card>

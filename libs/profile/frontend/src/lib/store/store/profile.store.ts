@@ -30,6 +30,7 @@ export class ProfileStore extends ComponentStore<ProfileUserStateInterface> {
     createdAt$ = this.select(state => state.user.createdAt)
     roleId$ = this.select(state => state.user.role.id)
     roleName$ = this.select(state => state.user.role.name)
+    id$ = this.select(state => state.user.id)
         
 
     loadProfileUser = this.updater( (state, user: UserInterface | null) => ({

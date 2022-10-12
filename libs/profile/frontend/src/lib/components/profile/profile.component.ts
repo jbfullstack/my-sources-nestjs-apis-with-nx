@@ -26,6 +26,7 @@ export class ProfileComponent implements OnInit{
   nickname_input: string = ''
   email_input: string = ''
   password_input: string = ''
+  savedToken: string = ''
 
   isSubmittings$!: Observable<boolean>
   currentUserSelector$!: Observable<UserInterface | null>
@@ -39,6 +40,7 @@ export class ProfileComponent implements OnInit{
   email$ = this.profileStore.email$
   roleName$ = this.profileStore.roleName$
   createdAt$ = this.profileStore.createdAt$
+  id$ = this.profileStore.id$
 
   constructor(private formBuilder : FormBuilder, private store: Store, private profileStore: ProfileStore) {}
 
@@ -71,6 +73,7 @@ export class ProfileComponent implements OnInit{
           this.pseudo_input = this.currentUser.pseudo
           this.nickname_input = this.getValue(this.currentUser.nickname)
           this.email_input = this.currentUser.email
+          this.savedToken =  this.getValue(this.currentUser.token)
         }
       }
     );
@@ -134,20 +137,27 @@ export class ProfileComponent implements OnInit{
       console.error('at least one field is null')
       return
     }else {
+      
+    
+      this.updateStores()
+    }
+    
+
+
+  }
+  updateStores() {
       const pseudo: string = this.pseudo_input
       const nickname: string = this.nickname_input
       const email: string = this.email_input
       const password: string = this.password_input
 
-      console.log('$$$ > checked: ', this.isEditPasswordChecked())
-      console.log('$$$ > password: ', password)
-
+      // Update profile
       if( this.isEditPasswordChecked() ){
         this.store.dispatch(updateUserProfileAction( { pseudo: pseudo, nickname: nickname, email: email, password: password} ))
       } else {
         this.store.dispatch(updateUserProfileAction( { pseudo: pseudo, nickname: nickname, email: email, password: '' } ))
       }
-    
+
       const newUserProfile: ProfileUserStateInterface = {
         user: {
           id: (this.currentUser?.id) ? this.currentUser.id : 0,
@@ -160,11 +170,12 @@ export class ProfileComponent implements OnInit{
         pending: false
       }
       
+      // update profileStore
       this.profileStore.patchState({
         user: newUserProfile.user
       })
 
-
+      // Update global store
       const newCurrentUser : UserInterface = {
         id: newUserProfile.user.id,
         pseudo: newUserProfile.user.pseudo,
@@ -176,8 +187,9 @@ export class ProfileComponent implements OnInit{
           name: newUserProfile.user.role.name
         },
         image: null,
-        token: null
+        token: this.savedToken 
       }
+
       const authState: AuthStateInterface = {
         login: {
           isLoggedIn: true,
@@ -193,11 +205,6 @@ export class ProfileComponent implements OnInit{
       }
 
       this.store.dispatch(updateCurentUserAction({ authState}))
-
-      // !!! TODO : Regenerate token !!!
-    }
-    
-
 
   }
 }
