@@ -10,6 +10,7 @@ export function loadPublicAndOwnedSourcesGqlRequest() {
             description
             type {title}
             public
+            createdAt
             owner {	
                 pseudo
                 role { 

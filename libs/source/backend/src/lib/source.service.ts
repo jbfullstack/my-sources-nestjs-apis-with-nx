@@ -163,6 +163,7 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
         const created = await this.source.create({
             data: {
                 ...input,
+                createdAt: new Date(),
                 type: { connect: { id: typeId } },
                 owner: { connect: { id: userId } }
             }

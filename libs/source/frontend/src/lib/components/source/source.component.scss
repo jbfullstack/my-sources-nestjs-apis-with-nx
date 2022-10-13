@@ -10,10 +10,18 @@
     box-shadow: 2px 2px 4px 4px lightgray;
 }
 
-.public {
-    background-color: lightblue;
-}
+// .public:hover {
+//     background-color: lightblue;
+// }
 
 .private {
-    background-color: blanchedalmond;
+    background-color: lightgray;
+}
+
+.private:hover {
+    background-color: white;
+}
+
+.align-right{
+    float: right;
 }

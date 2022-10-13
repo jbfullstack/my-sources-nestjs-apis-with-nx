@@ -9,7 +9,6 @@
             }" matTooltip="{{ isPublicMessage() }}">
                 <mat-card-header>
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
-                    <mat-card-subtitle>{{ source.createdAt  | date:'short' }}</mat-card-subtitle>
                     <mat-card-subtitle>{{  printTagList() }}</mat-card-subtitle>
                     <mat-card-title>{{ source.title }}</mat-card-title>
                 </mat-card-header>
@@ -18,7 +17,14 @@
                     <mat-card-content *ngIf="hasContent()">content: {{ source.content }}</mat-card-content>
                     <mat-card-content *ngIf="hasDescription()">description: {{ source.description }}</mat-card-content>
 
-                    <mat-card-subtitle>owner: {{ source.owner.pseudo }}</mat-card-subtitle>
+                    <br>
+                    <hr>
+                    <mat-card-subtitle>
+                        <span class="bottom">
+                            owner: {{ source.owner.pseudo }}
+                            <div class="align-right" >{{ source.createdAt  | date:'short' }}</div>
+                        </span>
+                    </mat-card-subtitle>
                 </mat-card-content>
                 <mat-card-actions>
                 <!-- <button mat-stroked-button matTooltip="Allow {{ user.pseudo }} inside the app" (click)="activate()">Activate</button>
