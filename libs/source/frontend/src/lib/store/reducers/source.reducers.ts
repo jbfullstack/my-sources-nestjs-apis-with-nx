@@ -2,6 +2,7 @@ import { createReducer, on, State, Action } from "@ngrx/store";
 import { SourceStateInterface, UserInterface } from "@jbhive/types_fe";
 import { initialState } from "../source.store";
 import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
+import { logoutAction } from "@jbhive/auth_fe";
 
 
 
@@ -183,6 +184,20 @@ const sourceReducer = createReducer(
             ...state,
             pending: false,
             errors: action.errors
+        })
+    ),
+
+    /** ---- LOGOUT ---- */
+    on(
+        logoutAction, 
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            errors: '',
+            pending: false,
+            // searchInput: '',
+            sources: [],
+            tagsFilterIds: []
         })
     ),
 

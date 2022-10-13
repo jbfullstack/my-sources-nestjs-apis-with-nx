@@ -27,6 +27,11 @@ export class SourceResolver {
         return this.service.findSourcesWhereOwnerId(user.id)
     }
 
+    @Query( () => [Source], {nullable: true})
+    sourcesPublicOrOwned (@CtxUser() user: User) {
+        return this.service.findSourcesWherePublicOrOwnerId(user.id)
+    }
+
     @Public()
     @Query( () => [Source], {nullable: true})
     sourcesPublic () {

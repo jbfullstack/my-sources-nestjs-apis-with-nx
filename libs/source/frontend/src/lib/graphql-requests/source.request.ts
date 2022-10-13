@@ -1,11 +1,12 @@
 import { gql } from 'apollo-angular';
 
 export function loadPublicAndOwnedSourcesGqlRequest() {
-    return gql`query sources{   
-        sources 
+    return gql`query sourcesPublicOrOwned{   
+        sourcesPublicOrOwned 
         {
             id
             title
+            url
             description
             type {title}
             public

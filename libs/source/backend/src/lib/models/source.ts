@@ -23,6 +23,9 @@ export class Source {
     url?:string
 
     @Field({nullable: true})
+    content?: string
+
+    @Field({nullable: true})
     description?: string
 
     @Field( () => SourceType, {nullable: true})

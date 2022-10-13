@@ -54,8 +54,34 @@ export class SourceComponent implements OnInit{
                 return 'This source is private'
             }
         }
-
         return 'Status undefined..'
+    }
+
+    hasUrl(){
+        if (this.source){
+            if (this.source?.url && this.source?.url !== ''){
+                return true
+            }
+        }
+        return false
+    }
+
+    hasDescription(){
+        if (this.source){
+            if (this.source?.description && this.source?.description !== ''){
+                return true
+            }
+        }
+        return false
+    }
+
+    hasContent(){
+        if (this.source){
+            if (this.source?.content && this.source?.content !== ''){
+                return true
+            }
+        }
+        return false
     }
 
     retrieveHeaderImage(){

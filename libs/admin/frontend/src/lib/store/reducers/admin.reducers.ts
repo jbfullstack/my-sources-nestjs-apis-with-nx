@@ -4,6 +4,7 @@ import { AdminStateInterface, UserInterface } from "@jbhive/types_fe";
 
 import { loadDesactivatedUsersAction, loadDesactivatedUsersSuccessAction, loadDesactivatedUsersFailureAction, activateAction, activateSuccessAction, activateFailureAction, deleteAction, deleteSuccessAction, deleteFailureAction, loadActivatedUsersAction, loadActivatedUsersFailureAction, loadActivatedUsersSuccessAction, desactivateAction, desactivateFailureAction, desactivateSuccessAction, updateSearchUserInputAction, hideSuccessAction, hideAction, hideFailureAction, updateSearchTagInputAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, createTagSuccessAction, createTagAction, createTagFailureAction, deleteTagAction, deleteTagFailureAction, deleteTagSuccessAction, } from "../actions/admin.action";
 import { initialState } from "../stores/admin.store";
+import { logoutAction } from "@jbhive/auth_fe";
 
 
 
@@ -293,6 +294,23 @@ const adminReducer = createReducer(
             ...state,
             pending: false,
             errors: action.errors
+        })
+    ),
+
+
+    /** ---- LOGOUT ---- */
+    on(
+        logoutAction, 
+        (state, action): AdminStateInterface => 
+        ({
+            ...state,
+            errors: '',
+            pending: false,
+            activatedUsersList: [],
+            desactivatedUsersList: [],
+            loggedUserRoleId: 0,
+            tags: [],
+            
         })
     ),
 )

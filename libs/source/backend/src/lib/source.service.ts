@@ -90,6 +90,27 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
         return result
     }
 
+    async findSourcesWherePublicOrOwnerId(userId: number) {
+        const allSources = await this.source.findMany({
+            where: {
+                OR:[
+                    {ownerId: userId},
+                    {public: true}
+                ]                               
+            },
+            include: SourcePrismaIncludes.sourceIncludes
+        })
+        
+        if (!allSources || allSources.length === 0) {
+            throw new NotFoundException(`No source found`)
+        }
+
+        const result = allSources.map(source => {
+            return { ...source, tags: source.tags.map(tag => tag.tag) }
+        })
+        return result
+    }
+
     async findSourceWhereOwnerId(userId: number, sourceId: number) {
         const allSources = await this.source.findMany({
             where: {

@@ -9,7 +9,7 @@ export class SourceService {
     
     loadPublicAndOwnedSources() {
         return this.apollo.mutate<any>({ mutation: loadPublicAndOwnedSourcesGqlRequest() })
-        .pipe(map((response: any) => response.data.sources))
+        .pipe(map((response: any) => response.data.sourcesPublicOrOwned))
     }
 
 
