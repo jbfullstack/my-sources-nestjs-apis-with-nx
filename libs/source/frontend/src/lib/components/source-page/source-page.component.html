@@ -19,13 +19,17 @@
                         <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
                         <input [(ngModel)]="searchSourceInput" (ngModelChange)="searchInputChange($event)">
                         <p>filter by title or description</p>
-                        {{ searchSourceInput }}
+
+                        <mat-button-toggle-group [(ngModel)]="search_options" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
+                            <mat-button-toggle [checked]="true" value="owned">Owned</mat-button-toggle >
+                            <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
+                            <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
+                        </mat-button-toggle-group>
                     </div>
 
                     <br>
-
-                    <div *ngIf="sources$ | async" >
-                        <ms-sources [sources]="sources$ | async ">
+                    <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
+                        <ms-sources [sources]="filteredSources$ | async ">
                         </ms-sources>
                     </div>
                 </div>

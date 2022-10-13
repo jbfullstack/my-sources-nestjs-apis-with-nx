@@ -5,6 +5,7 @@ import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
 import { loadSourcesAction } from '../../store/actions/source.action'
 import { sourceSelector } from '../../store/selectors/source.selector'
+import { currentUserSelector } from '@jbhive/auth_fe'
 
 
 @Component({
@@ -21,10 +22,13 @@ export class SourcePageComponent implements OnInit{
     tagsFilterIds$ = this.sourceStore.tagsFilterIds$
     searchInput$ = this.sourceStore.searchInput$
 
-    filteredActivatedUsers$ = this.sourceStore.filteredActivatedUsers$
+    filteredSources$ = this.sourceStore.filteredSources$
+    
 
 
     searchSourceInput: string = ''
+
+    search_options: string = 'owned';
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }
 
@@ -44,10 +48,40 @@ export class SourcePageComponent implements OnInit{
                 }             
             }
         })
+
+        this.store.pipe(select(currentUserSelector)).subscribe( {
+            next: (user) => {
+                if (user) {
+                    console.log('user.id: ', user.id)
+                    this.sourceStore.loadLoggedUserId(user.id)
+                }             
+            }
+        })
         
     }
 
-    searchInputChange(value : string){
-        
+    searchInputChange(searchInput : string){
+        this.sourceStore.patchState({searchInput})
+    }
+
+    searchOptionsContainsMine(){
+        return this.search_options.includes('owned')
+    }
+
+    onChangeOptions(value: string){
+        console.log('new value options filter: ', value)
+        const showOwned: boolean = value.includes('owned')
+        const showOwnedPrivate: boolean = (showOwned) ? value.includes('private') : false
+        const showUnowned: boolean = value.includes('unowned')
+        this.sourceStore.patchState({
+            optionsFilter: {
+                showOwned,
+                showOwnedPrivate,
+                showUnowned
+        }})
+    }
+
+    optionsNotEmpty(){
+        return this.search_options.toString() !== ''
     }
 }

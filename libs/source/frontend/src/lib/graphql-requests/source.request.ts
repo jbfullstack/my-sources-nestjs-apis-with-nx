@@ -12,6 +12,7 @@ export function loadPublicAndOwnedSourcesGqlRequest() {
             public
             createdAt
             owner {	
+                id
                 pseudo
                 role { 
                     id

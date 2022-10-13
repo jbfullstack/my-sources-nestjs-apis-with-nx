@@ -50,7 +50,6 @@ export class SourceResolver {
         return this.service.findSourceWhereOwnerId(user.id, id)
     }
 
-    @Roles(Role.Admin, Role.Astek)
     @Mutation( () => Source, {nullable: true})
     async createSource(
         @CtxUser() user: User,
@@ -71,7 +70,6 @@ export class SourceResolver {
             return this.service.updateSource(user.id, id, input)
     }
 
-    @Roles(Role.Admin, Role.Astek)
     @Mutation( () => Source, {nullable: true})
     async updateSourceOwned(
         @CtxUser() user: User,

@@ -17,7 +17,10 @@ import { SourceInterface } from '@jbhive/types_fe'
 export class SourceComponent implements OnInit{
     @Input() source!: SourceInterface | null;
 
-    pending$ = this.sourceStore.pending$       
+    pending$ = this.sourceStore.pending$     
+    showOwned$ = this.sourceStore.showOwned$
+    showOwnedPrivate$ = this.sourceStore.showOwnedPrivate$
+    showUnowned$ = this.sourceStore.showUnowned$  
 
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }

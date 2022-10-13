@@ -12,13 +12,15 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 @NgModule({
     exports: [
         MatIconModule, MatToolbarModule, MatMenuModule, 
         MatTabsModule, MatCardModule, MatExpansionModule, 
         MatSelectModule, ScrollingModule, MatTooltipModule,
-        MatButtonModule, MatCheckboxModule, MatProgressBarModule
+        MatButtonModule, MatCheckboxModule, MatProgressBarModule,
+        MatButtonToggleModule
     ]
 })
 export class MaterialsModules {
