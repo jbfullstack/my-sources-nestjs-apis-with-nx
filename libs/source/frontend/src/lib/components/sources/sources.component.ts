@@ -16,6 +16,7 @@ import { SourceInterface } from '@jbhive/types_fe'
 })
 export class SourcesComponent implements OnInit{
     @Input() sources!: SourceInterface[] | null;
+    @Input() searchParent: string = '';
 
     pending$ = this.sourceStore.pending$       
 

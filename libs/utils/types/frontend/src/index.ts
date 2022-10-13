@@ -18,6 +18,10 @@ export * from './lib/interfaces/source-option-filter.interface'
 export * from './lib/interfaces/create-source-request.interface'
 export * from './lib/interfaces/update-source-request.interface'
 
+export * from './lib/pipe/highlighter.pipe'
+
+export * from './lib/directives/highlight.directive'
+
 
 
 export * from './lib/modules/backendErrorMessages/backend-error-message.module'

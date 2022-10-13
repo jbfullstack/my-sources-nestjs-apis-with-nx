@@ -29,8 +29,11 @@
 
                     <br>
                     <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
-                        <ms-sources [sources]="filteredSources$ | async ">
+                        <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
                         </ms-sources>
+
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -44,3 +47,4 @@
     </mat-tab>
 
 </mat-tab-group>
+

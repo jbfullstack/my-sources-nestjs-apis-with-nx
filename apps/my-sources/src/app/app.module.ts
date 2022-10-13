@@ -40,6 +40,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/source_fe';
+import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
 
 
 
@@ -60,7 +61,9 @@ import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/
     ManageTagrComponent,
     SourcePageComponent,
     SourcesComponent,
-    SourceComponent
+    SourceComponent,
+    HighlighterPipe,
+    HighlightDirective
   ],
   imports: [
     BrowserModule, 

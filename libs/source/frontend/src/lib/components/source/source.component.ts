@@ -16,11 +16,14 @@ import { SourceInterface } from '@jbhive/types_fe'
 })
 export class SourceComponent implements OnInit{
     @Input() source!: SourceInterface | null;
+    @Input() searchParent: string = '';
+    
 
     pending$ = this.sourceStore.pending$     
     showOwned$ = this.sourceStore.showOwned$
     showOwnedPrivate$ = this.sourceStore.showOwnedPrivate$
     showUnowned$ = this.sourceStore.showUnowned$  
+    searchInput$ = this.sourceStore.searchInput$
 
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }
@@ -49,6 +52,26 @@ export class SourceComponent implements OnInit{
         
     }
 
+    title(){
+        if (this.source){
+            if (this.source.title !== null){
+                return this.source.title.toString()
+            }
+        }
+
+        return ''
+    }
+
+    description(){
+        if (this.source){
+            if (this.source.description !== null){
+                return this.source.description
+            }
+        }
+
+        return ''
+    }
+
     isPublicMessage(){
         if (this.source){
             if (this.source.public){
@@ -60,9 +83,22 @@ export class SourceComponent implements OnInit{
         return 'Status undefined..'
     }
 
+    print() : string{
+        return "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled "
+    }
+
     hasUrl(){
         if (this.source){
             if (this.source?.url && this.source?.url !== ''){
+                return true
+            }
+        }
+        return false
+    }
+
+    hasTitle(){
+        if (this.source){
+            if (this.source?.title && this.source?.title !== ''){
                 return true
             }
         }

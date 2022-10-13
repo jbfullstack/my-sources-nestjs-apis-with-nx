@@ -26,7 +26,9 @@ const routes = [
     RouterModule.forChild(routes),
     StoreModule.forFeature('source', reducers),
     EffectsModule.forFeature([SourceEffect]),
+    // HighlighterPipe
   ],
-  providers: [SourceService, SourceStore]
+  providers: [SourceService, SourceStore],
+  // declarations: [HighlighterPipe]
 })
 export class SourceModule {}
