@@ -22,11 +22,10 @@ export class ProfileEffect {
         this.actions$.pipe(
             ofType(updateUserProfileAction),
             switchMap( (action) => {
-                console.log('updateUserProfile>: ', action)
                 return this.profileService.updateUserProfile(action)
                 .pipe(
                     map((user: UserInterface) => {
-                        this.snackbar.openDefaultSnackBar(`Success: profile update \n You will need to re-loggin to regenerate access token :)`)
+                        this.snackbar.openDefaultSnackBar(`Success: profile update :)`)
                         return updateUserProfileSuccessAction({user})
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {

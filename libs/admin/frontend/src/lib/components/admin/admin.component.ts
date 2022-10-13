@@ -1,5 +1,5 @@
 import { Observable, Subscription } from 'rxjs'
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 
@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit{
   tags$ = this.adminStore.tags$
   filteredTags$ = this.adminStore.filteredTags$
 
-  constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore) { }
+  constructor(private formBuilder : FormBuilder, private store: Store, private adminStore: AdminStore, private ref: ChangeDetectorRef) { }
     
   ngOnInit(): void {
       this.initializeValues()
@@ -37,6 +37,10 @@ export class AdminComponent implements OnInit{
 
   ngOnDestroy() {
     // this.desactivatedListSubscription.unsubscribe();
+  }
+
+  ngAfterContentChecked() {
+    this.ref.detectChanges();
   }
   
 

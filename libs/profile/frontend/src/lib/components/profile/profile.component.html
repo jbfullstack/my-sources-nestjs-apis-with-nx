@@ -30,54 +30,87 @@
     <mat-tab label="Edit">
         <section class="register">
             <br>
-            <div class="col-md-6 col-md-offset-3 register-form">                  
-                <div class="st-login-title text-center">
-                    <mat-card class="mat-card">     
-                    <form id="register" [formGroup]="form">
-                        Pseudo
-                        <fieldset class="form-group">
-                            <input matInput formControlName="pseudo"  [(ngModel)]="pseudo_input" name="register-pseudo" id="st-pseudo">                        
-                            <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
-                            class="alert">
-                                <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
-                                <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.
+            <div class="auth-page">
+                <div class="container page">
+                    <div class="row">
+                        <div class="clo-md-6 col-xs-12">                
+                            <div class="st-login-title text-center">
+                                <mat-card class="mat-card">     
+                                    <mat-card-header>                            
+                                        <!-- <mat-card-subtitle>{{ source.createdAt  | date:'short' }}</mat-card-subtitle>
+                                        <mat-card-subtitle> Edit your profile</mat-card-subtitle> -->
+                                        <mat-card-title>Edit your profile</mat-card-title>
+                                    </mat-card-header>
+
+                                    <form id="edit_profile" [formGroup]="form">
+                                        <fieldset class="form-group">
+                                            <mat-form-field class="example-form-field" appearance="fill" >
+                                                <mat-label>Pseudo</mat-label>
+                                                <input matInput class="input-description" type="text" [(ngModel)]="pseudo_input" formControlName="pseudo"/>
+                                                <button *ngIf="pseudo_input" matSuffix mat-icon-button aria-label="Clear" (click)="pseudo_input=''">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>                                                                     
+                                            </mat-form-field>   
+                                            <div *ngIf="this.form.controls['pseudo'].invalid && (this.form.controls['pseudo'].dirty || this.form.controls['pseudo'].touched)"
+                                                class="alert">
+                                                    <div *ngIf="this.form.controls['pseudo'].errors?.['required']">Pseudo is required.</div>
+                                                    <div *ngIf="this.form.controls['pseudo'].errors?.['minlength']">Pseudo must be at least 3 characters long.</div>
+                                                </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            <mat-form-field class="example-form-field" appearance="fill" >
+                                                <mat-label>Nickname</mat-label>
+                                                <input matInput class="input-description" type="text" [(ngModel)]="nickname_input" formControlName="nickname"/>
+                                                <button *ngIf="nickname_input" matSuffix mat-icon-button aria-label="Clear" (click)="nickname_input=''">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>                                                                     
+                                            </mat-form-field>   
+                                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
+                                            class="alert">
+                                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
+                                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.</div>
+                                            </div>
+                                        </fieldset>
+
+                                        <fieldset class="form-group">
+                                            <mat-form-field class="example-form-field" appearance="fill" >
+                                                <mat-label>Email</mat-label>
+                                                <input matInput class="input-description" type="text" [(ngModel)]="email_input" formControlName="email"/>
+                                                <button *ngIf="email_input" matSuffix mat-icon-button aria-label="Clear" (click)="email_input=''">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>                                                                     
+                                            </mat-form-field>   
+                                            <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
+                                            class="alert">
+                                                <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
+                                                <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
+                                                <div *ngIf="this.form.controls['email'].errors?.['email']">Wrong format email.</div>
+                                            </div>
+                                        </fieldset>
+
+
+                                        <fieldset class="form-group">
+                                            <section class="example-section" [formGroup]="enable">
+                                                <p><mat-checkbox formControlName="edit_password" (change)="onChangeCheckbox($event)">Edit password</mat-checkbox></p>
+                                            </section>
+                                            <mat-form-field class="example-form-field" appearance="fill">
+                                                <mat-label>Password</mat-label>
+                                                <input matInput class="input-description" type="text" [(ngModel)]="password_input" formControlName="password" (change)="onChangeCheckbox($event)"/>
+                                                <button *ngIf="password_input" matSuffix mat-icon-button aria-label="Clear" (click)="password_input=''">
+                                                    <mat-icon>close</mat-icon>
+                                                </button>                                                                     
+                                            </mat-form-field> 
+                                            <button class="align-left " mat-stroked-button  matTooltip="Save {{  this.pseudo$ | async }}'s profile" [disabled]="!this.form.valid" (click)="save()" >Save</button>
+
+                                        </fieldset>
+                                        
+                                    </form>                    
+                                </mat-card>
+                                
                             </div>
                         </div>
-                        </fieldset>
-
-                        Nickname
-                        <fieldset class="form-group">                            
-                            <input matInput formControlName="nickname" [(ngModel)]="nickname_input" name="register-nickname" id="st-nickname">
-                            <div *ngIf="this.form.controls['nickname'].invalid && (this.form.controls['nickname'].dirty || this.form.controls['nickname'].touched)"
-                            class="alert">
-                                <div *ngIf="this.form.controls['nickname'].errors?.['required']">Nickname is required.</div>
-                                <div *ngIf="this.form.controls['nickname'].errors?.['minlength']">Nickname must be at least 3 characters long.
-                            </div>
-                        </div>   
-                        </fieldset>
-
-                        Email 
-                        <fieldset class="form-group">                                                           
-                            <input matInput formControlName="email" [(ngModel)]="email_input" name="register-email" id="st-email">
-                            <div *ngIf="this.form.controls['email'].invalid && (this.form.controls['email'].dirty || this.form.controls['email'].touched)"
-                            class="alert">
-                                <div *ngIf="this.form.controls['email'].errors?.['required']">Email is required.</div>
-                                <div *ngIf="this.form.controls['email'].errors?.['minlength']">Email must be at least 10 characters long.</div>
-                            <div *ngIf="this.form.controls['email'].errors?.['email']">Wrong format email.</div>
-                        </div>
-                        </fieldset>
-
-                        <fieldset class="form-group">
-                            <section class="example-section" [formGroup]="enable">
-                                <p><mat-checkbox formControlName="edit_password" (change)="onChangeCheckbox($event)">Edit password</mat-checkbox></p>
-                            </section>
-
-                            <input (change)="onChangeCheckbox($event)" matInput [(ngModel)]="password_input" formControlName="password"  value="" name="register-password" id="st-password">
-                            <button mat-stroked-button  matTooltip="Save {{  this.pseudo$ | async }}'s profile" [disabled]="!this.form.valid" (click)="save()" >Save</button>
-                        </fieldset>
-                    </form>                    
-                    </mat-card>
-                    
+                    </div>
                 </div>
             </div>
 
