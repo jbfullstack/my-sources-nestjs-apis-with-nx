@@ -28,6 +28,21 @@ export function loadPublicAndOwnedSourcesGqlRequest() {
     }`
 }
 
+export function loadTagsGqlRequest() {
+    return gql`query tags{   
+        tags 
+        {
+            id
+            title
+            description
+            author {        
+                id
+                pseudo
+            }      
+        }
+    }`
+}
+
 
 
 

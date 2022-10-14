@@ -11,6 +11,7 @@ import { reducers } from './store/reducers/source.reducers';
 import { SourceService } from './services/source.service';
 import { SourcePageComponent } from './components/source-page/source-page.component';
 import { SourceStore } from './store/source.store';
+import { AutocompleteTagChipsComponent } from './components/autocomplete-chips/autocomplete-tag-chips.component';
 
 const routes = [
   {
@@ -29,6 +30,6 @@ const routes = [
     // HighlighterPipe
   ],
   providers: [SourceService, SourceStore],
-  // declarations: [HighlighterPipe]
+  // declarations: [AutocompleteChipdsComponent]
 })
 export class SourceModule {}

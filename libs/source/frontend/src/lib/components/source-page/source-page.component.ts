@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
-import { loadSourcesAction } from '../../store/actions/source.action'
-import { sourceSelector } from '../../store/selectors/source.selector'
+import { loadSourcesAction, loadTagsAction } from '../../store/actions/source.action'
+import { sourceSelector, tagSelector, tagsFilterIdsSelector } from '../../store/selectors/source.selector'
 import { currentUserSelector } from '@jbhive/auth_fe'
 
 
@@ -19,6 +19,7 @@ export class SourcePageComponent implements OnInit{
     errors$ = this.sourceStore.errors$
     pending$ = this.sourceStore.pending$
     sources$ = this.sourceStore.sources$
+    tags$ = this.sourceStore.tags$
     tagsFilterIds$ = this.sourceStore.tagsFilterIds$
     searchInput$ = this.sourceStore.searchInput$
 
@@ -39,12 +40,22 @@ export class SourcePageComponent implements OnInit{
     initializeValues(): void {
 
         this.store.dispatch(loadSourcesAction())
+        this.store.dispatch(loadTagsAction())
 
         this.store.pipe(select(sourceSelector)).subscribe( {
             next: (sources) => {
                 if (sources) {
                     console.log('sources: ', sources)
                     this.sourceStore.loadSources(sources)
+                }             
+            }
+        })
+
+        this.store.pipe(select(tagSelector)).subscribe( {
+            next: (tags) => {
+                if (tags) {
+                    console.log('loaded tags: ', tags)
+                    this.sourceStore.loadTags(tags)
                 }             
             }
         })
@@ -57,6 +68,20 @@ export class SourcePageComponent implements OnInit{
                 }             
             }
         })
+
+        this.store.pipe(select(tagsFilterIdsSelector)).subscribe( {
+            next: (tagIds) => {
+                if (tagIds) {
+                    console.log('tagIds: ', tagIds)
+                    this.sourceStore.loadTagsFilterIds(tagIds)
+                }             
+            }
+        })
+
+
+        
+
+        
         
     }
 

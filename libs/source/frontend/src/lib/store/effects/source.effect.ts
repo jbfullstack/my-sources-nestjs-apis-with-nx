@@ -12,11 +12,12 @@ import { Router } from '@angular/router';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 import { SourceStore } from '../source.store';
 import { SourceService } from '../../services/source.service';
-import { loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
+import { addTagAction, addTagSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
 
 
 @Injectable()
 export class SourceEffect {
+    
 
     loadSources$ = createEffect( () => 
         this.actions$.pipe(
@@ -35,7 +36,42 @@ export class SourceEffect {
         )
     )
 
+    loadTags$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(loadTagsAction),
+            switchMap( () => {
+                return this.sourceService.loadTags().pipe(
+                    map((tags: TagInterface[]) => {
+                        return loadTagsSuccessAction({ tags })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't retrieve tags from server: \n ${errorResponse.message}`)
+                        return of(loadTagsFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
 
+    addTagFilter$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(addTagAction),
+            switchMap( (action) => {
+                // this.sourceStore.addTagFilter({ id: action.id })
+                return of(addTagSuccessAction({ id: action.id }))
+            })
+        )
+    )
+
+    removeTagFilter$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(removeTagAction),
+            switchMap( (action) => {
+                // this.sourceStore.addTagFilter({ id: action.id })
+                return of(removeTagSuccessAction({ id: action.id }))
+            })
+        )
+    )
 
 
 

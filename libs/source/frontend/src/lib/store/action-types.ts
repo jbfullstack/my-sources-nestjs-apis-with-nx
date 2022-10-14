@@ -3,6 +3,10 @@ export enum ActionTypes {
     LOAD_SOURCES_SUCCESS = '[Source] Load sources success',
     LOAD_SOURCES_FAILURE = '[Source] Load sources failure',
 
+    LOAD_TAGS = '[Source] Load tags',
+    LOAD_TAGS_SUCCESS = '[Source] Load tags success',
+    LOAD_TAGS_FAILURE = '[Source] Load tags failure',    
+
     CREATE_SOURCE = '[Source] Create source',
     CREATE_SOURCE_SUCCESS = '[Source] Create source success',
     CREATE_SOURCE_FAILURE = '[Source] Create source failure',

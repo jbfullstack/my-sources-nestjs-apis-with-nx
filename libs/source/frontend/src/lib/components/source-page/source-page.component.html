@@ -16,23 +16,30 @@
 
                     <div class="search">
                         <!-- Search bar -->     
-                        <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
-                        <input [(ngModel)]="searchSourceInput" (ngModelChange)="searchInputChange($event)">
-                        <p>filter by title or description</p>
+                        
+                            <div class="source-search-input">
+                                <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
+                                <input [(ngModel)]="searchSourceInput" (ngModelChange)="searchInputChange($event)">
+                                <p>filter by title or description</p>
+                            </div>
+                            <div class="tag-search-input">
+                                <mat-button-toggle-group [(ngModel)]="search_options" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
+                                    <mat-button-toggle [checked]="true" value="owned">Owned</mat-button-toggle >
+                                    <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
+                                    <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
+                                </mat-button-toggle-group>
+                               
+                            </div>
+                            <ms-autocomplete-tag-chips></ms-autocomplete-tag-chips>
+                       
 
-                        <mat-button-toggle-group [(ngModel)]="search_options" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
-                            <mat-button-toggle [checked]="true" value="owned">Owned</mat-button-toggle >
-                            <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
-                            <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
-                        </mat-button-toggle-group>
+                        
                     </div>
 
                     <br>
                     <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
                         <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
                         </ms-sources>
-
-                        
                         
                     </div>
                 </div>

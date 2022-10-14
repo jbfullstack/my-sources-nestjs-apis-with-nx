@@ -19,6 +19,20 @@ export const loadSourcesFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const loadTagsAction = createAction(
+    ActionTypes.LOAD_TAGS
+);
+
+export const loadTagsSuccessAction = createAction(
+    ActionTypes.LOAD_TAGS_SUCCESS,
+    props<{ tags: TagInterface[]}>()
+);
+
+export const loadTagsFailureAction = createAction(
+    ActionTypes.LOAD_TAGS_FAILURE,
+    props<{ errors: string}>()
+);
+
 export const updateSearchInputAction = createAction(
     ActionTypes.UPDATE_SEARCH_INPUT_USER,
     props<{ search: string}>()
@@ -35,12 +49,12 @@ export const updateSearchInputFailureAction = createAction(
 
 export const addTagAction = createAction(
     ActionTypes.ADD_TAG_FILTER,
-    props<{ title: string, description: string}>()
+    props<{ id: number}>()
 );
 
 export const addTagSuccessAction = createAction(
     ActionTypes.ADD_TAG_FILTER_SUCCESS,
-    props<{ tag: TagInterface}>()
+    props<{ id: number}>()
 );
 
 export const addTagFailureAction = createAction(

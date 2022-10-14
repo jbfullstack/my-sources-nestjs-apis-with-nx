@@ -1,7 +1,7 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 import { SourceStateInterface, UserInterface } from "@jbhive/types_fe";
 import { initialState } from "../source.store";
-import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
+import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
 import { logoutAction } from "@jbhive/auth_fe";
 
 
@@ -28,6 +28,34 @@ const sourceReducer = createReducer(
     ),
     on (
         loadSourcesFailureAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+
+    /** ---- LOAD TAG ---- */
+    on (
+        loadTagsAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on (
+        loadTagsSuccessAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            tags: action.tags
+        })
+    ),
+    on (
+        loadTagsFailureAction,
         (state, action): SourceStateInterface => 
         ({
             ...state,
@@ -146,7 +174,7 @@ const sourceReducer = createReducer(
         ({
             ...state,
             pending: false,
-            tagsFilterIds:[...state.tagsFilterIds, action.tag.id]            
+            tagsFilterIds:[...state.tagsFilterIds, action.id]            
         })
     ),
     on (
@@ -197,6 +225,7 @@ const sourceReducer = createReducer(
             pending: false,
             // searchInput: '',
             sources: [],
+            tags: [],
             tagsFilterIds: []
         })
     ),

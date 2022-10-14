@@ -25,7 +25,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 
 import { UptimeComponent } from '@jbhive/uptime';
 import { AuthModule } from '@jbhive/auth_fe';
-import { SourceModule } from '@jbhive/source_fe';
+import { AutocompleteTagChipsComponent, SourceModule } from '@jbhive/source_fe';
 
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,7 +63,8 @@ import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
     SourcesComponent,
     SourceComponent,
     HighlighterPipe,
-    HighlightDirective
+    HighlightDirective,
+    AutocompleteTagChipsComponent
   ],
   imports: [
     BrowserModule, 

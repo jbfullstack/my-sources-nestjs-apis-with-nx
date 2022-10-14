@@ -5,27 +5,32 @@ export const sourceFeatureSelector = createFeatureSelector<SourceStateInterface>
 
 export const isLoadingSelector = createSelector(
     sourceFeatureSelector, 
-    (adminState: SourceStateInterface) => adminState.pending
+    (sourceState: SourceStateInterface) => sourceState.pending
 )
 
 export const sourceSelector = createSelector(
     sourceFeatureSelector, 
-    (adminState: SourceStateInterface) => adminState.sources
+    (sourceState: SourceStateInterface) => sourceState.sources
+)
+
+export const tagSelector = createSelector(
+    sourceFeatureSelector, 
+    (sourceState: SourceStateInterface) => sourceState.tags
 )
 
 export const searchInputSelector = createSelector(
     sourceFeatureSelector, 
-    (adminState: SourceStateInterface) => adminState.searchInput
+    (sourceState: SourceStateInterface) => sourceState.searchInput
 )
 
 export const tagsFilterIdsSelector = createSelector(
     sourceFeatureSelector, 
-    (adminState: SourceStateInterface) => adminState.tagsFilterIds
+    (sourceState: SourceStateInterface) => sourceState.tagsFilterIds
 )
 
 export const errorsSelector = createSelector(
     sourceFeatureSelector, 
-    (adminState: SourceStateInterface) => adminState.errors
+    (sourceState: SourceStateInterface) => sourceState.errors
 )
 
 
