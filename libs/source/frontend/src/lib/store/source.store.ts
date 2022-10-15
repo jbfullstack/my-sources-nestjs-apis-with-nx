@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ComponentStore, tapResponse } from "@ngrx/component-store";
-import { SourceStateInterface, UserInterface, TagInterface, SourceInterface } from "@jbhive/types_fe";
+import { SourceStateInterface, UserInterface, TagInterface, SourceInterface, SourceTypeInterface } from "@jbhive/types_fe";
 import { SourceService } from "../services/source.service";
 
 export const initialState: SourceStateInterface = {
@@ -8,6 +8,7 @@ export const initialState: SourceStateInterface = {
     loggedUserId: 0,
     searchInput: '',
     sources: [],
+    types: [],
     tags: [],
     tagsFilterIds: [],
     isAllTagFilterRequired: false,
@@ -22,14 +23,12 @@ export const initialState: SourceStateInterface = {
 
 @Injectable()
 export class SourceStore extends ComponentStore<SourceStateInterface> {
-    
-    
-    
 
     errors$ = this.select(state => state.errors)
     pending$ = this.select(state => state.pending)
     loggedUserId$  = this.select(state => state.loggedUserId)
     sources$ = this.select(state => state.sources)
+    type$ = this.select(state => state.types)
     tags$ = this.select(state => state.tags)
     tagsFilterIds$ = this.select(state => state.tagsFilterIds)
     isAllTagFilterRequired$ = this.select(state => state.isAllTagFilterRequired)
@@ -51,13 +50,14 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
                                                 : []
         ).filter(
             // apply filter by search input
-            (source) => source.title.toLowerCase().includes(searchInput.toLowerCase()) || source.description.toLowerCase().includes(searchInput.toLowerCase())
+            (source) =>     source.title.toLowerCase().includes(searchInput.toLowerCase()) 
+                        ||  source.description.toLowerCase().includes(searchInput.toLowerCase())
+                        ||  source.content.toLowerCase().includes(searchInput.toLowerCase())
         )
         .filter(
             // apply filter by tag
-            // (source) => (tagsFilterIds.length === 0)? source : source.tags.some( tag => tagsFilterIds.includes(tag.id))
-            // (source) => this.sourceContainsAllTagsOf(source, tagsFilterIds)
-            (source) => ( isAllTagFilterRequired ) ? this.sourceContainsAllTagsOf(source, tagsFilterIds) : this.sourceContainsAtLeastOneTagOf(source, tagsFilterIds)
+            (source) => ( isAllTagFilterRequired )  ? this.sourceContainsAllTagsOf(source, tagsFilterIds) 
+                                                    : this.sourceContainsAtLeastOneTagOf(source, tagsFilterIds)
         )
     )
 
@@ -90,6 +90,12 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
             sources: sources || []
         })  
     )  
+
+    loadTypes = this.updater( (state, types: SourceTypeInterface[] | null) => ({
+            ...state,
+            types: types || []
+        })  
+    )
 
     loadTags = this.updater( (state, tags: TagInterface[] | null) => ({
             ...state,

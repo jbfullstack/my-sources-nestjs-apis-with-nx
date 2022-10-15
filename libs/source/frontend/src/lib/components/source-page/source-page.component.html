@@ -53,27 +53,31 @@
             <hr>
             <br> 
 
-               
-                        <mat-card class="mat-card">
+
+            <mat-card class="mat-card">
                             
                             <mat-card-title class="margin-left">Create a new source</mat-card-title> 
                             <mat-card-subtitle class="margin-left">and never lost it!</mat-card-subtitle>
 
+                            <mat-checkbox class="margin-left" [(ngModel)]="newSourcePublic">Public</mat-checkbox>
+                            <br>
+
+                          
+
                             <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
                                 <mat-label>Title</mat-label>
-                                <input  matInput type="text" [(ngModel)]="newSourceTitle">
+                                <input  matInput type="text" [(ngModel)]="newSourceTitle" required>
                                 <button *ngIf="newSourceTitle" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceTitle=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
                             </mat-form-field>
                             <br>
 
-                            <mat-checkbox class="margin-left" [(ngModel)]="newSourcePublic">Public</mat-checkbox>
-                            <br>
+                            
 
-                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
+                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field" >                    
                                 <mat-label>Url</mat-label>
-                                <input matInput type="text" [(ngModel)]="newSourceUrl">
+                                <input matInput type="text" [(ngModel)]="newSourceUrl" placeholder="http://www.google.fr">
                                 <button *ngIf="newSourceUrl" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceUrl=''">
                                     <mat-icon>close</mat-icon>
                                 </button>
@@ -98,16 +102,50 @@
                             </mat-form-field>
                             <br>
 
-                            TYPE?
+                            <mat-form-field class="example-chip-list" appearance="fill" class="create-form-field">
+                                <mat-label>Filter by tag</mat-label>
+                                <mat-chip-list #chipList aria-label="Tag selection">
+                                    <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                                    {{ tag }}
+                                    <button matChipRemove>
+                                        <mat-icon>cancel</mat-icon>
+                                    </button>
+                                    </mat-chip>
+                                    <input
+                                    placeholder="New tag..."
+                                    #tagInput
+                                    [formControl]="tagCtrl"
+                                    [matAutocomplete]="auto"
+                                    [matChipInputFor]="chipList"
+                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                    (matChipInputTokenEnd)="add($event)"
+                                    />
+                                </mat-chip-list>
+                                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                    <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                                    {{ tag }}
+                                    </mat-option>
+                                </mat-autocomplete>
+                            </mat-form-field>
                             <br>
 
-                            TAGS?
+                            <form [formGroup]="sourceTypesForm">
+                                <mat-form-field appearance="fill" class="create-form-field">
+                                    <mat-label>Source type</mat-label>
+                                    <mat-select [(value)]="selectedType" name="type" formControlName="types">
+                                        <mat-option *ngFor="let type of types" [value]="type">
+                                            {{type.title}}
+                                        </mat-option>
+                                    </mat-select>
+                                    
+                                </mat-form-field>
+                            </form>
                             <br>
 
 
-                            
-                            
-                        </mat-card>             
+                            <button [disabled]="!isValid()" class="create-form-field" mat-stroked-button (click)="save()" matTooltip="Save '{{ newSourceTitle }}'">Save</button>
+                        
+            </mat-card>             
                             
         </section>
     </mat-tab>

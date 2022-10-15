@@ -1,7 +1,7 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 import { SourceStateInterface, UserInterface } from "@jbhive/types_fe";
 import { initialState } from "../source.store";
-import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
+import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
 import { logoutAction } from "@jbhive/auth_fe";
 
 
@@ -28,6 +28,34 @@ const sourceReducer = createReducer(
     ),
     on (
         loadSourcesFailureAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+
+    /** ---- LOAD SOURCE TYPES ---- */
+    on (
+        loadTypesAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on (
+        loadTypesSuccessAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            types: action.types
+        })
+    ),
+    on (
+        loadTypesFailureAction,
         (state, action): SourceStateInterface => 
         ({
             ...state,
@@ -226,6 +254,7 @@ const sourceReducer = createReducer(
             // searchInput: '',
             sources: [],
             tags: [],
+            types: [],
             tagsFilterIds: []
         })
     ),

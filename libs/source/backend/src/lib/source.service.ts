@@ -169,8 +169,8 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             }
         })
 
-        this.manageReccordAssignementForSourceTag(created.id, tagsIds)
-        return created
+        await this.manageReccordAssignementForSourceTag(created.id, tagsIds)
+        return await this.findSource(created.id)
     }
 
     async updateSource(userId: number, sourceId: number, input: UpdateSourceInput) {
@@ -402,10 +402,11 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
     async manageReccordAssignementForSourceTag(sourceId: number, tags: number[]) {
 
         const source = await this.findSource(sourceId)
-        this.removeOldReccordsForSourceTag(source, sourceId, tags)
-        this.addNewReccordsForSourceTag(source, sourceId, tags)
+        await this.removeOldReccordsForSourceTag(source, sourceId, tags)
+        await this.addNewReccordsForSourceTag(source, sourceId, tags)
         return true
     }
+
     async addNewReccordsForSourceTag(source: { tags: Tag[]; id: number; createdAt: Date; title: string; url: string; content: string; description: string; typeId: number; ownerId: number; owner: { id: number; pseudo: string; email: string; role: import(".prisma/client").Role; }; type: import(".prisma/client").SourceType; }, sourceId: number, tags: number[]) {
         // // News
         let assignements = []
@@ -430,6 +431,8 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
         const relationsCreated = await this.sourceTag.createMany({
             data: assignements
         })
+
+        return relationsCreated
 
     }
 

@@ -11,18 +11,20 @@
             }" >
                 <mat-card-header >
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
-                    <mat-card-subtitle>{{  printTagList() }}</mat-card-subtitle>
+                    <mat-card-subtitle >{{  printTagList() }}</mat-card-subtitle>
                     <mat-card-title   *ngIf="hasTitle()"  
-                                        [highlight]="searchParent" [caseSensitive]="true" customClasses="highlighted-text" 
+                                        [highlight]="searchParent" [caseSensitive]="false" customClasses="highlighted-text" 
                                         [displayContent]="title()" displayTitle="title: ">
                     </mat-card-title>
                     <!-- <div [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" >{{ title() }}</div> -->
                 </mat-card-header>
                 <mat-card-content>
-                    <mat-card-subtitle *ngIf="hasUrl()">url: {{ source.url }}</mat-card-subtitle>
-                    <mat-card-content *ngIf="hasContent()">content: {{ source.content }}</mat-card-content>
+                    <a *ngIf="hasUrl()" href="{{ source.url }}" target="_blank">url</a>
+                    
+                    <mat-card-content *ngIf="hasContent()" [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+                                        [displayContent]="content()" displayTitle="content: ">></mat-card-content>
                     <mat-card-content   *ngIf="hasDescription()"  
-                                        [highlight]="searchParent" [caseSensitive]="true" customClasses="my-highlight-class" 
+                                        [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
                                         [displayContent]="description()" displayTitle="description: ">
                     </mat-card-content>
 

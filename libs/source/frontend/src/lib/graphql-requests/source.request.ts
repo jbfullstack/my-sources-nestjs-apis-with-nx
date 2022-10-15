@@ -1,3 +1,4 @@
+import { CreateSourceRequestInterface } from '@jbhive/types_fe';
 import { gql } from 'apollo-angular';
 
 export function loadPublicAndOwnedSourcesGqlRequest() {
@@ -7,6 +8,7 @@ export function loadPublicAndOwnedSourcesGqlRequest() {
             id
             title
             url
+            content
             description
             type {title}
             public
@@ -40,6 +42,95 @@ export function loadTagsGqlRequest() {
                 pseudo
             }      
         }
+    }`
+}
+
+export function loadSourceTypesGqlRequest(){
+    return gql`query types{   
+        types 
+        {
+            id
+            title
+            description
+        }
+    }`
+}
+
+export function createSourceGqlRequest(request: CreateSourceRequestInterface){
+    return gql`mutation createSource{  
+        createSource (
+            typeId: ${request.typeId},
+            tagIds: [],
+            input : {
+                title: "${request.title}",
+                description: "${request.description}",
+                content: "${request.content}",
+                public: ${request.public},
+                url: "${request.url}"
+            }
+        ) 
+        {
+            id
+            title
+            content
+            url
+            description
+            type {title}
+            public
+            createdAt
+            owner {	
+                id
+                pseudo
+                role { 
+                    id
+                    name
+                }
+            }
+            tags {
+                id
+                title
+                createdAt
+            }
+        } 
+    }`
+}
+
+export function createSourceWithTagGqlRequest(request: CreateSourceRequestInterface){
+    return gql`mutation createSource{  
+        createSource (
+            typeId: ${request.typeId},
+            tagIds: [${request.tagsIds}],
+            input : {
+                title: "${request.title}",
+                description: "${request.description}",
+                content: "${request.content}",
+                public: ${request.public},
+                url: "${request.url}"
+            }
+        ) 
+        {
+            id
+            title
+            url
+            content
+            description
+            type {title}
+            public
+            createdAt
+            owner {	
+                id
+                pseudo
+                role { 
+                    id
+                    name
+                }
+            }
+            tags {
+                id
+                title
+                createdAt
+            }
+        } 
     }`
 }
 

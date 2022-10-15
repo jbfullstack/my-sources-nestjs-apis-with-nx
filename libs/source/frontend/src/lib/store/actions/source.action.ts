@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 
 import { ActionTypes } from '../action-types';
-import { CreateSourceRequestInterface, SourceInterface, TagInterface, UpdateSourceRequestInterface, UserInterface } from '@jbhive/types_fe'
+import { CreateSourceRequestInterface, SourceInterface, SourceTypeInterface, TagInterface, UpdateSourceRequestInterface, UserInterface } from '@jbhive/types_fe'
 
 
 
@@ -16,6 +16,20 @@ export const loadSourcesSuccessAction = createAction(
 
 export const loadSourcesFailureAction = createAction(
     ActionTypes.LOAD_SOURCES_FAILURE,
+    props<{ errors: string}>()
+);
+
+export const loadTypesAction = createAction(
+    ActionTypes.LOAD_TYPES
+);
+
+export const loadTypesSuccessAction = createAction(
+    ActionTypes.LOAD_TYPES_SUCCESS,
+    props<{ types: SourceTypeInterface[]}>()
+);
+
+export const loadTypesFailureAction = createAction(
+    ActionTypes.LOAD_TYPES_FAILURE,
     props<{ errors: string}>()
 );
 

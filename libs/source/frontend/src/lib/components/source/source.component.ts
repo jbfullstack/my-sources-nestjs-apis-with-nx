@@ -52,8 +52,12 @@ export class SourceComponent implements OnInit{
             
     }
 
+    hasTag(){
+        return (this.source && this.source.tags.length > 0)
+    }
+
     printTagList(){
-        if (this.source){
+        if (this.source && this.source.tags.length > 0){
             let res = '['
             for( let tag of this.source.tags) {
                 res +=  tag.title + ', '
@@ -63,7 +67,7 @@ export class SourceComponent implements OnInit{
             res += ']'
             return res
         } else {
-            return '[]'
+            return ''
         }
         
     }
@@ -82,6 +86,16 @@ export class SourceComponent implements OnInit{
         if (this.source){
             if (this.source.description !== null){
                 return this.source.description
+            }
+        }
+
+        return ''
+    }
+
+    content(){
+        if (this.source){
+            if (this.source.content !== null){
+                return this.source.content
             }
         }
 
@@ -170,6 +184,10 @@ export class SourceComponent implements OnInit{
         }
 
         return "https://image.shutterstock.com/image-vector/unknown-person-icon-anonymous-pictogram-600w-1391394830.jpg"
+    }
+
+    goToUrl(){
+        window.open('www.google.fr', "_blank");
     }
 
 }

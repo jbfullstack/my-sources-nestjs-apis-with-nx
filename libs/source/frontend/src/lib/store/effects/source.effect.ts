@@ -7,12 +7,12 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { Injectable } from "@angular/core";
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { BackendErrorsInterface, UserInterface, TagInterface, SourceInterface } from '@jbhive/types_fe';
+import { BackendErrorsInterface, UserInterface, TagInterface, SourceInterface, SourceTypeInterface } from '@jbhive/types_fe';
 import { Router } from '@angular/router';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 import { SourceStore } from '../source.store';
 import { SourceService } from '../../services/source.service';
-import { addTagAction, addTagSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
+import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
 
 
 @Injectable()
@@ -35,6 +35,23 @@ export class SourceEffect {
             })
         )
     )
+
+    loadTypes$ = createEffect( () => 
+    this.actions$.pipe(
+        ofType(loadTypesAction),
+        switchMap( () => {
+            return this.sourceService.loadTypes().pipe(
+                map((types: SourceTypeInterface[]) => {
+                    return loadTypesSuccessAction({ types })
+                }),
+                catchError( (errorResponse: HttpErrorResponse) => {
+                    this.snackbar.openSnackBarError(`Error: can't retrieve source types from server: \n ${errorResponse.message}`)
+                    return of(loadTypesFailureAction({errors: errorResponse.message}))
+                })
+            )
+        })
+    )
+)
 
     loadTags$ = createEffect( () => 
         this.actions$.pipe(
@@ -84,6 +101,24 @@ export class SourceEffect {
             })
         )
     )
+
+    createSource$ = createEffect( () => 
+    this.actions$.pipe(
+        ofType(createSourceAction),
+        switchMap( (action) => {
+            return this.sourceService.createSource(action.request).pipe(
+                map((source: SourceInterface) => {
+                    this.snackbar.openSnackBarError(`Source ${source.title} created!`)
+                    return createSourceSuccessAction({ source })
+                }),
+                catchError( (errorResponse: HttpErrorResponse) => {
+                    this.snackbar.openSnackBarError(`Error: can't retrieve tags from server: \n ${errorResponse.message}`)
+                    return of(createSourceFailureAction({errors: errorResponse.message}))
+                })
+            )
+        })
+    )
+)
 
     constructor(
         private actions$: Actions, 
