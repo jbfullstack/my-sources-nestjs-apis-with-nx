@@ -29,7 +29,8 @@ export class SourcePageComponent implements OnInit{
 
     searchSourceInput: string = ''
 
-    search_options: string = 'owned';
+    // search_options: string = 'owned';
+    search_options_array: string[] = ['owned']
     isAllTagsRequired: boolean = false
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }
@@ -94,7 +95,7 @@ export class SourcePageComponent implements OnInit{
     }
 
     searchOptionsContainsMine(){
-        return this.search_options.includes('owned')
+        return this.search_options_array.includes('owned')
     }
 
     onChangeOptions(value: string){
@@ -116,6 +117,6 @@ export class SourcePageComponent implements OnInit{
     }
 
     optionsNotEmpty(){
-        return this.search_options.toString() !== ''
+        return this.search_options_array.length > 0
     }
 }

@@ -1,19 +1,18 @@
 <mat-tab-group dynamicHeight>
     <mat-tab label="Search">
         <section class="register">
+
             <br>
+            <hr>
+            <br>            
 
             <!-- <ms-backend-error-messages 
             *ngIf="backendErrorsSelector$ | async"
             [backendErrors]="backendErrorsSelector$ | async"></ms-backend-error-messages> -->
             
             <!-- <div class="color-overlay"></div> -->
-            <div class="container">
-
-
-                <hr>
+            <div class="container">                
                 <div >
-
                     <div class="search">
                         <!-- Search bar -->     
                         
@@ -23,7 +22,7 @@
                                 <p>filter by title or description</p>
                             </div>
                             <div class="tag-search-input">
-                                <mat-button-toggle-group [(ngModel)]="search_options" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
+                                <mat-button-toggle-group [(ngModel)]="search_options_array" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
                                     <mat-button-toggle [checked]="true" value="owned">Owned</mat-button-toggle >
                                     <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
                                     <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
@@ -32,12 +31,13 @@
                             </div>
                             <ms-autocomplete-tag-chips></ms-autocomplete-tag-chips>
                             <mat-slide-toggle [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle>
-                       
 
-                        
                     </div>
 
                     <br>
+                    <hr>
+                    <br>
+
                     <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
                         <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
                         </ms-sources>
