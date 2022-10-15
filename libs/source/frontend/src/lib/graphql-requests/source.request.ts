@@ -10,7 +10,10 @@ export function loadPublicAndOwnedSourcesGqlRequest() {
             url
             content
             description
-            type {title}
+            type {
+                id
+                title
+            }
             public
             createdAt
             owner {	
@@ -75,7 +78,10 @@ export function createSourceGqlRequest(request: CreateSourceRequestInterface){
             content
             url
             description
-            type {title}
+            type {
+                id
+                title
+            }
             public
             createdAt
             owner {	
@@ -114,7 +120,10 @@ export function createSourceWithTagGqlRequest(request: CreateSourceRequestInterf
             url
             content
             description
-            type {title}
+            type {
+                id
+                title
+            }
             public
             createdAt
             owner {	

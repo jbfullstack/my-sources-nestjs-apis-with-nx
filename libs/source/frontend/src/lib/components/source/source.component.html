@@ -9,7 +9,11 @@
                 'public': source.public,
                 'mat-card': true
             }" >
+
+            <div *ngIf="!editMode">
                 <mat-card-header >
+
+                    
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
                     <mat-card-subtitle >{{  printTagList() }}</mat-card-subtitle>
                     <mat-card-title   *ngIf="hasTitle()"  
@@ -50,6 +54,69 @@
                 </div>
                 
                 </mat-card-actions>
+
+            </div>
+            <div *ngIf="editMode">
+                    <mat-form-field class="example-form-field" appearance="fill">                    
+                        <mat-label>Title</mat-label>
+                        <input matInput type="text" [(ngModel)]="source.title" >
+                        <button *ngIf="source.title" matSuffix mat-icon-button aria-label="Clear" (click)="source.title=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field" appearance="fill" >
+                        <mat-label>Url</mat-label>
+                        <input matInput class="input-description" type="text" [(ngModel)]="source.url">
+                        <button *ngIf="source.url" matSuffix mat-icon-button aria-label="Clear" (click)="source.url=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field" appearance="fill"  >
+                        <mat-label>Description</mat-label>
+                        <input matInput class="input-description" type="text" [(ngModel)]="source.title">
+                        <button *ngIf="source.description" matSuffix mat-icon-button aria-label="Clear" (click)="source.title=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field" appearance="fill"  >
+                        <mat-label>Content</mat-label>
+                        <input matInput class="input-description" type="text" [(ngModel)]="source.content">
+                        <button *ngIf="source.content" matSuffix mat-icon-button aria-label="Clear" (click)="source.content=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                    
+                    <mat-checkbox class="margin-left" [(ngModel)]="source.public">Public</mat-checkbox>
+
+                    <form [formGroup]="sourceTypesForm">
+                        <mat-form-field appearance="fill" class="create-form-field">
+                            <mat-label>Source type</mat-label>
+                            <mat-select [(value)]="selectedType" name="type" formControlName="types">
+                                <mat-option *ngFor="let type of types" [value]="type">
+                                    {{type.title}}
+                                </mat-option>
+                            </mat-select>
+                            
+                        </mat-form-field>
+                    </form>
+                    <br>
+                    
+
+                    
+                    <!-- <mat-card-title>#{{ tag.title }}</mat-card-title> -->
+                    <!-- <br>
+                    <mat-form-field class="example-form-field" appearance="fill" [style.width.rem]=25 >
+                        <mat-label>Description</mat-label>
+                        <input matInput class="input-description" type="text" [(ngModel)]="description">
+                        <button *ngIf="description" matSuffix mat-icon-button aria-label="Clear" (click)="description=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field> -->
+                    <mat-card-actions>
+                        <button mat-stroked-button matTooltip="Save changes for {{ source.title }}" (click)="save()">Save</button>
+                        <button mat-stroked-button matTooltip="Undo edit" (click)="editBack()">Back</button>
+                    </mat-card-actions>                
+            </div>
             </mat-card>
         </div>
     </div>

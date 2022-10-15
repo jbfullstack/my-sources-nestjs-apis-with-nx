@@ -4,8 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
 import { deleteSourceAction, loadSourcesAction } from '../../store/actions/source.action'
-import { sourceSelector } from '../../store/selectors/source.selector'
-import { SourceInterface } from '@jbhive/types_fe'
+import { sourceSelector, typeSelector } from '../../store/selectors/source.selector'
+import { SourceInterface, SourceTypeInterface } from '@jbhive/types_fe'
 import { currentUserSelector } from '@jbhive/auth_fe'
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
@@ -19,6 +19,10 @@ import { MatDialog } from '@angular/material/dialog'
 export class SourceComponent implements OnInit{
     @Input() source!: SourceInterface | null;
     @Input() searchParent: string = '';
+
+    sourceTypesForm!: FormGroup;
+    types: SourceTypeInterface[] = []
+    selectedType!: SourceTypeInterface
     
     isOwnedByLoggedUser: boolean = false
     loggedUserId!: number
@@ -30,6 +34,8 @@ export class SourceComponent implements OnInit{
     showOwnedPrivate$ = this.sourceStore.showOwnedPrivate$
     showUnowned$ = this.sourceStore.showUnowned$  
     searchInput$ = this.sourceStore.searchInput$
+
+    editMode: boolean = false
 
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore, private dialog: MatDialog) { }
@@ -45,8 +51,25 @@ export class SourceComponent implements OnInit{
         this.store.pipe(select(currentUserSelector)).subscribe( {
             next: (user) => {
                 if (user) {
-                    console.log('user: ', user)
+                    
                     this.loggedUserId = user.id
+                }             
+            }
+        })
+
+        this.store.pipe(select(typeSelector)).subscribe( {
+            next: (types) => {
+                if (types) {
+                    this.sourceStore.loadTypes(types)
+                    this.types = types
+
+                    // -- Form
+                    this.sourceTypesForm = this.formBuilder.group({
+                        types: [null, Validators.required]
+                    })
+                    const typeKey = (this.source === null)? 0 : this.source.type.id - 1
+                    const toSelect = types[typeKey]
+                    this.sourceTypesForm.get('types')?.setValue(toSelect)
                 }             
             }
         })
@@ -165,7 +188,17 @@ export class SourceComponent implements OnInit{
     }
 
     edit(){
-        console.log('TODO: implementer edit source mechanism')
+        this.editMode = true
+    }
+
+    editBack(){
+        this.editMode = false
+    }
+
+    save(){
+
+
+        this.editMode = false
     }
 
     delete(){
