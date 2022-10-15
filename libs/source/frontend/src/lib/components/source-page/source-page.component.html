@@ -28,9 +28,10 @@
                                     <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
                                     <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
                                 </mat-button-toggle-group>
-                               
+                            
                             </div>
                             <ms-autocomplete-tag-chips></ms-autocomplete-tag-chips>
+                            <mat-slide-toggle [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle>
                        
 
                         

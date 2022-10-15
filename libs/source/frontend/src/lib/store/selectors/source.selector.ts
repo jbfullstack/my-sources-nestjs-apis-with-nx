@@ -28,6 +28,11 @@ export const tagsFilterIdsSelector = createSelector(
     (sourceState: SourceStateInterface) => sourceState.tagsFilterIds
 )
 
+export const isAllTagFilterRequiredSelector = createSelector(
+    sourceFeatureSelector, 
+    (sourceState: SourceStateInterface) => sourceState.isAllTagFilterRequired
+)
+
 export const errorsSelector = createSelector(
     sourceFeatureSelector, 
     (sourceState: SourceStateInterface) => sourceState.errors

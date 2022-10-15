@@ -11,6 +11,7 @@ export interface SourceStateInterface {
     sources: SourceInterface[] 
     tags: TagInterface[],
     tagsFilterIds: number[]  // null means not known yet
+    isAllTagFilterRequired: boolean
     searchInput: string
     optionsFilter: SourceOptionFilterInterface
     errors: string

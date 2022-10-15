@@ -22,6 +22,6 @@
     "types_fe": "libs/utils/types/frontend",
     "uptime": "libs/utils/uptime/frontend",
     "user_be": "libs/user/backend",
-    "usnackbar": "libs/utils/snackbar"
+    "snackbar": "libs/utils/snackbar"
   }
 }

@@ -15,6 +15,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
     exports: [
@@ -22,7 +23,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
         MatTabsModule, MatCardModule, MatExpansionModule, 
         MatSelectModule, ScrollingModule, MatTooltipModule,
         MatButtonModule, MatCheckboxModule, MatProgressBarModule,
-        MatButtonToggleModule, MatChipsModule, MatAutocompleteModule
+        MatButtonToggleModule, MatChipsModule, MatAutocompleteModule,
+        MatSlideToggleModule
     ]
 })
 export class MaterialsModules {

@@ -10,6 +10,7 @@ export const initialState: SourceStateInterface = {
     sources: [],
     tags: [],
     tagsFilterIds: [],
+    isAllTagFilterRequired: false,
     optionsFilter: {
         showOwned: true,
         showOwnedPrivate: false,
@@ -31,6 +32,7 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
     sources$ = this.select(state => state.sources)
     tags$ = this.select(state => state.tags)
     tagsFilterIds$ = this.select(state => state.tagsFilterIds)
+    isAllTagFilterRequired$ = this.select(state => state.isAllTagFilterRequired)
     searchInput$ = this.select(state => state.searchInput)
     optionsFilter$ = this.select(state => state.optionsFilter)
     showOwned$ = this.select(state => state.optionsFilter.showOwned)
@@ -39,7 +41,7 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
 
 
     filteredSources$  = this.select( 
-        ({sources, searchInput, optionsFilter: options, tagsFilterIds, loggedUserId: id }) => sources.filter( 
+        ({sources, searchInput, optionsFilter: options, tagsFilterIds, loggedUserId: id, isAllTagFilterRequired }) => sources.filter( 
             (source) => (options.showOwned && options.showUnowned)  ? 
                             (options.showOwnedPrivate)  ? source // all options
                                                         : ( source.owner.id === id && source.public === true) || ( source.owner.id !== id)
@@ -53,36 +55,27 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
         )
         .filter(
             // apply filter by tag
-            (source) => (tagsFilterIds.length === 0)? source : source.tags.some( tag => tagsFilterIds.includes(tag.id))
+            // (source) => (tagsFilterIds.length === 0)? source : source.tags.some( tag => tagsFilterIds.includes(tag.id))
+            // (source) => this.sourceContainsAllTagsOf(source, tagsFilterIds)
+            (source) => ( isAllTagFilterRequired ) ? this.sourceContainsAllTagsOf(source, tagsFilterIds) : this.sourceContainsAtLeastOneTagOf(source, tagsFilterIds)
         )
     )
 
 
-    sourceContainsAtLeastOneTagOf(source: SourceInterface, tagsFilter: number[]): boolean {   
-        if (tagsFilter.length === 0) {
-            console.log('tagsFilter empty -> return')
+    sourceContainsAtLeastOneTagOf(source: SourceInterface, tagsFilter: number[]) : boolean {   
+        return (tagsFilter.length === 0)? true : source.tags.some( tag => tagsFilter.includes(tag.id))        
+    }
+
+    sourceContainsAllTagsOf(source: SourceInterface, tagsFilter: number[])  {   
+        let sourceTagIds : number[] = []
+        for(var tag of source.tags){
+            sourceTagIds.push(tag.id)
+        }
+
+        if (tagsFilter.length === 0){
             return true
         } else {
-            console.log('tagsFilter -> ', tagsFilter)
-            const included = source.tags.some( tag => tagsFilter.includes(+tag.id))
-            console.log('tada: ', included)
-            return included
-            // console.log('sourceContainsAtLeastOneTagOf: source.tags', source.tags)
-            // console.log('sourceContainsAtLeastOneTagOf: tagsFilter',tagsFilter)
-            // for (var tag of source.tags) {                
-            //     console.log('current source tag id: ', tag.id)
-            //     for (var tagIdFilter of tagsFilter) {
-            //         console.log('current tag filter id: ', tagIdFilter)
-
-            //         console.log(`${+tag.id} === ${tagIdFilter}`)
-            //         if (+tag.id === tagIdFilter){
-            //             console.log(`true`)
-            //             return true
-            //         }
-            //     }
-            // }
-    
-            // return false
+            return tagsFilter.every( id => sourceTagIds.includes(id))
         }
     }
 
@@ -109,6 +102,13 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
             tagsFilterIds: ids || []
         })  
     )
+
+    loadIsAllTagFilterRequired = this.updater( (state, allTagRequired: boolean | null) => ({
+            ...state,
+            isAllTagFilterRequired: allTagRequired || false
+        })  
+    )
+
 
     // addTagsFilterIds  = this.updater( (state, id: number) => ({
     //         ...state,

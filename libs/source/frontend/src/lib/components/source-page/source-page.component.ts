@@ -4,7 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
 import { loadSourcesAction, loadTagsAction } from '../../store/actions/source.action'
-import { sourceSelector, tagSelector, tagsFilterIdsSelector } from '../../store/selectors/source.selector'
+import { isAllTagFilterRequiredSelector, sourceSelector, tagSelector, tagsFilterIdsSelector } from '../../store/selectors/source.selector'
 import { currentUserSelector } from '@jbhive/auth_fe'
 
 
@@ -30,6 +30,7 @@ export class SourcePageComponent implements OnInit{
     searchSourceInput: string = ''
 
     search_options: string = 'owned';
+    isAllTagsRequired: boolean = false
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }
 
@@ -78,10 +79,13 @@ export class SourcePageComponent implements OnInit{
             }
         })
 
+        this.store.pipe(select(isAllTagFilterRequiredSelector)).subscribe( {
+            next: (allTagsRequired) => {
+                console.log('allTagsRequired: ', allTagsRequired)
+                this.sourceStore.loadIsAllTagFilterRequired(allTagsRequired)
+            }
+        })
 
-        
-
-        
         
     }
 
@@ -104,6 +108,11 @@ export class SourcePageComponent implements OnInit{
                 showOwnedPrivate,
                 showUnowned
         }})
+    }
+
+    onChangeRequired(value: boolean){
+        console.log('new value for all tags required: ', value)
+        this.sourceStore.patchState({ isAllTagFilterRequired: value })
     }
 
     optionsNotEmpty(){
