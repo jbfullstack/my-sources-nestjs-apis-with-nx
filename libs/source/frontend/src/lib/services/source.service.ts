@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
-import { createSourceGqlRequest, createSourceWithTagGqlRequest, loadPublicAndOwnedSourcesGqlRequest, loadSourceTypesGqlRequest, loadTagsGqlRequest } from "../graphql-requests/source.request";
+import { createSourceGqlRequest, createSourceWithTagGqlRequest, deleteSOurceOwnedGqlRequest, loadPublicAndOwnedSourcesGqlRequest, loadSourceTypesGqlRequest, loadTagsGqlRequest } from "../graphql-requests/source.request";
 import { CreateSourceRequestInterface } from "@jbhive/types_fe";
 
 @Injectable()
@@ -33,9 +33,14 @@ export class SourceService {
             return this.apollo.mutate<any>({ mutation: createSourceGqlRequest(request) })
             .pipe(map((response: any) => response.data.createSource))
         }
-
-        
     }
+
+    deleteSource(id: number) {
+        console.log('deleteSource: ', id)
+        return this.apollo.mutate<any>({ mutation: deleteSOurceOwnedGqlRequest(id) })
+            .pipe(map((response: any) => response.data.createSource))
+    }
+    
 
 
     constructor(private apollo: Apollo) { }

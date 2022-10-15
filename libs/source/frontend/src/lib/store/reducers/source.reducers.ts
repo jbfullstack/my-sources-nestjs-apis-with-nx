@@ -255,7 +255,9 @@ const sourceReducer = createReducer(
             sources: [],
             tags: [],
             types: [],
-            tagsFilterIds: []
+            tagsFilterIds: [],
+            loggedUserId: 0,
+            searchInput:'wow'
         })
     ),
 

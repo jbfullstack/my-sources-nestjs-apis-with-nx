@@ -134,6 +134,12 @@ export function createSourceWithTagGqlRequest(request: CreateSourceRequestInterf
     }`
 }
 
+export function deleteSOurceOwnedGqlRequest(id: number){
+    return gql`mutation deleteSourceOwned {    
+        deleteSourceOwned(id: ${id})
+    }`
+}
+
 
 
 

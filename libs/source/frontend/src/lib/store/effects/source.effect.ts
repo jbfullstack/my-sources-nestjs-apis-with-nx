@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 import { SourceStore } from '../source.store';
 import { SourceService } from '../../services/source.service';
-import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
+import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
 
 
 @Injectable()
@@ -103,22 +103,39 @@ export class SourceEffect {
     )
 
     createSource$ = createEffect( () => 
-    this.actions$.pipe(
-        ofType(createSourceAction),
-        switchMap( (action) => {
-            return this.sourceService.createSource(action.request).pipe(
-                map((source: SourceInterface) => {
-                    this.snackbar.openSnackBarError(`Source ${source.title} created!`)
-                    return createSourceSuccessAction({ source })
-                }),
-                catchError( (errorResponse: HttpErrorResponse) => {
-                    this.snackbar.openSnackBarError(`Error: can't retrieve tags from server: \n ${errorResponse.message}`)
-                    return of(createSourceFailureAction({errors: errorResponse.message}))
-                })
-            )
-        })
+        this.actions$.pipe(
+            ofType(createSourceAction),
+            switchMap( (action) => {
+                return this.sourceService.createSource(action.request).pipe(
+                    map((source: SourceInterface) => {
+                        this.snackbar.openSnackBarError(`Source ${source.title} created!`)
+                        return createSourceSuccessAction({ source })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't create source: \n ${errorResponse.message}`)
+                        return of(createSourceFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
     )
-)
+
+    deleteSource$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(deleteSourceAction),
+            switchMap( (action) => {
+                return this.sourceService.deleteSource(action.id).pipe(
+                    map(() => {
+                        return deleteSourceSuccessAction({ id: action.id })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't delete source: \n ${errorResponse.message}`)
+                        return of(deleteSourceFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
 
     constructor(
         private actions$: Actions, 

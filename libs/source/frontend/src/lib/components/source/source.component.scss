@@ -4,11 +4,18 @@
     margin-left: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: none;
+    overflow: auto; /* overflow is needed */
+    resize: both;
 }
 
 .mat-card:hover{
     box-shadow: 2px 2px 4px 4px lightgray;
 }
+
+// .mat-footer{
+//     position: absolute;
+//     bottom: 1.5rem;
+// }
 
 // .public:hover {
 //     background-color: lightblue;

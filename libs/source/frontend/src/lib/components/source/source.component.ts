@@ -3,11 +3,12 @@ import { Component, Input, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
-import { loadSourcesAction } from '../../store/actions/source.action'
+import { deleteSourceAction, loadSourcesAction } from '../../store/actions/source.action'
 import { sourceSelector } from '../../store/selectors/source.selector'
 import { SourceInterface } from '@jbhive/types_fe'
 import { currentUserSelector } from '@jbhive/auth_fe'
-
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'
+import { MatDialog } from '@angular/material/dialog'
 
 @Component({
     selector: 'ms-source',
@@ -31,7 +32,7 @@ export class SourceComponent implements OnInit{
     searchInput$ = this.sourceStore.searchInput$
 
 
-    constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { }
+    constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore, private dialog: MatDialog) { }
 
     ngOnInit(): void {
         this.initializeValues()
@@ -168,7 +169,29 @@ export class SourceComponent implements OnInit{
     }
 
     delete(){
-        console.log('TODO: implementer delete source mechanism')
+        
+            const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+                data:{
+                    message: 'Are you sure want to delete?',
+                    buttonText: {
+                        ok: 'Yes',
+                        cancel: 'No'
+                    }
+                }
+            });
+
+
+            dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+                if (confirmed) {
+                    if (this.source !== null){
+                        this.store.dispatch(deleteSourceAction({id: this.source.id}))
+                    }
+                } else {
+                    console.log('delete source action not confirmed')
+                }
+            });
+        
+        
     }
 
     retrieveHeaderImage(){

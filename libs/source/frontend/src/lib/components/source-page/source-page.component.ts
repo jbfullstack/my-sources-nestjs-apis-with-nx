@@ -274,7 +274,7 @@ export class SourcePageComponent implements OnInit{
         const filterValue = value.toLowerCase()
 
         return this.allTagsName.filter((tag) =>
-            tag.toLowerCase().includes(filterValue)
+            tag.toLowerCase().includes(filterValue) && !this.tags.includes(tag)
         )
     }
 }

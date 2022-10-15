@@ -61,7 +61,7 @@ export class AutocompleteTagChipsComponent implements OnInit{
         const value = (event.value || '').trim()
 
         // Add our tag
-        if (value) {
+        if (value && !this.allTagsName.includes(value)) {
             this.tags.push(value)
         }
 
@@ -87,26 +87,30 @@ export class AutocompleteTagChipsComponent implements OnInit{
     }
 
     selected(event: MatAutocompleteSelectedEvent): void {
-        this.tags.push(event.option.viewValue)
-        if (this.tagInput != null){
-            this.tagInput.nativeElement.value = ''
+        if (!this.tags.includes(event.option.viewValue)) {
+            this.tags.push(event.option.viewValue)
+            if (this.tagInput != null){
+                this.tagInput.nativeElement.value = ''
+            }
+
+            this.tagCtrl.setValue(null)
+
+            const foundTag = this.allTags.find( tag => tag.title === event.option.viewValue)
+            if (foundTag){
+                this.store.dispatch(addTagAction({id: foundTag.id}))
+            } else {
+                console.error(`tag to add '${event.option.viewValue}'' not found..`)
+            }
         }
         
-        this.tagCtrl.setValue(null)
-
-        const foundTag = this.allTags.find( tag => tag.title === event.option.viewValue)
-        if (foundTag){
-            this.store.dispatch(addTagAction({id: foundTag.id}))
-        } else {
-            console.error(`tag to add '${event.option.viewValue}'' not found..`)
-        }
+        
     }
 
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase()
 
         return this.allTagsName.filter((tag) =>
-            tag.toLowerCase().includes(filterValue)
+            tag.toLowerCase().includes(filterValue) && !this.tags.includes(tag)
         )
     }
 }

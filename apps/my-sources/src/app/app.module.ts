@@ -25,7 +25,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 
 import { UptimeComponent } from '@jbhive/uptime';
 import { AuthModule } from '@jbhive/auth_fe';
-import { AutocompleteTagChipsComponent, SourceModule } from '@jbhive/source_fe';
+import { AutocompleteTagChipsComponent, ConfirmationDialogComponent, SourceModule } from '@jbhive/source_fe';
 
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -40,7 +40,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/source_fe';
-import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
+import {  HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -64,7 +65,8 @@ import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
     SourceComponent,
     HighlighterPipe,
     HighlightDirective,
-    AutocompleteTagChipsComponent
+    AutocompleteTagChipsComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     BrowserModule, 
@@ -77,6 +79,7 @@ import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
     ReactiveFormsModule,
     MatInputModule,
     MatTabsModule,
+    MatDialogModule,
     // MyOwnMaterial modules there !!
     MaterialsModules,
     MatSnackBarModule,
@@ -123,7 +126,8 @@ import { HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
     FormsModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   bootstrap: [AppComponent],
 })

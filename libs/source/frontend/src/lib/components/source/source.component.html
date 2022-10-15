@@ -28,16 +28,19 @@
                                         [displayContent]="description()" displayTitle="description: ">
                     </mat-card-content>
 
-                    <br>
-                    <hr>
-                    <mat-card-subtitle>
-                        <span class="bottom">
-                            owner: {{ source.owner.pseudo }}
-                            <div class="align-right" >{{ source.createdAt  | date:'short' }}</div>
-                        </span>
-                    </mat-card-subtitle>
+                 
                 </mat-card-content>
-                <mat-card-actions>
+                <mat-card-actions class="mat-footer">
+                    <div >
+                        <br>
+                        <hr>
+                        <mat-card-subtitle>
+                            <span class="bottom">
+                                owner: {{ source.owner.pseudo }}
+                                <div class="align-right" >{{ source.createdAt  | date:'short' }}</div>
+                            </span>
+                        </mat-card-subtitle>
+                    </div>
                 <!-- <button mat-stroked-button matTooltip="Allow {{ user.pseudo }} inside the app" (click)="activate()">Activate</button>
                 <button mat-stroked-button matTooltip="Ban {{ user.pseudo }} for ever" (click)="hide()">Hide</button>
                 <button mat-stroked-button matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button> -->
