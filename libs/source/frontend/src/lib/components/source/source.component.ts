@@ -6,6 +6,7 @@ import { SourceStore } from '../../store/source.store'
 import { loadSourcesAction } from '../../store/actions/source.action'
 import { sourceSelector } from '../../store/selectors/source.selector'
 import { SourceInterface } from '@jbhive/types_fe'
+import { currentUserSelector } from '@jbhive/auth_fe'
 
 
 @Component({
@@ -18,8 +19,12 @@ export class SourceComponent implements OnInit{
     @Input() source!: SourceInterface | null;
     @Input() searchParent: string = '';
     
+    isOwnedByLoggedUser: boolean = false
+    loggedUserId!: number
+
 
     pending$ = this.sourceStore.pending$     
+    loggedUserId$  = this.sourceStore.loggedUserId$
     showOwned$ = this.sourceStore.showOwned$
     showOwnedPrivate$ = this.sourceStore.showOwnedPrivate$
     showUnowned$ = this.sourceStore.showUnowned$  
@@ -30,10 +35,21 @@ export class SourceComponent implements OnInit{
 
     ngOnInit(): void {
         this.initializeValues()
+        
     }
 
     initializeValues(): void {
-        console.log(this.source)        
+        console.log(this.source)   
+        
+        this.store.pipe(select(currentUserSelector)).subscribe( {
+            next: (user) => {
+                if (user) {
+                    console.log('user: ', user)
+                    this.loggedUserId = user.id
+                }             
+            }
+        })
+            
     }
 
     printTagList(){
@@ -121,6 +137,24 @@ export class SourceComponent implements OnInit{
             }
         }
         return false
+    }
+
+    isOwnedByLogedUser(){
+        if (this.source){
+            if (this.source.owner.id === this.loggedUserId){
+                return true
+            }
+        }
+
+        return false
+    }
+
+    edit(){
+        console.log('TODO: implementer edit source mechanism')
+    }
+
+    delete(){
+        console.log('TODO: implementer delete source mechanism')
     }
 
     retrieveHeaderImage(){

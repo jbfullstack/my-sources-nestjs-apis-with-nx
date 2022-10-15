@@ -23,9 +23,9 @@
                             </div>
                             <div class="tag-search-input">
                                 <mat-button-toggle-group [(ngModel)]="search_options_array" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
-                                    <mat-button-toggle [checked]="true" value="owned">Owned</mat-button-toggle >
-                                    <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private">Private</mat-button-toggle>
-                                    <mat-button-toggle value="unowned">Unowned</mat-button-toggle>
+                                    <mat-button-toggle [checked]="true" value="owned" matTooltip="Show public owned sources">Owned</mat-button-toggle >
+                                    <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private" matTooltip="Show private owned sources">Private</mat-button-toggle>
+                                    <mat-button-toggle value="unowned" matTooltip="Show public unowned sources">Unowned</mat-button-toggle>
                                 </mat-button-toggle-group>
                             
                             </div>
@@ -50,7 +50,65 @@
     <mat-tab label="Create">
         <section class="register">
             <br>
+            <hr>
+            <br> 
 
+               
+                        <mat-card class="mat-card">
+                            
+                            <mat-card-title class="margin-left">Create a new source</mat-card-title> 
+                            <mat-card-subtitle class="margin-left">and never lost it!</mat-card-subtitle>
+
+                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
+                                <mat-label>Title</mat-label>
+                                <input  matInput type="text" [(ngModel)]="newSourceTitle">
+                                <button *ngIf="newSourceTitle" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceTitle=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <br>
+
+                            <mat-checkbox class="margin-left" [(ngModel)]="newSourcePublic">Public</mat-checkbox>
+                            <br>
+
+                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
+                                <mat-label>Url</mat-label>
+                                <input matInput type="text" [(ngModel)]="newSourceUrl">
+                                <button *ngIf="newSourceUrl" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceUrl=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <br>
+
+                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
+                                <mat-label>Content</mat-label>
+                                <input matInput type="text" [(ngModel)]="newSourceContent">
+                                <button *ngIf="newSourceContent" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceContent=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <br>
+
+                            <mat-form-field class="example-form-field" appearance="fill" class="create-form-field">                    
+                                <mat-label>Description</mat-label>
+                                <input matInput type="text" [(ngModel)]="newSourceDescription">
+                                <button *ngIf="newSourceDescription" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceDescription=''">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </mat-form-field>
+                            <br>
+
+                            TYPE?
+                            <br>
+
+                            TAGS?
+                            <br>
+
+
+                            
+                            
+                        </mat-card>             
+                            
         </section>
     </mat-tab>
 

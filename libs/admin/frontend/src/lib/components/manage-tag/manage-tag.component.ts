@@ -7,6 +7,7 @@ import { AdminService } from '../../services/admin.service';
 import { AdminStore } from '../../store/stores/admin.store';
 import { activateAction, deleteAction, deleteTagAction, hideAction, updateTagAction } from '../../store/actions/admin.action';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { capitalizeFirstLetter } from '../../utils/utils'
 // import { AdminStore } from '../../store/stores/admin.store';
 
 
@@ -46,9 +47,9 @@ export class ManageTagrComponent  implements OnInit {
         console.log('changed !!!: ', value)
     }
 
-    capitalizeFirstLetter(msg: string) {
-        return msg.charAt(0).toUpperCase() + msg.slice(1);
-      }
+    upperFirst(msg: string){
+        capitalizeFirstLetter(msg)
+    }
 
     
 }

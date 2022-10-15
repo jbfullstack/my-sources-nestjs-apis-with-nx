@@ -8,7 +8,7 @@
                 'private': !source.public,
                 'public': source.public,
                 'mat-card': true
-            }" matTooltip="{{ isPublicMessage() }}" >
+            }" >
                 <mat-card-header >
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
                     <mat-card-subtitle>{{  printTagList() }}</mat-card-subtitle>
@@ -39,6 +39,11 @@
                 <!-- <button mat-stroked-button matTooltip="Allow {{ user.pseudo }} inside the app" (click)="activate()">Activate</button>
                 <button mat-stroked-button matTooltip="Ban {{ user.pseudo }} for ever" (click)="hide()">Hide</button>
                 <button mat-stroked-button matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button> -->
+                <div *ngIf="isOwnedByLogedUser()">
+                    <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>
+                    <button mat-stroked-button (click)="delete()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
+                </div>
+                
                 </mat-card-actions>
             </mat-card>
         </div>

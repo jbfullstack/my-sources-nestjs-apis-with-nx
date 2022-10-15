@@ -20,3 +20,25 @@
 :host ::ng-deep  .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
     background-color: lightgray ;
 }
+
+.create-form-field{
+	width: 40rem;
+	margin-left: 1.5rem;
+}
+
+.margin-left{
+	margin-left: 1.5rem;
+}
+
+.mat-card{
+	width: 47rem;
+	margin-top: 3rem;
+	margin-left: 10rem;
+	margin-bottom: 10rem;
+	box-shadow: none;
+}
+
+.mat-card:hover{
+    box-shadow: 2px 2px 4px 4px lightgray;
+}
+

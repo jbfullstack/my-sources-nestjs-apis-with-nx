@@ -26,6 +26,11 @@ export class SourcePageComponent implements OnInit{
     filteredSources$ = this.sourceStore.filteredSources$
     
 
+    newSourceTitle: string = ''
+    newSourceUrl: string = ''
+    newSourceContent: string = ''
+    newSourceDescription: string = ''
+    newSourcePublic: boolean = true
 
     searchSourceInput: string = ''
 

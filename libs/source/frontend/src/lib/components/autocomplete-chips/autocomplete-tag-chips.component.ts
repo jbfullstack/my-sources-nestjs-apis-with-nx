@@ -34,10 +34,9 @@ export class AutocompleteTagChipsComponent implements OnInit{
 
     constructor(private store: Store, private sourceStore: SourceStore) {
         this.filteredTags = this.tagCtrl.valueChanges.pipe(
-        startWith(null),
-        map((tag: string | null) =>
-        tag ? this._filter(tag) : this.allTagsName.slice()
-        )
+            startWith(null),
+                map((tag: string | null) => tag ? this._filter(tag) : this.allTagsName.slice()
+            )
         )
     }
 
@@ -106,8 +105,8 @@ export class AutocompleteTagChipsComponent implements OnInit{
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase()
 
-        return this.allTagsName.filter((fruit) =>
-        fruit.toLowerCase().includes(filterValue)
+        return this.allTagsName.filter((tag) =>
+            tag.toLowerCase().includes(filterValue)
         )
     }
 }

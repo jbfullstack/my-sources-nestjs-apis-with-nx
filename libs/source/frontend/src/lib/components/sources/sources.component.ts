@@ -28,7 +28,8 @@ export class SourcesComponent implements OnInit{
     }
 
     initializeValues(): void {
-        console.log(this.sources)        
+        console.log(this.sources)    
+            
     }
 
     sourcesToActivate() {
