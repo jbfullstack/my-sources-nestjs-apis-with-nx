@@ -108,7 +108,7 @@ export class SourceEffect {
             switchMap( (action) => {
                 return this.sourceService.createSource(action.request).pipe(
                     map((source: SourceInterface) => {
-                        this.snackbar.openSnackBarError(`Source ${source.title} created!`)
+                        this.snackbar.openDefaultSnackBar(`Source ${source.title} created!`)
                         return createSourceSuccessAction({ source })
                     }),
                     catchError( (errorResponse: HttpErrorResponse) => {

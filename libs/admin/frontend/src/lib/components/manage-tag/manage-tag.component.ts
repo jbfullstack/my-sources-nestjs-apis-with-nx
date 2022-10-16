@@ -48,7 +48,7 @@ export class ManageTagrComponent  implements OnInit {
     }
 
     upperFirst(msg: string){
-        capitalizeFirstLetter(msg)
+       return msg.charAt(0).toUpperCase() +msg.slice(1)
     }
 
     

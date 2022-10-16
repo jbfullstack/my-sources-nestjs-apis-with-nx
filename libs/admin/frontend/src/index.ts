@@ -6,3 +6,5 @@ export * from './lib/components/activated-list/activated-list.component'
 export * from './lib/components/tag-list/tag-list.component'
 export * from './lib/components/manage-tag/manage-tag.component'
 export * from './lib/components/admin/admin.component'
+
+export * from './lib/store/actions/admin.action'

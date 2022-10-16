@@ -52,6 +52,7 @@ export class SourceComponent implements OnInit{
     searchInput$ = this.sourceStore.searchInput$
 
     editMode: boolean = false
+    
 
     // -- edit tag
     separatorKeysCodes: number[] = [ENTER, COMMA]
@@ -102,7 +103,6 @@ export class SourceComponent implements OnInit{
                 if (user) {
                     
                     this.loggedUserId = user.id
-
                 }             
             }
         })
@@ -140,6 +140,8 @@ export class SourceComponent implements OnInit{
     hasTag(){
         return (this.source && this.source.tags.length > 0)
     }
+
+   
 
     getTagIds(): number[] {
 
@@ -379,4 +381,4 @@ export class SourceComponent implements OnInit{
         )
     }
 
-}2
+}

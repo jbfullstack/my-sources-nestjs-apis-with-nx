@@ -17,7 +17,7 @@
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
                     <mat-card-title   *ngIf="hasTitle()"  
                                         [highlight]="searchParent" [caseSensitive]="false" customClasses="highlighted-text" 
-                                        [displayContent]="title()" displayTitle="title: ">
+                                        [displayContent]="title()">
                     </mat-card-title>
                     <!-- <div [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" >{{ title() }}</div> -->
                 </mat-card-header>
@@ -47,7 +47,7 @@
                             {{  printTagList() }}
                         </mat-card-content>
                     </div>
-                
+                    
                 </mat-card-content>
                 <mat-card-actions class="mat-footer">
                     <div >
@@ -64,13 +64,13 @@
                 <button mat-stroked-button matTooltip="Ban {{ user.pseudo }} for ever" (click)="hide()">Hide</button>
                 <button mat-stroked-button matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button> -->
                 <div *ngIf="isOwnedByLogedUser()">
-                    <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>
+                    <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>                    
                     <button mat-stroked-button (click)="delete()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
                 </div>
                 
                 </mat-card-actions>
 
-            </div>
+            </div>            
             <div *ngIf="editMode">
                     <mat-form-field class="example-form-field" appearance="fill">                    
                         <mat-label>Title</mat-label>
@@ -156,7 +156,7 @@
                     <mat-card-actions>
                         <button mat-stroked-button matTooltip="Save changes for {{ source.title }}" (click)="save()">Save</button>
                         <button mat-stroked-button matTooltip="Undo edit" (click)="editBack()">Back</button>
-                    </mat-card-actions>                
+                    </mat-card-actions>   
             </div>
             </mat-card>
         </div>

@@ -3,6 +3,7 @@ import { SourceStateInterface, UserInterface } from "@jbhive/types_fe";
 import { initialState } from "../source.store";
 import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
 import { logoutAction } from "@jbhive/auth_fe";
+import { createTagAction, createTagFailureAction, createTagSuccessAction } from "@jbhive/admin_fe";
 
 
 
@@ -258,6 +259,34 @@ const sourceReducer = createReducer(
             tagsFilterIds: [],
             loggedUserId: 0,
             searchInput:'wow'
+        })
+    ),
+
+    // ---
+    on (
+        createTagAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on (
+        createTagSuccessAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            tags: [...state.tags, action.tag]
+        })
+    ),
+    on (
+        createTagFailureAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
         })
     ),
 

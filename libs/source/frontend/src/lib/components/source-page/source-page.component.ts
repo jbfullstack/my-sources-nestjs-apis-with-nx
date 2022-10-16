@@ -6,10 +6,11 @@ import { SourceStore } from '../../store/source.store'
 import { createSourceAction, loadSourcesAction, loadTagsAction, loadTypesAction } from '../../store/actions/source.action'
 import { isAllTagFilterRequiredSelector, sourceSelector, tagSelector, tagsFilterIdsSelector, typeSelector } from '../../store/selectors/source.selector'
 import { currentUserSelector } from '@jbhive/auth_fe'
-import { CreateSourceRequestInterface, SourceTypeInterface, TagInterface } from '@jbhive/types_fe'
+import { CreateSourceRequestInterface, Role, SourceTypeInterface, TagInterface } from '@jbhive/types_fe'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { MatChipInputEvent } from '@angular/material/chips'
+import { createTagAction } from '@jbhive/admin_fe'
 
 
 @Component({
@@ -59,6 +60,12 @@ export class SourcePageComponent implements OnInit{
 
     @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement> | undefined
 
+    // -- create new tag
+    createNewTag: boolean = false
+    isLoggedUserAtLeastLord: boolean = false
+    newTagTitle: string = ''
+    newTagDescription: string = ''
+
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { 
         this.filteredTags = this.tagCtrl.valueChanges.pipe(
             startWith(null),
@@ -90,7 +97,6 @@ export class SourcePageComponent implements OnInit{
         this.store.pipe(select(sourceSelector)).subscribe( {
             next: (sources) => {
                 if (sources) {
-                    console.log('sources: ', sources)
                     this.sourceStore.loadSources(sources)
                 }             
             }
@@ -99,7 +105,6 @@ export class SourcePageComponent implements OnInit{
         this.store.pipe(select(typeSelector)).subscribe( {
             next: (types) => {
                 if (types) {
-                    console.log('types: ', types)
                     this.sourceStore.loadTypes(types)
                     this.types = types
 
@@ -116,7 +121,6 @@ export class SourcePageComponent implements OnInit{
         this.store.pipe(select(tagSelector)).subscribe( {
             next: (tags) => {
                 if (tags) {
-                    console.log('loaded tags: ', tags)
                     this.sourceStore.loadTags(tags)
                 }             
             }
@@ -125,16 +129,21 @@ export class SourcePageComponent implements OnInit{
         this.store.pipe(select(currentUserSelector)).subscribe( {
             next: (user) => {
                 if (user) {
-                    console.log('user.id: ', user.id)
                     this.sourceStore.loadLoggedUserId(user.id)
+                    const roleId = (user?.role?.id) ? user.role.id : 0
+                    if (roleId >= Role.Lord){
+                        // Astek, Admin or Lord
+                        this.isLoggedUserAtLeastLord = true
+                    }
                 }             
             }
         })
+    
+
 
         this.store.pipe(select(tagsFilterIdsSelector)).subscribe( {
             next: (tagIds) => {
                 if (tagIds) {
-                    console.log('tagIds: ', tagIds)
                     this.sourceStore.loadTagsFilterIds(tagIds)
                 }             
             }
@@ -142,7 +151,6 @@ export class SourcePageComponent implements OnInit{
 
         this.store.pipe(select(isAllTagFilterRequiredSelector)).subscribe( {
             next: (allTagsRequired) => {
-                console.log('allTagsRequired: ', allTagsRequired)
                 this.sourceStore.loadIsAllTagFilterRequired(allTagsRequired)
             }
         })
@@ -186,7 +194,6 @@ export class SourcePageComponent implements OnInit{
     }
 
     onChangeOptions(value: string){
-        console.log('new value options filter: ', value)
         const showOwned: boolean = value.includes('owned')
         const showOwnedPrivate: boolean = (showOwned) ? value.includes('private') : false
         const showUnowned: boolean = value.includes('unowned')
@@ -199,7 +206,6 @@ export class SourcePageComponent implements OnInit{
     }
 
     onChangeRequired(value: boolean){
-        console.log('new value for all tags required: ', value)
         this.sourceStore.patchState({ isAllTagFilterRequired: value })
     }
 
@@ -207,9 +213,12 @@ export class SourcePageComponent implements OnInit{
         return this.search_options_array.length > 0
     }
 
+    saveTag(){
+        this.store.dispatch(createTagAction( {title: this.newTagTitle, description: this.newTagDescription} ))
+        this.createTagBack()
+    }
+
     save(){
-        console.log('this.selectedType: ', this.selectedType)
-        console.log('this.sourceTypesForm.get(types): ', this.sourceTypesForm.get('types')?.value.id)
         const source: CreateSourceRequestInterface = {
             public: this.newSourcePublic,
             title: this.newSourceTitle,
@@ -219,8 +228,16 @@ export class SourcePageComponent implements OnInit{
             typeId: this.sourceTypesForm.get('types')?.value.id,
             tagsIds: this.getTagIds()
         }
-        console.log('source: ', source)
         this.store.dispatch(createSourceAction({request: source}))
+        
+        // --- empty fields (prevent to create same twice by mistake)
+        this.newSourceTitle = ''
+        this.newSourceUrl = ''
+        this.newSourceContent = ''
+        this.newSourceDescription = ''
+        this.newSourcePublic = true
+        this.tags = []
+        this.createNewTag = false
     }
 
     getTagIds(): number[] {
@@ -233,6 +250,16 @@ export class SourcePageComponent implements OnInit{
             }
         }
         return res
+    }
+
+    createTag(){
+        this.createNewTag = true
+    }
+
+    createTagBack(){
+        this.newTagTitle = ''
+        this.newTagDescription = ''
+        this.createNewTag = false
     }
 
     // -- chips

@@ -143,9 +143,36 @@
                             <br>
 
 
-                            <button [disabled]="!isValid()" class="create-form-field" mat-stroked-button (click)="save()" matTooltip="Save '{{ newSourceTitle }}'">Save</button>
-                        
-            </mat-card>             
+                            <button [disabled]="!isValid() && !(pending$ | async)" class="create-form-field" mat-stroked-button (click)="save()" matTooltip="Save '{{ newSourceTitle }}'">Save</button>
+                            <button *ngIf="this.isLoggedUserAtLeastLord" class="create-form-field" mat-stroked-button (click)="createTag()" matTooltip="Create a new tag to add">Add Tag</button>
+
+
+                            <div *ngIf="this.createNewTag">
+                                <hr>
+                                <br>
+                                <mat-form-field class="create-form-field" appearance="fill">                    
+                                    <mat-label>Title</mat-label>
+                                    <input matInput type="text" [(ngModel)]="newTagTitle">
+                                    <button *ngIf="newTagTitle" matSuffix mat-icon-button aria-label="Clear" (click)="newTagTitle=''">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                                <!-- <mat-card-title>#{{ tag.title }}</mat-card-title> -->
+                                <br>
+                                <mat-form-field class="create-form-field" appearance="fill"  >
+                                    <mat-label>Description</mat-label>
+                                    <input matInput class="input-description" type="text" [(ngModel)]="newTagDescription">
+                                    <button *ngIf="newTagDescription" matSuffix mat-icon-button aria-label="Clear" (click)="newTagDescription=''">
+                                            <mat-icon>close</mat-icon>
+                                    </button>
+                                </mat-form-field>
+                                
+                                <button mat-stroked-button class="create-form-field" matTooltip="Save tag" (click)="saveTag()">Save</button>
+                                <button mat-stroked-button class="create-form-field"  (click)="createTagBack()">Back</button>
+                                
+                            </div>
+            </mat-card>       
+            
                             
         </section>
     </mat-tab>

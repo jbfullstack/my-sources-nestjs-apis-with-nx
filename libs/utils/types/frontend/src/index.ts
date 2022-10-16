@@ -22,8 +22,7 @@ export * from './lib/pipe/highlighter.pipe'
 
 export * from './lib/directives/highlight.directive'
 
-
-
+export * from './lib/enum/role.enum'
 
 export * from './lib/modules/backendErrorMessages/backend-error-message.module'
 
