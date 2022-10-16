@@ -22,6 +22,7 @@
                                 <p>filter by title or description</p>
                             </div>
                             <div class="tag-search-input">
+                                Show if : 
                                 <mat-button-toggle-group [(ngModel)]="search_options_array" aria-label="Font Style" multiple (ngModelChange)="onChangeOptions($event)" >
                                     <mat-button-toggle [checked]="true" value="owned" matTooltip="Show public owned sources">Owned</mat-button-toggle >
                                     <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private" matTooltip="Show private owned sources">Private</mat-button-toggle>
@@ -29,9 +30,19 @@
                                 </mat-button-toggle-group>
                             
                             </div>
+                            
+                            Group by:
+                            <mat-button-toggle-group [(ngModel)]="orderby_value_toggle" aria-label="Font Style" (ngModelChange)="onChangeOrderbyValue($event)" [value]="selectedOrderbyValue">
+                                <mat-button-toggle [checked]="true" value="2" matTooltip="Order by date">Date</mat-button-toggle >
+                                <mat-button-toggle value="0" matTooltip="Order by author">Author</mat-button-toggle >
+                                <mat-button-toggle value="1" matTooltip="Order by type">Type</mat-button-toggle >
+                            </mat-button-toggle-group>
+                            <mat-checkbox class="margin-left" [(ngModel)]="orderby_asc_checkbox" (ngModelChange)="onChangeOrderbyAsc($event)" matTooltip="Ascendant result">ASC</mat-checkbox>
+
                             <ms-autocomplete-tag-chips></ms-autocomplete-tag-chips>
                             <mat-slide-toggle [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle>
 
+                            <br>
                     </div>
 
                     <br>

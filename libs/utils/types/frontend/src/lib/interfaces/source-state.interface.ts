@@ -1,3 +1,4 @@
+import { Orderby } from "../enum/order-source-by.enum"
 import { BackendErrorsInterface } from "./backend-errors.interface"
 import { SourceOptionFilterInterface } from "./source-option-filter.interface"
 import { SourceTypeInterface } from "./source-type.interface"
@@ -16,5 +17,7 @@ export interface SourceStateInterface {
     isAllTagFilterRequired: boolean
     searchInput: string
     optionsFilter: SourceOptionFilterInterface
+    orderbyAsc: boolean
+    orderbyValue: Orderby
     errors: string
 }

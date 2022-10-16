@@ -4,9 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
 import { createSourceAction, loadSourcesAction, loadTagsAction, loadTypesAction } from '../../store/actions/source.action'
-import { isAllTagFilterRequiredSelector, sourceSelector, tagSelector, tagsFilterIdsSelector, typeSelector } from '../../store/selectors/source.selector'
+import { isAllTagFilterRequiredSelector, orderbyAsc, orderbyValue, sourceSelector, tagSelector, tagsFilterIdsSelector, typeSelector } from '../../store/selectors/source.selector'
 import { currentUserSelector } from '@jbhive/auth_fe'
-import { CreateSourceRequestInterface, Role, SourceTypeInterface, TagInterface } from '@jbhive/types_fe'
+import { CreateSourceRequestInterface, Orderby, Role, SourceTypeInterface, TagInterface } from '@jbhive/types_fe'
 import { COMMA, ENTER } from '@angular/cdk/keycodes'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { MatChipInputEvent } from '@angular/material/chips'
@@ -65,6 +65,11 @@ export class SourcePageComponent implements OnInit{
     isLoggedUserAtLeastLord: boolean = false
     newTagTitle: string = ''
     newTagDescription: string = ''
+
+    // -- order by
+    orderby_asc_checkbox: boolean = false
+    orderby_value_toggle: number = 2
+    selectedOrderbyValue: number = 2
 
     constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore) { 
         this.filteredTags = this.tagCtrl.valueChanges.pipe(
@@ -155,6 +160,22 @@ export class SourcePageComponent implements OnInit{
             }
         })
 
+        this.store.pipe(select(orderbyAsc)).subscribe( {
+            next: (asc) => {
+                this.sourceStore.loadOrderbyAsc(asc)
+            }
+        })
+
+        this.store.pipe(select(orderbyValue)).subscribe( {
+            next: (value) => {
+                this.sourceStore.loadOrderbyValue(value)
+            }
+        })
+
+        
+
+        
+
         
     }
 
@@ -207,6 +228,27 @@ export class SourcePageComponent implements OnInit{
 
     onChangeRequired(value: boolean){
         this.sourceStore.patchState({ isAllTagFilterRequired: value })
+    }
+
+    onChangeOrderbyAsc(value: boolean){
+        this.sourceStore.patchState({ orderbyAsc: value })
+    }
+
+    onChangeOrderbyValue(value: number){
+        console.log('onChangeOrderbyValue', value)
+        this.sourceStore.patchState({ orderbyValue: value })
+        // switch(value){
+        //     case 0:
+        //         this.sourceStore.patchState({ orderbyValue: Orderby.Author })
+        //         break
+        //     case 1:
+        //         this.sourceStore.patchState({ orderbyValue: Orderby.Type })
+        //         break
+        //     case 2:
+        //         this.sourceStore.patchState({ orderbyValue: Orderby.Date })
+        //         break
+        // }
+        
     }
 
     optionsNotEmpty(){

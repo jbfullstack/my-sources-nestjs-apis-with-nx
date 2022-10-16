@@ -38,6 +38,16 @@ export const isAllTagFilterRequiredSelector = createSelector(
     (sourceState: SourceStateInterface) => sourceState.isAllTagFilterRequired
 )
 
+export const orderbyAsc = createSelector(
+    sourceFeatureSelector, 
+    (sourceState: SourceStateInterface) => sourceState.orderbyAsc
+)
+
+export const orderbyValue = createSelector(
+    sourceFeatureSelector, 
+    (sourceState: SourceStateInterface) => sourceState.orderbyValue
+)
+
 export const errorsSelector = createSelector(
     sourceFeatureSelector, 
     (sourceState: SourceStateInterface) => sourceState.errors
