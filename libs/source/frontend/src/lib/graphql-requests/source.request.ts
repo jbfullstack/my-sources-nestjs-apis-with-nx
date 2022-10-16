@@ -1,4 +1,4 @@
-import { CreateSourceRequestInterface } from '@jbhive/types_fe';
+import { CreateSourceRequestInterface, UpdateSourceRequestInterface } from '@jbhive/types_fe';
 import { gql } from 'apollo-angular';
 
 export function loadPublicAndOwnedSourcesGqlRequest() {
@@ -143,9 +143,52 @@ export function createSourceWithTagGqlRequest(request: CreateSourceRequestInterf
     }`
 }
 
-export function deleteSOurceOwnedGqlRequest(id: number){
+export function deleteSourceOwnedGqlRequest(id: number){
     return gql`mutation deleteSourceOwned {    
         deleteSourceOwned(id: ${id})
+    }`
+}
+
+export function updateSourceOwnedGqlRequest(id: number, request: UpdateSourceRequestInterface){
+    return gql`mutation updateSourceOwned{  
+        updateSourceOwned (
+            id: ${id},
+            input : {
+                title: "${request.title}",
+                description: "${request.description}",
+                content: "${request.content}",
+                public: ${request.public},
+                url: "${request.url}",
+                typeId: ${request.typeId},
+                tagIds: [${request.tagsIds}],
+            }
+        ) 
+        {
+            id
+            title
+            url
+            content
+            description
+            type {
+                id
+                title
+            }
+            public
+            createdAt
+            owner {	
+                id
+                pseudo
+                role { 
+                    id
+                    name
+                }
+            }
+            tags {
+                id
+                title
+                createdAt
+            }
+        } 
     }`
 }
 

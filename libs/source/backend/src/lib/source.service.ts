@@ -198,8 +198,8 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             await this.manageReccordAssignementForSourceTag(sourceId, tagIds)
         }
 
-
-        return updatedSource
+        const updateCompletedSource = await this.findSource(updatedSource.id)
+        return updateCompletedSource
     }
 
     async updateSourceOwned(userId: number, sourceId: number, input: UpdateSourceInput) {

@@ -1,14 +1,21 @@
 import { Observable, Subscription } from 'rxjs'
-import { Component, Input, OnInit } from '@angular/core'
+import { COMMA, ENTER } from '@angular/cdk/keycodes'
+import { Component, Input, OnInit,  ElementRef,  ViewChild  } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
-import { deleteSourceAction, loadSourcesAction } from '../../store/actions/source.action'
+import { deleteSourceAction, loadSourcesAction, updateSourceAction } from '../../store/actions/source.action'
 import { sourceSelector, typeSelector } from '../../store/selectors/source.selector'
-import { SourceInterface, SourceTypeInterface } from '@jbhive/types_fe'
+import { SourceInterface, SourceTypeInterface, TagInterface, UpdateSourceRequestInterface } from '@jbhive/types_fe'
 import { currentUserSelector } from '@jbhive/auth_fe'
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
+
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
+import { MatChipInputEvent } from '@angular/material/chips'
+import { map, startWith } from 'rxjs/operators'
+import { tagSelector } from '../../store/selectors/source.selector'
+import {TooltipPosition} from '@angular/material/tooltip';
 
 @Component({
     selector: 'ms-source',
@@ -28,6 +35,15 @@ export class SourceComponent implements OnInit{
     loggedUserId!: number
 
 
+    newSourceTitle: string = ''
+    newSourceUrl: string = ''
+    newSourceContent: string = ''
+    newSourceDescription: string = ''
+    newSourcePublic: boolean = true
+    newSourceType: number = 1
+    newTagIds: number[] = []
+
+
     pending$ = this.sourceStore.pending$     
     loggedUserId$  = this.sourceStore.loggedUserId$
     showOwned$ = this.sourceStore.showOwned$
@@ -37,8 +53,29 @@ export class SourceComponent implements OnInit{
 
     editMode: boolean = false
 
+    // -- edit tag
+    separatorKeysCodes: number[] = [ENTER, COMMA]
+    tagCtrl = new FormControl('')
+    filteredTags: Observable<string[]>
+    tags: string[] = []
 
-    constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore, private dialog: MatDialog) { }
+    
+    tags$ = this.sourceStore.tags$
+    allTags: TagInterface[] = []
+    allTagsName: string[] = []
+
+    @ViewChild('tagInput') tagInput: ElementRef<HTMLInputElement> | undefined
+
+    positionOptions: TooltipPosition[] = ['after', 'before', 'above', 'below', 'left', 'right'];
+
+
+    constructor(private formBuilder : FormBuilder, private store: Store, private sourceStore: SourceStore, private dialog: MatDialog) {
+        this.filteredTags = this.tagCtrl.valueChanges.pipe(
+            startWith(null),
+                map((tag: string | null) => tag ? this._filter(tag) : this.allTagsName.slice()
+            )
+        )
+    }
 
     ngOnInit(): void {
         this.initializeValues()
@@ -47,12 +84,25 @@ export class SourceComponent implements OnInit{
 
     initializeValues(): void {
         console.log(this.source)   
+
+
+        if (this.source){
+            this.newSourceTitle = this.source.title
+            this.newSourceUrl = this.source.url
+            this.newSourceContent = this.source.content
+            this.newSourceDescription = this.source.description
+            this.newSourcePublic = this.source.public
+            this.newSourceType = this.source.type.id
+            this.newTagIds = this.getTagIds()
+        }
+        
         
         this.store.pipe(select(currentUserSelector)).subscribe( {
             next: (user) => {
                 if (user) {
                     
                     this.loggedUserId = user.id
+
                 }             
             }
         })
@@ -73,22 +123,45 @@ export class SourceComponent implements OnInit{
                 }             
             }
         })
-            
+
+        this.store.pipe(select(tagSelector)).subscribe( {
+            next: (tags) => {
+                if (tags) {
+                    this.allTags = tags
+                    this.allTags.forEach( tag => this.allTagsName.push(tag.title))
+                    if(this.source){
+                        this.source.tags.forEach( tag => this.tags.push(tag.title))
+                    }                   
+                }             
+            }
+        })
     }
 
     hasTag(){
         return (this.source && this.source.tags.length > 0)
     }
 
+    getTagIds(): number[] {
+
+        let res: number[] = []
+        for(var t of this.tags){
+            const found = this.allTags.find( tag => tag.title === t)
+            if (found){
+                res.push(found.id)
+            }
+        }
+        return res
+    }
+
+
     printTagList(){
         if (this.source && this.source.tags.length > 0){
-            let res = '['
+            let res = ''
             for( let tag of this.source.tags) {
-                res +=  tag.title + ', '
+                res +=  tag.title.charAt(0).toUpperCase() + tag.title.slice(1) + ', '
             }
 
             res = res.slice(0, -2)
-            res += ']'
             return res
         } else {
             return ''
@@ -196,11 +269,26 @@ export class SourceComponent implements OnInit{
     }
 
     save(){
+        console.log('tada: this.sourceTypesForm.get(types)?.value> ', this.sourceTypesForm.get('types')?.value)
+        if (this.source){
+            const req : UpdateSourceRequestInterface = {
+                content: this.newSourceContent,
+                description: this.newSourceDescription,
+                public: this.newSourcePublic,
+                url: this.newSourceUrl,
+                title: this.newSourceTitle,
+                typeId: this.sourceTypesForm.get('types')?.value.id,
+                tagsIds: this.getTagIds()
 
-
-        this.editMode = false
+            }
+            this.store.dispatch(updateSourceAction({sourceId: this.source.id, input: req}))
+    
+    
+            this.editMode = false
+        }
+        
     }
-
+    
     delete(){
         
             const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
@@ -246,4 +334,49 @@ export class SourceComponent implements OnInit{
         window.open('www.google.fr', "_blank");
     }
 
-}
+
+    // --- Edit tag chips
+    add(event: MatChipInputEvent): void {
+        const value = (event.value || '').trim()
+
+        // Add our tag
+        if (value && !this.allTagsName.includes(value)) {
+            this.tags.push(value)
+        }
+
+        // Clear the input value
+        event.chipInput!.clear()
+
+        this.tagCtrl.setValue(null)
+    }
+
+    remove(value: string): void {
+        const index = this.tags.indexOf(value)
+
+        if (index >= 0) {
+            this.tags.splice(index, 1)
+        }
+    }
+
+    selected(event: MatAutocompleteSelectedEvent): void {
+        if (!this.tags.includes(event.option.viewValue)) {
+            this.tags.push(event.option.viewValue)
+            if (this.tagInput != null){
+                this.tagInput.nativeElement.value = ''
+            }
+
+            this.tagCtrl.setValue(null)
+        }
+        
+        
+    }
+
+    private _filter(value: string): string[] {
+        const filterValue = value.toLowerCase()
+
+        return this.allTagsName.filter((tag) =>
+            tag.toLowerCase().includes(filterValue) && !this.tags.includes(tag)
+        )
+    }
+
+}2

@@ -93,7 +93,7 @@ export const removeTagFailureAction = createAction(
 
 export const updateSourceAction = createAction(
     ActionTypes.UPDATE_SOURCE,
-    props<{ sourceID: number, input: UpdateSourceRequestInterface}>()
+    props<{ sourceId: number, input: UpdateSourceRequestInterface}>()
 );
 
 export const updateSourceSuccessAction = createAction(

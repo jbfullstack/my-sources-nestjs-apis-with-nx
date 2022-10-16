@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 import { SourceStore } from '../source.store';
 import { SourceService } from '../../services/source.service';
-import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction } from '../actions/source.action';
+import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from '../actions/source.action';
 
 
 @Injectable()
@@ -131,6 +131,23 @@ export class SourceEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't delete source: \n ${errorResponse.message}`)
                         return of(deleteSourceFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    updateSource$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateSourceAction),
+            switchMap( (action) => {
+                return this.sourceService.updateSource(action.sourceId, action.input).pipe(
+                    map((source : SourceInterface) => {
+                        return updateSourceSuccessAction({ source})
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't update source: \n ${errorResponse.message}`)
+                        return of(updateSourceFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

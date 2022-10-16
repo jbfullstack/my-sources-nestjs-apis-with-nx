@@ -15,7 +15,6 @@
 
                     
                     <img src="{{retrieveHeaderImage()}}" matTooltip="{{ source.type.title }}" mat-card-avatar />
-                    <mat-card-subtitle >{{  printTagList() }}</mat-card-subtitle>
                     <mat-card-title   *ngIf="hasTitle()"  
                                         [highlight]="searchParent" [caseSensitive]="false" customClasses="highlighted-text" 
                                         [displayContent]="title()" displayTitle="title: ">
@@ -23,16 +22,32 @@
                     <!-- <div [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" >{{ title() }}</div> -->
                 </mat-card-header>
                 <mat-card-content>
-                    <a *ngIf="hasUrl()" href="{{ source.url }}" target="_blank">url</a>
+                    <a *ngIf="hasUrl()" href="{{ source.url }}" target="_blank" matTooltip="Open '{{ source.url }}'">url</a>
                     
-                    <mat-card-content *ngIf="hasContent()" [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
-                                        [displayContent]="content()" displayTitle="content: ">></mat-card-content>
-                    <mat-card-content   *ngIf="hasDescription()"  
-                                        [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
-                                        [displayContent]="description()" displayTitle="description: ">
-                    </mat-card-content>
+                    <div *ngIf="hasContent()">
+                        <br>
+                        <h5>Content</h5>
+                        <mat-card-content  [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+                                            [displayContent]="content()" displayTitle="" class="border-block"></mat-card-content>
+                    </div>
+                    
+                    <div *ngIf="hasDescription()">
+                        <br>
+                        <h5>Description</h5>                    
+                        <mat-card-content    
+                                            [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+                                            [displayContent]="description()" displayTitle=""  >
+                        </mat-card-content>
+                    </div>
 
-                 
+                    <div *ngIf="hasTag()">
+                        <br>
+                        <h5>Tags</h5>                    
+                        <mat-card-content >
+                            {{  printTagList() }}
+                        </mat-card-content>
+                    </div>
+                
                 </mat-card-content>
                 <mat-card-actions class="mat-footer">
                     <div >
@@ -59,34 +74,34 @@
             <div *ngIf="editMode">
                     <mat-form-field class="example-form-field" appearance="fill">                    
                         <mat-label>Title</mat-label>
-                        <input matInput type="text" [(ngModel)]="source.title" >
-                        <button *ngIf="source.title" matSuffix mat-icon-button aria-label="Clear" (click)="source.title=''">
+                        <input matInput type="text" [(ngModel)]="newSourceTitle" >
+                        <button *ngIf="newSourceTitle" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceTitle=''">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
                     <mat-form-field class="example-form-field" appearance="fill" >
                         <mat-label>Url</mat-label>
-                        <input matInput class="input-description" type="text" [(ngModel)]="source.url">
-                        <button *ngIf="source.url" matSuffix mat-icon-button aria-label="Clear" (click)="source.url=''">
+                        <input matInput class="input-url" type="text" [(ngModel)]="newSourceUrl">
+                        <button *ngIf="newSourceUrl" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceUrl=''">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
                     <mat-form-field class="example-form-field" appearance="fill"  >
                         <mat-label>Description</mat-label>
-                        <input matInput class="input-description" type="text" [(ngModel)]="source.title">
-                        <button *ngIf="source.description" matSuffix mat-icon-button aria-label="Clear" (click)="source.title=''">
+                        <input matInput class="input-description" type="text" [(ngModel)]="newSourceDescription">
+                        <button *ngIf="newSourceDescription" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceDescription=''">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
                     <mat-form-field class="example-form-field" appearance="fill"  >
                         <mat-label>Content</mat-label>
-                        <input matInput class="input-description" type="text" [(ngModel)]="source.content">
-                        <button *ngIf="source.content" matSuffix mat-icon-button aria-label="Clear" (click)="source.content=''">
+                        <input matInput class="input-content" type="text" [(ngModel)]="newSourceContent">
+                        <button *ngIf="newSourceContent" matSuffix mat-icon-button aria-label="Clear" (click)="newSourceContent=''">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>
                     
-                    <mat-checkbox class="margin-left" [(ngModel)]="source.public">Public</mat-checkbox>
+                    <mat-checkbox class="margin-left" [(ngModel)]="newSourcePublic">Public</mat-checkbox>
 
                     <form [formGroup]="sourceTypesForm">
                         <mat-form-field appearance="fill" class="create-form-field">
@@ -100,6 +115,32 @@
                         </mat-form-field>
                     </form>
                     <br>
+
+                    <mat-form-field class="example-chip-list" appearance="fill">
+                        <mat-label>Filter by tag</mat-label>
+                        <mat-chip-list #chipList aria-label="Tag selection">
+                            <mat-chip *ngFor="let tag of tags" (removed)="remove(tag)">
+                            {{ tag }}
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                            </mat-chip>
+                            <input
+                            placeholder="New tag..."
+                            #tagInput
+                            [formControl]="tagCtrl"
+                            [matAutocomplete]="auto"
+                            [matChipInputFor]="chipList"
+                            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                            (matChipInputTokenEnd)="add($event)"
+                            />
+                        </mat-chip-list>
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                            <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+                            {{ tag }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
                     
 
                     

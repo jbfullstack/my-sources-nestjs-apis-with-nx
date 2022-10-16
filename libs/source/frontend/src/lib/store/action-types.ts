@@ -19,9 +19,9 @@ export enum ActionTypes {
     DELETE_SOURCE_SUCCESS = '[Source] Delete source success',
     DELETE_SOURCE_FAILURE = '[Source] Delete source failure',
 
-    UPDATE_SOURCE = '[Source] Update role',
-    UPDATE_SOURCE_SUCCESS = '[Source] Update role success',
-    UPDATE_SOURCE_FAILURE = '[Source] Update role failure',
+    UPDATE_SOURCE = '[Source] Update source',
+    UPDATE_SOURCE_SUCCESS = '[Source] Update source success',
+    UPDATE_SOURCE_FAILURE = '[Source] Update source failure',
 
     UPDATE_SEARCH_INPUT_USER = '[Source] Update search input user',
     UPDATE_SEARCH_INPUT_USER_SUCCESS = '[Source] search input user success',

@@ -42,6 +42,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/source_fe';
 import {  HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltip } from '@angular/material/tooltip';
 
 
 
@@ -127,7 +128,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     ReactiveFormsModule,
     MatInputModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltip
   ],
   bootstrap: [AppComponent],
 })
