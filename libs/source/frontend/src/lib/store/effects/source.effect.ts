@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 import { SnackBarColorEnum, SnackBarComponent } from '@jbhive/snackbar';
 import { SourceStore } from '../source.store';
 import { SourceService } from '../../services/source.service';
-import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from '../actions/source.action';
+import { addTagAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceOwnedAction, deleteSourceOwnedFailureAction, deleteSourceOwnedSuccessAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceOwnedAction, updateSourceOwnedFailureAction, updateSourceOwnedSuccessAction, updateSourceSuccessAction } from '../actions/source.action';
 
 
 @Injectable()
@@ -120,6 +120,23 @@ export class SourceEffect {
         )
     )
 
+    deleteSourceOwned$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(deleteSourceOwnedAction),
+            switchMap( (action) => {
+                return this.sourceService.deleteSourceOwned(action.id).pipe(
+                    map(() => {
+                        return deleteSourceOwnedSuccessAction({ id: action.id })
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't delete source: \n ${errorResponse.message}`)
+                        return of(deleteSourceOwnedFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
     deleteSource$ = createEffect( () => 
         this.actions$.pipe(
             ofType(deleteSourceAction),
@@ -131,6 +148,23 @@ export class SourceEffect {
                     catchError( (errorResponse: HttpErrorResponse) => {
                         this.snackbar.openSnackBarError(`Error: can't delete source: \n ${errorResponse.message}`)
                         return of(deleteSourceFailureAction({errors: errorResponse.message}))
+                    })
+                )
+            })
+        )
+    )
+
+    updateSourceOwned$ = createEffect( () => 
+        this.actions$.pipe(
+            ofType(updateSourceOwnedAction),
+            switchMap( (action) => {
+                return this.sourceService.updateSourceOwned(action.sourceId, action.input).pipe(
+                    map((source : SourceInterface) => {
+                        return updateSourceOwnedSuccessAction({ source})
+                    }),
+                    catchError( (errorResponse: HttpErrorResponse) => {
+                        this.snackbar.openSnackBarError(`Error: can't update source: \n ${errorResponse.message}`)
+                        return of(updateSourceOwnedFailureAction({errors: errorResponse.message}))
                     })
                 )
             })

@@ -7,6 +7,7 @@
             <mat-card [ngClass]="{
                 'private': !source.public,
                 'public': source.public,
+                'unowned': !this.isOwnedByLoggedUser,
                 'mat-card': true
             }" >
 
@@ -64,6 +65,10 @@
                 <button mat-stroked-button matTooltip="Ban {{ user.pseudo }} for ever" (click)="hide()">Hide</button>
                 <button mat-stroked-button matTooltip="Delete {{ user.pseudo }}'s account" (click)="delete()">Delete</button> -->
                 <div *ngIf="isOwnedByLogedUser()">
+                    <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>                    
+                    <button mat-stroked-button (click)="deleteOwned()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
+                </div>
+                <div *ngIf="!isOwnedByLogedUser() && isLoggedUserAtLeastAdmin()">
                     <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>                    
                     <button mat-stroked-button (click)="delete()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
                 </div>
@@ -154,7 +159,8 @@
                         </button>
                     </mat-form-field> -->
                     <mat-card-actions>
-                        <button mat-stroked-button matTooltip="Save changes for {{ source.title }}" (click)="save()">Save</button>
+                        <button mat-stroked-button *ngIf="!isOwnedByLogedUser() && isLoggedUserAtLeastAdmin()" matTooltip="Save changes for {{ source.title }}" (click)="save()">Save</button>
+                        <button mat-stroked-button *ngIf="isOwnedByLogedUser()" matTooltip="Save changes for {{ source.title }}" (click)="saveOwned()">Save</button>
                         <button mat-stroked-button matTooltip="Undo edit" (click)="editBack()">Back</button>
                     </mat-card-actions>   
             </div>

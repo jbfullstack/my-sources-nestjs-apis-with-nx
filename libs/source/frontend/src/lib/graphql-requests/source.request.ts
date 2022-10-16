@@ -149,6 +149,16 @@ export function deleteSourceOwnedGqlRequest(id: number){
     }`
 }
 
+export function deleteSourceGqlRequest(id: number){
+    return gql`mutation deleteSource {    
+        deleteSource(id: ${id})
+    }`
+}
+
+
+
+
+
 export function updateSourceOwnedGqlRequest(id: number, request: UpdateSourceRequestInterface){
     return gql`mutation updateSourceOwned{  
         updateSourceOwned (
@@ -190,6 +200,51 @@ export function updateSourceOwnedGqlRequest(id: number, request: UpdateSourceReq
             }
         } 
     }`
+}
+    
+    export function updateSourceGqlRequest(id: number, request: UpdateSourceRequestInterface){
+        return gql`mutation updateSource{  
+            updateSource (
+                id: ${id},
+                input : {
+                    title: "${request.title}",
+                    description: "${request.description}",
+                    content: "${request.content}",
+                    public: ${request.public},
+                    url: "${request.url}",
+                    typeId: ${request.typeId},
+                    tagIds: [${request.tagsIds}],
+                }
+            ) 
+            {
+                id
+                title
+                url
+                content
+                description
+                type {
+                    id
+                    title
+                }
+                public
+                createdAt
+                owner {	
+                    id
+                    pseudo
+                    role { 
+                        id
+                        name
+                    }
+                }
+                tags {
+                    id
+                    title
+                    createdAt
+                }
+            } 
+        }`
+
+    
 }
 
 

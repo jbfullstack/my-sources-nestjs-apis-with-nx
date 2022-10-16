@@ -91,6 +91,21 @@ export const removeTagFailureAction = createAction(
     props<{ errors: string}>()
 );
 
+export const updateSourceOwnedAction = createAction(
+    ActionTypes.UPDATE_SOURCE_OWNED,
+    props<{ sourceId: number, input: UpdateSourceRequestInterface}>()
+);
+
+export const updateSourceOwnedSuccessAction = createAction(
+    ActionTypes.UPDATE_SOURCE_OWNED_SUCCESS,
+    props<{ source: SourceInterface}>()
+);
+
+export const updateSourceOwnedFailureAction = createAction(
+    ActionTypes.UPDATE_SOURCE_OWNED_FAILURE,
+    props<{ errors: string}>()
+);
+
 export const updateSourceAction = createAction(
     ActionTypes.UPDATE_SOURCE,
     props<{ sourceId: number, input: UpdateSourceRequestInterface}>()
@@ -117,6 +132,21 @@ export const deleteSourceSuccessAction = createAction(
 );
 
 export const deleteSourceFailureAction = createAction(
+    ActionTypes.DELETE_SOURCE_FAILURE,
+    props<{ errors: string}>()
+);
+
+export const deleteSourceOwnedAction = createAction(
+    ActionTypes.DELETE_SOURCE,
+    props<{ id: number}>()
+);
+
+export const deleteSourceOwnedSuccessAction = createAction(
+    ActionTypes.DELETE_SOURCE_SUCCESS,
+    props<{ id: number}>()
+);
+
+export const deleteSourceOwnedFailureAction = createAction(
     ActionTypes.DELETE_SOURCE_FAILURE,
     props<{ errors: string}>()
 );

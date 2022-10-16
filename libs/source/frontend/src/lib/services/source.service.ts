@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
-import { createSourceGqlRequest, createSourceWithTagGqlRequest, deleteSourceOwnedGqlRequest, loadPublicAndOwnedSourcesGqlRequest, loadSourceTypesGqlRequest, loadTagsGqlRequest, updateSourceOwnedGqlRequest } from "../graphql-requests/source.request";
+import { createSourceGqlRequest, createSourceWithTagGqlRequest, deleteSourceGqlRequest, deleteSourceOwnedGqlRequest, loadPublicAndOwnedSourcesGqlRequest, loadSourceTypesGqlRequest, loadTagsGqlRequest, updateSourceGqlRequest, updateSourceOwnedGqlRequest } from "../graphql-requests/source.request";
 import { CreateSourceRequestInterface, UpdateSourceRequestInterface } from "@jbhive/types_fe";
 
 @Injectable()
@@ -34,16 +34,28 @@ export class SourceService {
         }
     }
 
-    updateSource(id: number, input: UpdateSourceRequestInterface) {
-        console.log('updateSource: ', id, input)
+    updateSourceOwned(id: number, input: UpdateSourceRequestInterface) {
+        console.log('updateSourceOwned: ', id, input)
         return this.apollo.mutate<any>({ mutation: updateSourceOwnedGqlRequest(id, input) })
             .pipe(map((response: any) => response.data.updateSourceOwned))
     }
 
+    updateSource(id: number, input: UpdateSourceRequestInterface) {
+        console.log('updateSource: ', id, input)
+        return this.apollo.mutate<any>({ mutation: updateSourceGqlRequest(id, input) })
+            .pipe(map((response: any) => response.data.updateSource))
+    }
+
     deleteSource(id: number) {
         console.log('deleteSource: ', id)
+        return this.apollo.mutate<any>({ mutation: deleteSourceGqlRequest(id) })
+            .pipe(map((response: any) => response.data.deleteSource))
+    }
+
+    deleteSourceOwned(id: number) {
+        console.log('deleteSourceOwned: ', id)
         return this.apollo.mutate<any>({ mutation: deleteSourceOwnedGqlRequest(id) })
-            .pipe(map((response: any) => response.data.createSource))
+            .pipe(map((response: any) => response.data.deleteSourceOwned))
     }
     
 

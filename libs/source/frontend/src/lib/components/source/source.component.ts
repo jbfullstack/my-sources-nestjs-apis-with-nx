@@ -4,9 +4,9 @@ import { Component, Input, OnInit,  ElementRef,  ViewChild  } from '@angular/cor
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { select, Store } from '@ngrx/store'
 import { SourceStore } from '../../store/source.store'
-import { deleteSourceAction, loadSourcesAction, updateSourceAction } from '../../store/actions/source.action'
+import { deleteSourceAction, deleteSourceOwnedAction, loadSourcesAction, updateSourceAction, updateSourceOwnedAction } from '../../store/actions/source.action'
 import { sourceSelector, typeSelector } from '../../store/selectors/source.selector'
-import { SourceInterface, SourceTypeInterface, TagInterface, UpdateSourceRequestInterface } from '@jbhive/types_fe'
+import { Role, SourceInterface, SourceTypeInterface, TagInterface, UpdateSourceRequestInterface } from '@jbhive/types_fe'
 import { currentUserSelector } from '@jbhive/auth_fe'
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component'
 import { MatDialog } from '@angular/material/dialog'
@@ -33,6 +33,7 @@ export class SourceComponent implements OnInit{
     
     isOwnedByLoggedUser: boolean = false
     loggedUserId!: number
+    loggedUserRoleId: number = 0
 
 
     newSourceTitle: string = ''
@@ -103,6 +104,9 @@ export class SourceComponent implements OnInit{
                 if (user) {
                     
                     this.loggedUserId = user.id
+                    this.loggedUserRoleId = (user.role.id === null)? 0 : user.role.id
+                    this.isOwnedByLoggedUser = (user.id === this.source?.owner.id)
+                    console.log(`${this.source?.title} => isOwnedByLoggedUser? ` + this.isOwnedByLoggedUser)
                 }             
             }
         })
@@ -169,6 +173,10 @@ export class SourceComponent implements OnInit{
             return ''
         }
         
+    }
+
+    isLoggedUserAtLeastAdmin(){
+        return (this.loggedUserRoleId >= Role.Admin)
     }
 
     title(){
@@ -270,8 +278,26 @@ export class SourceComponent implements OnInit{
         this.editMode = false
     }
 
+    saveOwned(){
+        if (this.source){
+            const req : UpdateSourceRequestInterface = {
+                content: this.newSourceContent,
+                description: this.newSourceDescription,
+                public: this.newSourcePublic,
+                url: this.newSourceUrl,
+                title: this.newSourceTitle,
+                typeId: this.sourceTypesForm.get('types')?.value.id,
+                tagsIds: this.getTagIds()
+
+            }
+            this.store.dispatch(updateSourceOwnedAction({sourceId: this.source.id, input: req}))
+    
+    
+            this.editMode = false
+        }
+    }
+
     save(){
-        console.log('tada: this.sourceTypesForm.get(types)?.value> ', this.sourceTypesForm.get('types')?.value)
         if (this.source){
             const req : UpdateSourceRequestInterface = {
                 content: this.newSourceContent,
@@ -287,34 +313,49 @@ export class SourceComponent implements OnInit{
     
     
             this.editMode = false
-        }
-        
+        }        
     }
-    
-    delete(){
-        
-            const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
-                data:{
-                    message: 'Are you sure want to delete?',
-                    buttonText: {
-                        ok: 'Yes',
-                        cancel: 'No'
-                    }
-                }
-            });
 
-
-            dialogRef.afterClosed().subscribe((confirmed: boolean) => {
-                if (confirmed) {
-                    if (this.source !== null){
-                        this.store.dispatch(deleteSourceAction({id: this.source.id}))
-                    }
-                } else {
-                    console.log('delete source action not confirmed')
+    deleteOwned(){        
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+            data:{
+                message: 'Are you sure want to delete?',
+                buttonText: {
+                    ok: 'Yes',
+                    cancel: 'No'
                 }
-            });
-        
-        
+            }
+        });
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                if (this.source !== null){
+                    this.store.dispatch(deleteSourceOwnedAction({id: this.source.id}))
+                }
+            } else {
+                console.log('delete source action not confirmed')
+            }
+        });
+    }
+
+    delete(){        
+        const dialogRef = this.dialog.open(ConfirmationDialogComponent,{
+            data:{
+                message: 'You are not the owner of this source! \nAre you sure want to delete?',
+                buttonText: {
+                    ok: 'Yes',
+                    cancel: 'No'
+                }
+            }
+        });
+        dialogRef.afterClosed().subscribe((confirmed: boolean) => {
+            if (confirmed) {
+                if (this.source !== null){
+                    this.store.dispatch(deleteSourceAction({id: this.source.id}))
+                }
+            } else {
+                console.log('delete source action not confirmed')
+            }
+        });
     }
 
     retrieveHeaderImage(){

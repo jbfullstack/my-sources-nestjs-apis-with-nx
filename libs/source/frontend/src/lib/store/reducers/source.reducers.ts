@@ -1,7 +1,7 @@
 import { createReducer, on, State, Action } from "@ngrx/store";
 import { SourceStateInterface, UserInterface } from "@jbhive/types_fe";
 import { initialState } from "../source.store";
-import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceSuccessAction } from "../actions/source.action";
+import { addTagAction, addTagFailureAction, addTagSuccessAction, createSourceAction, createSourceFailureAction, createSourceSuccessAction, deleteSourceAction, deleteSourceFailureAction, deleteSourceOwnedAction, deleteSourceOwnedFailureAction, deleteSourceOwnedSuccessAction, deleteSourceSuccessAction, loadSourcesAction, loadSourcesFailureAction, loadSourcesSuccessAction, loadTagsAction, loadTagsFailureAction, loadTagsSuccessAction, loadTypesAction, loadTypesFailureAction, loadTypesSuccessAction, removeTagAction, removeTagFailureAction, removeTagSuccessAction, updateSearchInputAction, updateSearchInputFailureAction, updateSearchInputSuccessAction, updateSourceAction, updateSourceFailureAction, updateSourceOwnedAction, updateSourceOwnedFailureAction, updateSourceOwnedSuccessAction, updateSourceSuccessAction } from "../actions/source.action";
 import { logoutAction } from "@jbhive/auth_fe";
 import { createTagAction, createTagFailureAction, createTagSuccessAction } from "@jbhive/admin_fe";
 
@@ -120,6 +120,33 @@ const sourceReducer = createReducer(
             errors: action.errors
         })
     ),
+    /** ---- DELETE SOURCE OWNED ---- */
+    on (
+        deleteSourceOwnedAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on (
+        deleteSourceOwnedSuccessAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            sources: state.sources.filter( source => source.id !== action.id),          
+        })
+    ),
+    on (
+        deleteSourceOwnedFailureAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
 
     /** ---- DELETE SOURCE ---- */
     on (
@@ -149,7 +176,34 @@ const sourceReducer = createReducer(
         })
     ),
 
-    /** ---- UPDATE SOURCE ---- */
+    /** ---- UPDATE SOURCE OWNED ---- */
+    on (
+        updateSourceOwnedAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: true
+        })
+    ),
+    on (
+        updateSourceOwnedSuccessAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            sources:[...state.sources.filter( source => source.id !== action.source.id), action.source]            
+        })
+    ),
+    on (
+        updateSourceOwnedFailureAction,
+        (state, action): SourceStateInterface => 
+        ({
+            ...state,
+            pending: false,
+            errors: action.errors
+        })
+    ),
+     /** ---- UPDATE SOURCE ---- */
     on (
         updateSourceAction,
         (state, action): SourceStateInterface => 

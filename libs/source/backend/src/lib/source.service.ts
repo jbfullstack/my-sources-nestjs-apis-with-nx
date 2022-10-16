@@ -18,6 +18,7 @@ import { roles_dataset, users_dataset, tags_dataset, types_dataset, Role } from 
 @Injectable()
 export class SourceService extends PrismaClient implements OnModuleInit, OnModuleDestroy {
 
+    groupby_desc = 'desc'
 
     constructor(private readonly data: UserService, private readonly log: LogService) {
         super()
@@ -98,6 +99,7 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
                     {public: true}
                 ]                               
             },
+            orderBy: {createdAt: 'desc'},
             include: SourcePrismaIncludes.sourceIncludes
         })
         
@@ -117,6 +119,7 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
                 id: sourceId,
                 ownerId: userId
             },
+            orderBy: {createdAt: 'desc'},
             include: SourcePrismaIncludes.sourceIncludes
         })
 
@@ -135,6 +138,7 @@ export class SourceService extends PrismaClient implements OnModuleInit, OnModul
             where: {
                 public: true
             },
+            orderBy: {createdAt: 'desc'},
             include: SourcePrismaIncludes.sourceIncludes
         })
 
