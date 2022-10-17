@@ -3,7 +3,7 @@ import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core'
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { SourceInterface } from '@jbhive/types_fe';
+import { SourceInterface, TagInterface } from '@jbhive/types_fe';
 import { select, Store } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 import { filteredSourcesSelector, sourceSelector } from '../../store/selectors/source.selector';
@@ -24,7 +24,7 @@ import { SourceStore } from '../../store/source.store';
   ],
 })
 export class SourceTableComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['title', 'description'];
+  displayedColumns: string[] = ['owner', 'title', 'date', 'tags'];
   dataSource!: MatTableDataSource<SourceInterface>;
   sources!: SourceInterface[];
 
@@ -51,8 +51,6 @@ export class SourceTableComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
     this.paginator.page.pipe(
       tap( () => {
         console.log('paginator tap -> pageIndex: ', this.paginator?.pageIndex)
@@ -61,30 +59,32 @@ export class SourceTableComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource<SourceInterface>( this.filteredPaginatorSources);
       })
     ).subscribe()
+  }
 
- 
+  printTagList(tags: TagInterface[]){   
+    if (tags.length === 0){
+      return 'No tag'
+    } else {
+      let res = ''
+      for (var tag of tags){
+        res += tag.title + ', '
+      }
+      res = res.slice(0, -2)
+      return res
+    }
   }
 
   getPaginatedSources(event : any) {
     this.filteredPaginatorSources = this.loadSourcesPage()
     this.dataSource = new MatTableDataSource<SourceInterface>( this.filteredPaginatorSources);
-    // return this.filteredPaginatorSources
     return event
   }
 
   loadSourcesPage(): SourceInterface[] {
-    // if (this.dataSource){
       const page_number: number = (this.paginator?.pageIndex)? this.paginator.pageIndex : 0
       const page_size: number = (this.paginator?.pageSize)? this.paginator.pageSize : 5
-      console.log(`math: this.sources.slice(${(page_number )} * ${page_size}, ${page_number+1} * ${page_size})`)
-      console.log(` --> ${(page_number ) * page_size} -- ${(page_number+1) * page_size}`)
       const paginatedSources: SourceInterface[] = this.sources.slice((page_number ) * page_size, (page_number+1) * page_size)  
-      console.log('paginatedSources: ', paginatedSources)    
-      console.log('\n\n')    
       return paginatedSources
-    // }
-
-    // return []
   }
 
   applyFilter(event: Event) {
