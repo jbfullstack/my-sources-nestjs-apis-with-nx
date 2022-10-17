@@ -28,21 +28,28 @@
                                     <mat-button-toggle *ngIf="searchOptionsContainsMine()" value="private" matTooltip="Show private owned sources">Private</mat-button-toggle>
                                     <mat-button-toggle value="unowned" matTooltip="Show public unowned sources">Unowned</mat-button-toggle>
                                 </mat-button-toggle-group>
+                                <mat-checkbox class="margin-left" [(ngModel)]="displaySourceInCard"  matTooltip="Display source in card">Display sources in Cards</mat-checkbox>
                             
                             </div>
-                            
-                            Group by:
-                            <mat-button-toggle-group [(ngModel)]="orderby_value_toggle" aria-label="Font Style" (ngModelChange)="onChangeOrderbyValue($event)" [value]="selectedOrderbyValue">
-                                <mat-button-toggle [checked]="true" value="2" matTooltip="Order by date">Date</mat-button-toggle >
-                                <mat-button-toggle value="0" matTooltip="Order by author">Author</mat-button-toggle >
-                                <mat-button-toggle value="1" matTooltip="Order by type">Type</mat-button-toggle >
-                            </mat-button-toggle-group>
-                            <mat-checkbox class="margin-left" [(ngModel)]="orderby_asc_checkbox" (ngModelChange)="onChangeOrderbyAsc($event)" matTooltip="Ascendant result">ASC</mat-checkbox>
 
                             <ms-autocomplete-tag-chips></ms-autocomplete-tag-chips>
-                            <mat-slide-toggle [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle>
-
+                            
+                                <div *ngIf="!displaySourceInCard">
+                                    <mat-slide-toggle [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle> 
+                                </div>                                
+                                <div *ngIf="displaySourceInCard">                            
+                                    <mat-slide-toggle class="left" [(ngModel)]="isAllTagsRequired" (ngModelChange)="onChangeRequired($event)">Source must have all tags</mat-slide-toggle> 
+                                    Group by:
+                                    <mat-button-toggle-group [(ngModel)]="orderby_value_toggle" aria-label="Font Style" (ngModelChange)="onChangeOrderbyValue($event)" [value]="selectedOrderbyValue">
+                                        <mat-button-toggle [checked]="true" value="2" matTooltip="Order by date">Date</mat-button-toggle >
+                                        <mat-button-toggle value="0" matTooltip="Order by author">Author</mat-button-toggle >
+                                        <mat-button-toggle value="1" matTooltip="Order by type">Type</mat-button-toggle >
+                                    </mat-button-toggle-group>
+                                    <mat-checkbox class="margin-left" [(ngModel)]="orderby_asc_checkbox" (ngModelChange)="onChangeOrderbyAsc($event)" matTooltip="Ascendant result">ASC</mat-checkbox>
+                                </div>  
+                                                  
                             <br>
+
                     </div>
 
                     <br>
@@ -50,15 +57,15 @@
                     <br>
 
                     <!-- SOURCE OWNED OR PUBLIC -->
-                    <div *ngIf="displaySourceInTable">
+                    
+                    <div *ngIf="displaySourceInCard">
                         <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
                             <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
                             </ms-sources>                        
                         </div>
                     </div>
-                    <div *ngIf="(filteredSources$ | async)">
-                        <ms-sources-table>
-
+                    <div *ngIf="(filteredSources$ | async) && !displaySourceInCard" >
+                        <ms-sources-table [searchParent]="searchSourceInput">
                         </ms-sources-table>
                     </div>
                     

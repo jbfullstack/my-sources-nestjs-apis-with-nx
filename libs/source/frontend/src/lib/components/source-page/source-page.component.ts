@@ -67,7 +67,7 @@ export class SourcePageComponent implements OnInit{
     newTagDescription: string = ''
 
     // -- Table display
-    displaySourceInTable: boolean = false
+    displaySourceInCard: boolean = false
 
     // -- order by
     orderby_asc_checkbox: boolean = false

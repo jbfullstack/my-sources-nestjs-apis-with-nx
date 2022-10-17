@@ -1,3 +1,7 @@
+.margin-bottom {
+    margin-bottom: 1.5rem;
+}
+
 table {
     width: 100%;
 }
@@ -11,7 +15,7 @@ tr.example-element-row:not(.example-expanded-row):hover {
 }
 
 tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+    background: #4da9ce;
 }
 
 .example-element-row td {
@@ -32,10 +36,6 @@ tr.example-element-row:not(.example-expanded-row):active {
     height: 104px;
 }
 
-.margin-bottom{
-    margin-bottom: 1.5rem;
-}
-
 .example-element-symbol {
     font-weight: bold;
     font-size: 40px;
@@ -49,3 +49,17 @@ tr.example-element-row:not(.example-expanded-row):active {
 .example-element-description-attribution {
     opacity: 0.5;
 }
+
+// > mat-row.detail-row {
+//     overflow: hidden;
+//     border-style: none;
+//     min-height: auto;
+//     &.detail-row-collapsed {
+//       max-height: 0;
+//       transition: max-height .4s ease-out;
+//     }
+//     &.detail-row-expanded {
+//       max-height: 1000px;
+//       transition: max-height .4s ease-in;
+//     }
+//   }

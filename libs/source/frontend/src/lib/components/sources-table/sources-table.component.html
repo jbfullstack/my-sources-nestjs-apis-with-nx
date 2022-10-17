@@ -1,15 +1,17 @@
-<mat-form-field  appearance="standard">
+<!-- <mat-form-field  appearance="standard">
     <mat-label>Filter</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field>
+</mat-form-field> -->
   
 <div class="mat-elevation-z8 margin-bottom">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)" multiTemplateDataRows>
   
       <!-- ID Column -->
       <ng-container matColumnDef="title">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-        <td mat-cell *matCellDef="let row"> {{row.title}} </td>
+        <td mat-cell *matCellDef="let row"
+        [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+        [displayContent]="title(row)" displayTitle=""></td>
       </ng-container>
 
       <!-- Progress Column -->
@@ -26,17 +28,76 @@
 
       <ng-container matColumnDef="owner">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
-        <td mat-cell *matCellDef="let row"> {{row.owner.pseudo}} </td>
+        <td mat-cell *matCellDef="let row"
+        [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+        [displayContent]="ownerPseudo(row)" displayTitle="" > </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+        <td mat-cell *matCellDef="let row"> {{row.type.title}} </td>
       </ng-container>
   
-      
+      <!-- expandable -->
+      <ng-container matColumnDef="expand">
+        <th mat-header-cell *matHeaderCellDef aria-label="row actions">&nbsp;</th>
+        <td mat-cell *matCellDef="let row">
+          <button mat-icon-button aria-label="expand row" (click)="(expandedElement = expandedElement === row ? null : row); $event.stopPropagation()">
+            <mat-icon *ngIf="expandedElement !== row">keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="expandedElement === row">keyboard_arrow_up</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let row" [attr.colspan]="displayedColumnswithExpand.length">
+      <div class="example-element-detail "
+           [@detailExpand]="row == expandedElement ? 'expanded' : 'collapsed'">
+        <!-- <div class="example-element-diagram">
+          <div class="example-element-position"> {{row.description}} </div>
+          <div class="example-element-symbol"> {{row.content}} </div>
+          <div class="example-element-name"> {{row.url}} </div>
+        </div> -->
+        <div class="example-element-description">
+            
+            <a *ngIf="hasUrl(row)" href="{{ url(row) }}" target="_blank" matTooltip="Open '{{ url(row) }}'">url</a>
+            <div *ngIf="hasDescription(row)">
+                <br>
+                <h5>Description</h5>
+                <div  [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+                                    [displayContent]="description(row)" displayTitle="" class="border-block"></div>
+            </div>
+            <div *ngIf="hasContent(row)">
+                <br>
+                <h5>Content</h5>
+                <div  [highlight]="searchParent" [caseSensitive]="false" customClasses="my-highlight-class" 
+                                    [displayContent]="content(row)" displayTitle="" class="border-block"></div>
+            </div>
+
+            <!-- <div *ngIf="isOwnedByLogedUser()">
+                <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>                    
+                <button mat-stroked-button (click)="deleteOwned()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
+            </div>
+            <div *ngIf="!isOwnedByLogedUser() && isLoggedUserAtLeastAdmin()">
+                <button mat-stroked-button (click)="edit()" matTooltip="Edit '{{ source.title }}'">Edit</button>                    
+                <button mat-stroked-button (click)="delete()" matTooltip="Delete '{{ source.title }}' for ever" class="align-right">Delete</button>
+            </div> -->
+
+          <!-- <span class="example-element-description-attribution"> -- Wikipedia </span> -->
+        </div>
+      </div>
+    </td>
+  </ng-container>
   
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnswithExpand"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnswithExpand;"  [class.example-expanded-row]="expandedElement === row"
+      (click)="expandedElement = expandedElement === row ? null : row"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   
       <!-- Row shown when there is no matching data. -->
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{searchParent}}"</td>
       </tr>
     </table>
   

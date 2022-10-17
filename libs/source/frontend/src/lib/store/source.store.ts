@@ -63,6 +63,7 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
             (source) =>     source.title.toLowerCase().includes(searchInput.toLowerCase()) 
                         ||  source.description.toLowerCase().includes(searchInput.toLowerCase())
                         ||  source.content.toLowerCase().includes(searchInput.toLowerCase())
+                        ||  source.owner.pseudo.toLowerCase().includes(searchInput.toLowerCase())
         )
         .filter(
             // apply filter by tag

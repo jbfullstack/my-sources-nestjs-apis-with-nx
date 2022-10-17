@@ -19,6 +19,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatTableModule} from '@angular/material/table';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
 
 
 @NgModule({
@@ -29,7 +30,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
         MatButtonModule, MatCheckboxModule, MatProgressBarModule,
         MatButtonToggleModule, MatChipsModule, MatAutocompleteModule,
         MatSlideToggleModule, MatTableModule, MatSidenavModule,
-        MatPaginatorModule
+        MatPaginatorModule, MatSortModule
     ]
 })
 export class MaterialsModules {
