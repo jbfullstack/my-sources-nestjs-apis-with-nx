@@ -11,8 +11,9 @@ export interface SourceStateInterface {
     pending: boolean
     loggedUserId: number
     sources: SourceInterface[] 
-    tags: TagInterface[],
-    types: SourceTypeInterface[],
+    filteredSources: SourceInterface[] 
+    tags: TagInterface[]
+    types: SourceTypeInterface[]
     tagsFilterIds: number[]  // null means not known yet
     isAllTagFilterRequired: boolean
     searchInput: string

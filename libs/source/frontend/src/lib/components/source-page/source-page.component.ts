@@ -66,6 +66,9 @@ export class SourcePageComponent implements OnInit{
     newTagTitle: string = ''
     newTagDescription: string = ''
 
+    // -- Table display
+    displaySourceInTable: boolean = false
+
     // -- order by
     orderby_asc_checkbox: boolean = false
     orderby_value_toggle: number = 2

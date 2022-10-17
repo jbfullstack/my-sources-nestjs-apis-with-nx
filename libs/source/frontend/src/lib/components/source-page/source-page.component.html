@@ -14,7 +14,7 @@
             <div class="container">                
                 <div >
                     <div class="search">
-                        <!-- Search bar -->     
+                        <!-- SOURCE SEARCH -->     
                         
                             <div class="source-search-input">
                                 <mat-icon class="mat-icon-search" aria-hidden="false" fontIcon="search" matPrefix></mat-icon>
@@ -49,11 +49,19 @@
                     <hr>
                     <br>
 
-                    <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
-                        <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
-                        </ms-sources>
-                        
+                    <!-- SOURCE OWNED OR PUBLIC -->
+                    <div *ngIf="displaySourceInTable">
+                        <div *ngIf="(filteredSources$ | async) && optionsNotEmpty()" >
+                            <ms-sources [sources]="filteredSources$ | async" [searchParent]="searchSourceInput">
+                            </ms-sources>                        
+                        </div>
                     </div>
+                    <div *ngIf="(filteredSources$ | async)">
+                        <ms-sources-table>
+
+                        </ms-sources-table>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -64,7 +72,7 @@
             <hr>
             <br> 
 
-
+            <!-- CREATE SOURCE -->
             <mat-card class="mat-card">
                             
                             <mat-card-title class="margin-left">Create a new source</mat-card-title> 

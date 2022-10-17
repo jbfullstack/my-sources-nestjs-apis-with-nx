@@ -13,6 +13,11 @@ export const sourceSelector = createSelector(
     (sourceState: SourceStateInterface) => sourceState.sources
 )
 
+export const filteredSourcesSelector = createSelector(
+    sourceFeatureSelector, 
+    (sourceState: SourceStateInterface) => sourceState.filteredSources
+)
+
 export const typeSelector = createSelector(
     sourceFeatureSelector, 
     (sourceState: SourceStateInterface) => sourceState.types

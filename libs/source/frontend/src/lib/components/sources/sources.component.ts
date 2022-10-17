@@ -28,7 +28,7 @@ export class SourcesComponent implements OnInit{
     }
 
     initializeValues(): void {
-        console.log(this.sources)    
+        console.log('SourcesComponent.init() sources: ',this.sources)    
             
     }
 

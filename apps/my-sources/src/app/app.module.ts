@@ -25,7 +25,7 @@ import { NxWelcomeComponent } from './nx-welcome.component';
 
 import { UptimeComponent } from '@jbhive/uptime';
 import { AuthModule } from '@jbhive/auth_fe';
-import { AutocompleteTagChipsComponent, ConfirmationDialogComponent, SourceModule } from '@jbhive/source_fe';
+import { AutocompleteTagChipsComponent, ConfirmationDialogComponent, SourceModule, SourceTableComponent } from '@jbhive/source_fe';
 
 import { MaterialsModules } from './material.modules';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -43,6 +43,8 @@ import { SourcePageComponent, SourcesComponent, SourceComponent } from '@jbhive/
 import {  HighlightDirective, HighlighterPipe } from '@jbhive/types_fe';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltip } from '@angular/material/tooltip';
+import { MatTableModule } from '@angular/material/table';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 
@@ -67,7 +69,8 @@ import { MatTooltip } from '@angular/material/tooltip';
     HighlighterPipe,
     HighlightDirective,
     AutocompleteTagChipsComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    SourceTableComponent,
   ],
   imports: [
     BrowserModule, 
@@ -129,7 +132,9 @@ import { MatTooltip } from '@angular/material/tooltip';
     MatInputModule,
     MatTabsModule,
     MatDialogModule,
-    MatTooltip
+    MatTooltip,
+    MatTableModule,
+    MatSidenavModule
   ],
   bootstrap: [AppComponent],
 })

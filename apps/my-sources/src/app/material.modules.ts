@@ -16,6 +16,9 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatTableModule} from '@angular/material/table';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -25,7 +28,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         MatSelectModule, ScrollingModule, MatTooltipModule,
         MatButtonModule, MatCheckboxModule, MatProgressBarModule,
         MatButtonToggleModule, MatChipsModule, MatAutocompleteModule,
-        MatSlideToggleModule,
+        MatSlideToggleModule, MatTableModule, MatSidenavModule,
+        MatPaginatorModule
     ]
 })
 export class MaterialsModules {

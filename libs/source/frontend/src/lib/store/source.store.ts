@@ -8,6 +8,7 @@ export const initialState: SourceStateInterface = {
     loggedUserId: 0,
     searchInput: '',
     sources: [],
+    filteredSources: [],
     types: [],
     tags: [],
     tagsFilterIds: [],
@@ -77,16 +78,11 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
     )
 
     sortSourcesBy(source1: SourceInterface, source2: SourceInterface, orderbyValue: Orderby, orderbyAsc: boolean): number {     
-        console.log('orderbyValue ',orderbyValue) 
-        console.log('orderbyAsc ',orderbyAsc) 
         if (orderbyValue == 0){
-            console.log('orderbyValue == 0') 
             return this.sortSourcesByAuthor(source1, source2, orderbyAsc)  
         } else  if (orderbyValue == 1){
-            console.log('orderbyValue == 1') 
             return this.sortSourcesByType(source1, source2, orderbyAsc) 
         } else  if (orderbyValue == 2){
-            console.log('orderbyValue == 2') 
             return this.sortSourcesByDate(source1, source2, orderbyAsc)
         } else {
             return 0
@@ -106,7 +102,6 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
     }
 
     sortSourcesByType(source1: SourceInterface, source2: SourceInterface, asc: boolean){
-        console.log('sortSourcesByType() ')
         let res = 0
         if (source1.type.id > source2.type.id){
             res = 1
@@ -117,7 +112,6 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
     }
 
     sortSourcesByAuthor(source1: SourceInterface, source2: SourceInterface, asc: boolean){
-        console.log('sortSourcesByAuthor() ')
         let res = 0
         if (source1.owner.pseudo > source2.owner.pseudo){
             res = 1
@@ -128,7 +122,6 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
     }
 
     sortSourcesByDate(source1: SourceInterface, source2: SourceInterface, asc: boolean){
-        console.log('sortSourcesByDate() ')
         const date1: Date = new Date(source1.createdAt)
         const date2: Date = new Date(source2.createdAt)
         let res = 0
@@ -158,6 +151,12 @@ export class SourceStore extends ComponentStore<SourceStateInterface> {
             return tagsFilter.every( id => sourceTagIds.includes(id))
         }
     }
+
+    loadFilteredSources = this.updater( (state, sources: SourceInterface[] | null) => ({
+        ...state,
+        filteredSources: sources || []
+    })  
+)
 
     loadSearchInput = this.updater( (state, search: string | null) => ({
             ...state,
