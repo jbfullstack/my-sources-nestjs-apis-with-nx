@@ -29,3 +29,10 @@ export const users_dataset = [
     { email: 'lo@gmail.com', nickname: 'lord', pseudo: 'lord', roleId: Role.Lord },
     { email: 'us@gmail.com', nickname: 'user', pseudo: 'user', roleId: Role.User },
 ] 
+
+export const sources_dataset = [
+    { title: 'bj@gmail.com', public: 'astek', url: 'astek', content: 'content', description: 'description', type: 0,  ownerId: 0, typeId: 0, 
+        tags: [0, 1],},
+] 
+
+

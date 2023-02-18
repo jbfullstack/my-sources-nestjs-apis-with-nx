@@ -6,7 +6,7 @@ import { Prisma, PrismaClient, Tag } from "@prisma/client";
 
 import { LogService } from "libs/utils/log/backend/src";
 import { ForbiddenError } from "apollo-server-express";
-import { AdminUpdateUserInput, UpdateUserInput, roles_dataset, users_dataset, PrismaIncludes } from "@jbhive/types_be";
+import { AdminUpdateUserInput, UpdateUserInput, roles_dataset, users_dataset, PrismaIncludes, CreatedRoleDto, CreatedUserDto } from "@jbhive/types_be";
 import { CryptHelper } from "@jbhive/crypt";
 
 
@@ -46,9 +46,9 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
      * 
      *********************************/
 
-    async createUser({ email, password, pseudo, roleId, nickname }: { email: string, password: string, pseudo: string, roleId: number, nickname: string }) {
+    async createUser({ email, password, pseudo, roleId, nickname }: CreatedUserDto) {
         // Comming from PrsimaClient
-        Logger.debug(`createUser`)
+        Logger.log(`createUser`)
         const created = await this.user.create({
             data: {
                 email,
@@ -56,17 +56,17 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
                 pseudo,
                 nickname,
                 roleId: +roleId,
-                hidden: false,  // TIODO admin manage hidden & activated
+                hidden: false,  // TODO admin manage hidden & activated
                 activated: true,
-                token: ''
+                token: '',
             }
         })
         return created
     }
 
-    async createActivatedUser({ email, password, pseudo, roleId, nickname  }: { email: string, password: string, pseudo: string, roleId: number, nickname: string }) {
+    async createActivatedUser({ email, password, pseudo, roleId, nickname  }: CreatedUserDto) {
         // Comming from PrsimaClient
-        Logger.debug(`createActivatedUser`)
+        Logger.log(`createActivatedUser`)
         const created = await this.user.create({
             data: {
                 email,
@@ -74,9 +74,9 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
                 pseudo,
                 nickname,
                 role: { connect : { id: +roleId}},
-                hidden: false,  // TIODO admin manage hidden & activated
+                hidden: false,  // TODO admin manage hidden & activated
                 activated: true,
-                token: ''
+                token: '',
             }
         })
         return created
@@ -84,8 +84,8 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
 
     
 
-    async createRole({ id, name, description }: { id: number, name: string, description: string }) {
-        // Comming from PrsimaClient
+    async createRole({ id, name, description }: CreatedRoleDto) { //{ id: number, name: string, description: string }) {
+        // Comming from PrismaClient
         const created = await this.role.create({
             data: {
                 id,
@@ -226,7 +226,7 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         if (found) {
             return true
         }
-        Logger.debug(`Initialize Roles..`)
+        Logger.log(`Initialize Roles..`)
         // create roles
         for (var role of roles_dataset) {
             await this.createRole({ id: role.id, name: role.name, description: role.description })
@@ -238,7 +238,7 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
         if (found) {
             return true
         }
-        Logger.debug(`Initialize Admin user`)
+        Logger.log(`Initialize Admin user`)
         const created = await this.createActivatedUser(this.default_admin)
         
         for (var user of users_dataset) {

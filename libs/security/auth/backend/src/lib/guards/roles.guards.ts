@@ -14,7 +14,6 @@ export class RolesGuard extends GqlAuthGuard{
     async canActivate(context: ExecutionContext) {
         // this.log.logGuardMethod(context.getClass().name, context.getHandler().name)
         await super.canActivate(context)
-        this.log.logGuard(`RolesGuard`, `yopla`)
 
         const roles = super.getRoles(context);
         if (!roles) {

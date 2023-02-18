@@ -1,9 +1,12 @@
+import { Logger } from "@nestjs/common";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Apollo, gql } from 'apollo-angular';
 import { createSourceGqlRequest, createSourceWithTagGqlRequest, deleteSourceGqlRequest, deleteSourceOwnedGqlRequest, loadPublicAndOwnedSourcesGqlRequest, loadSourceTypesGqlRequest, loadTagsGqlRequest, updateSourceGqlRequest, updateSourceOwnedGqlRequest } from "../graphql-requests/source.request";
 import { CreateSourceRequestInterface, UpdateSourceRequestInterface } from "@jbhive/types_fe";
+
+import { sources_dataset, PrismaIncludes } from "@jbhive/types_be";
 
 @Injectable()
 export class SourceService {
@@ -58,7 +61,15 @@ export class SourceService {
             .pipe(map((response: any) => response.data.deleteSourceOwned))
     }
     
-
+    // async loadDataset() {
+      
+    //     Logger.debug(`Loading sources dataset..`)        
+    //     for (var source of sources_dataset) {
+    //         let dto: CreateSourceRequestInterface = 
+    //             { title: source.title, public: true, url: source.url, description: source.description, content: source.content, typeId: source.typeId, tagsIds: []}
+    //         await this.createSource(dto)
+    //     }
+    // }
 
     constructor(private apollo: Apollo) { }
 }

@@ -16,7 +16,7 @@ export class ApolloInterceptor implements HttpInterceptor {
     constructor (private store: Store) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
-        console.log('Yoo interceptor: ', req)
+        console.log('ApolloInterceptor.intercept(): ', req)
         return this.store.select(userTokenSelector).pipe(
             first(),
             switchMap(token => {

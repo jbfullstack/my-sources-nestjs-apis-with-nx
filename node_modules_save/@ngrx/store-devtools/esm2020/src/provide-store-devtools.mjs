@@ -1,0 +1,74 @@
+import { InjectionToken } from '@angular/core';
+import { DevtoolsExtension, REDUX_DEVTOOLS_EXTENSION, } from './extension';
+import { DevtoolsDispatcher } from './devtools-dispatcher';
+import { createConfig, INITIAL_OPTIONS, noMonitor, STORE_DEVTOOLS_CONFIG, } from './config';
+import { ReducerManagerDispatcher, StateObservable, } from '@ngrx/store';
+import { createStateObservable } from './instrument';
+import { StoreDevtools } from './devtools';
+export const IS_EXTENSION_OR_MONITOR_PRESENT = new InjectionToken('@ngrx/store-devtools Is Devtools Extension or Monitor Present');
+export function createIsExtensionOrMonitorPresent(extension, config) {
+    return Boolean(extension) || config.monitor !== noMonitor;
+}
+export function createReduxDevtoolsExtension() {
+    const extensionKey = '__REDUX_DEVTOOLS_EXTENSION__';
+    if (typeof window === 'object' &&
+        typeof window[extensionKey] !== 'undefined') {
+        return window[extensionKey];
+    }
+    else {
+        return null;
+    }
+}
+/**
+ * Provides developer tools and instrumentation for `Store`.
+ *
+ * @usageNotes
+ *
+ * ```ts
+ * bootstrapApplication(AppComponent, {
+ *   providers: [
+ *     provideStoreDevtools({
+ *       maxAge: 25,
+ *       logOnly: environment.production,
+ *     }),
+ *   ],
+ * });
+ * ```
+ */
+export function provideStoreDevtools(options = {}) {
+    return {
+        ɵproviders: [
+            DevtoolsExtension,
+            DevtoolsDispatcher,
+            StoreDevtools,
+            {
+                provide: INITIAL_OPTIONS,
+                useValue: options,
+            },
+            {
+                provide: IS_EXTENSION_OR_MONITOR_PRESENT,
+                deps: [REDUX_DEVTOOLS_EXTENSION, STORE_DEVTOOLS_CONFIG],
+                useFactory: createIsExtensionOrMonitorPresent,
+            },
+            {
+                provide: REDUX_DEVTOOLS_EXTENSION,
+                useFactory: createReduxDevtoolsExtension,
+            },
+            {
+                provide: STORE_DEVTOOLS_CONFIG,
+                deps: [INITIAL_OPTIONS],
+                useFactory: createConfig,
+            },
+            {
+                provide: StateObservable,
+                deps: [StoreDevtools],
+                useFactory: createStateObservable,
+            },
+            {
+                provide: ReducerManagerDispatcher,
+                useExisting: DevtoolsDispatcher,
+            },
+        ],
+    };
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHJvdmlkZS1zdG9yZS1kZXZ0b29scy5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL21vZHVsZXMvc3RvcmUtZGV2dG9vbHMvc3JjL3Byb3ZpZGUtc3RvcmUtZGV2dG9vbHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLGNBQWMsRUFBRSxNQUFNLGVBQWUsQ0FBQztBQUMvQyxPQUFPLEVBQ0wsaUJBQWlCLEVBQ2pCLHdCQUF3QixHQUV6QixNQUFNLGFBQWEsQ0FBQztBQUNyQixPQUFPLEVBQUUsa0JBQWtCLEVBQUUsTUFBTSx1QkFBdUIsQ0FBQztBQUMzRCxPQUFPLEVBQ0wsWUFBWSxFQUNaLGVBQWUsRUFDZixTQUFTLEVBQ1QscUJBQXFCLEdBR3RCLE1BQU0sVUFBVSxDQUFDO0FBQ2xCLE9BQU8sRUFFTCx3QkFBd0IsRUFDeEIsZUFBZSxHQUNoQixNQUFNLGFBQWEsQ0FBQztBQUNyQixPQUFPLEVBQUUscUJBQXFCLEVBQUUsTUFBTSxjQUFjLENBQUM7QUFDckQsT0FBTyxFQUFFLGFBQWEsRUFBRSxNQUFNLFlBQVksQ0FBQztBQUUzQyxNQUFNLENBQUMsTUFBTSwrQkFBK0IsR0FBRyxJQUFJLGNBQWMsQ0FDL0QsK0RBQStELENBQ2hFLENBQUM7QUFFRixNQUFNLFVBQVUsaUNBQWlDLENBQy9DLFNBQXdDLEVBQ3hDLE1BQTJCO0lBRTNCLE9BQU8sT0FBTyxDQUFDLFNBQVMsQ0FBQyxJQUFJLE1BQU0sQ0FBQyxPQUFPLEtBQUssU0FBUyxDQUFDO0FBQzVELENBQUM7QUFFRCxNQUFNLFVBQVUsNEJBQTRCO0lBQzFDLE1BQU0sWUFBWSxHQUFHLDhCQUE4QixDQUFDO0lBRXBELElBQ0UsT0FBTyxNQUFNLEtBQUssUUFBUTtRQUMxQixPQUFRLE1BQWMsQ0FBQyxZQUFZLENBQUMsS0FBSyxXQUFXLEVBQ3BEO1FBQ0EsT0FBUSxNQUFjLENBQUMsWUFBWSxDQUFDLENBQUM7S0FDdEM7U0FBTTtRQUNMLE9BQU8sSUFBSSxDQUFDO0tBQ2I7QUFDSCxDQUFDO0FBRUQ7Ozs7Ozs7Ozs7Ozs7OztHQWVHO0FBQ0gsTUFBTSxVQUFVLG9CQUFvQixDQUNsQyxVQUFnQyxFQUFFO0lBRWxDLE9BQU87UUFDTCxVQUFVLEVBQUU7WUFDVixpQkFBaUI7WUFDakIsa0JBQWtCO1lBQ2xCLGFBQWE7WUFDYjtnQkFDRSxPQUFPLEVBQUUsZUFBZTtnQkFDeEIsUUFBUSxFQUFFLE9BQU87YUFDbEI7WUFDRDtnQkFDRSxPQUFPLEVBQUUsK0JBQStCO2dCQUN4QyxJQUFJLEVBQUUsQ0FBQyx3QkFBd0IsRUFBRSxxQkFBcUIsQ0FBQztnQkFDdkQsVUFBVSxFQUFFLGlDQUFpQzthQUM5QztZQUNEO2dCQUNFLE9BQU8sRUFBRSx3QkFBd0I7Z0JBQ2pDLFVBQVUsRUFBRSw0QkFBNEI7YUFDekM7WUFDRDtnQkFDRSxPQUFPLEVBQUUscUJBQXFCO2dCQUM5QixJQUFJLEVBQUUsQ0FBQyxlQUFlLENBQUM7Z0JBQ3ZCLFVBQVUsRUFBRSxZQUFZO2FBQ3pCO1lBQ0Q7Z0JBQ0UsT0FBTyxFQUFFLGVBQWU7Z0JBQ3hCLElBQUksRUFBRSxDQUFDLGFBQWEsQ0FBQztnQkFDckIsVUFBVSxFQUFFLHFCQUFxQjthQUNsQztZQUNEO2dCQUNFLE9BQU8sRUFBRSx3QkFBd0I7Z0JBQ2pDLFdBQVcsRUFBRSxrQkFBa0I7YUFDaEM7U0FDRjtLQUNGLENBQUM7QUFDSixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0aW9uVG9rZW4gfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7XG4gIERldnRvb2xzRXh0ZW5zaW9uLFxuICBSRURVWF9ERVZUT09MU19FWFRFTlNJT04sXG4gIFJlZHV4RGV2dG9vbHNFeHRlbnNpb24sXG59IGZyb20gJy4vZXh0ZW5zaW9uJztcbmltcG9ydCB7IERldnRvb2xzRGlzcGF0Y2hlciB9IGZyb20gJy4vZGV2dG9vbHMtZGlzcGF0Y2hlcic7XG5pbXBvcnQge1xuICBjcmVhdGVDb25maWcsXG4gIElOSVRJQUxfT1BUSU9OUyxcbiAgbm9Nb25pdG9yLFxuICBTVE9SRV9ERVZUT09MU19DT05GSUcsXG4gIFN0b3JlRGV2dG9vbHNDb25maWcsXG4gIFN0b3JlRGV2dG9vbHNPcHRpb25zLFxufSBmcm9tICcuL2NvbmZpZyc7XG5pbXBvcnQge1xuICBFbnZpcm9ubWVudFByb3ZpZGVycyxcbiAgUmVkdWNlck1hbmFnZXJEaXNwYXRjaGVyLFxuICBTdGF0ZU9ic2VydmFibGUsXG59IGZyb20gJ0BuZ3J4L3N0b3JlJztcbmltcG9ydCB7IGNyZWF0ZVN0YXRlT2JzZXJ2YWJsZSB9IGZyb20gJy4vaW5zdHJ1bWVudCc7XG5pbXBvcnQgeyBTdG9yZURldnRvb2xzIH0gZnJvbSAnLi9kZXZ0b29scyc7XG5cbmV4cG9ydCBjb25zdCBJU19FWFRFTlNJT05fT1JfTU9OSVRPUl9QUkVTRU5UID0gbmV3IEluamVjdGlvblRva2VuPGJvb2xlYW4+KFxuICAnQG5ncngvc3RvcmUtZGV2dG9vbHMgSXMgRGV2dG9vbHMgRXh0ZW5zaW9uIG9yIE1vbml0b3IgUHJlc2VudCdcbik7XG5cbmV4cG9ydCBmdW5jdGlvbiBjcmVhdGVJc0V4dGVuc2lvbk9yTW9uaXRvclByZXNlbnQoXG4gIGV4dGVuc2lvbjogUmVkdXhEZXZ0b29sc0V4dGVuc2lvbiB8IG51bGwsXG4gIGNvbmZpZzogU3RvcmVEZXZ0b29sc0NvbmZpZ1xuKSB7XG4gIHJldHVybiBCb29sZWFuKGV4dGVuc2lvbikgfHwgY29uZmlnLm1vbml0b3IgIT09IG5vTW9uaXRvcjtcbn1cblxuZXhwb3J0IGZ1bmN0aW9uIGNyZWF0ZVJlZHV4RGV2dG9vbHNFeHRlbnNpb24oKSB7XG4gIGNvbnN0IGV4dGVuc2lvbktleSA9ICdfX1JFRFVYX0RFVlRPT0xTX0VYVEVOU0lPTl9fJztcblxuICBpZiAoXG4gICAgdHlwZW9mIHdpbmRvdyA9PT0gJ29iamVjdCcgJiZcbiAgICB0eXBlb2YgKHdpbmRvdyBhcyBhbnkpW2V4dGVuc2lvbktleV0gIT09ICd1bmRlZmluZWQnXG4gICkge1xuICAgIHJldHVybiAod2luZG93IGFzIGFueSlbZXh0ZW5zaW9uS2V5XTtcbiAgfSBlbHNlIHtcbiAgICByZXR1cm4gbnVsbDtcbiAgfVxufVxuXG4vKipcbiAqIFByb3ZpZGVzIGRldmVsb3BlciB0b29scyBhbmQgaW5zdHJ1bWVudGF0aW9uIGZvciBgU3RvcmVgLlxuICpcbiAqIEB1c2FnZU5vdGVzXG4gKlxuICogYGBgdHNcbiAqIGJvb3RzdHJhcEFwcGxpY2F0aW9uKEFwcENvbXBvbmVudCwge1xuICogICBwcm92aWRlcnM6IFtcbiAqICAgICBwcm92aWRlU3RvcmVEZXZ0b29scyh7XG4gKiAgICAgICBtYXhBZ2U6IDI1LFxuICogICAgICAgbG9nT25seTogZW52aXJvbm1lbnQucHJvZHVjdGlvbixcbiAqICAgICB9KSxcbiAqICAgXSxcbiAqIH0pO1xuICogYGBgXG4gKi9cbmV4cG9ydCBmdW5jdGlvbiBwcm92aWRlU3RvcmVEZXZ0b29scyhcbiAgb3B0aW9uczogU3RvcmVEZXZ0b29sc09wdGlvbnMgPSB7fVxuKTogRW52aXJvbm1lbnRQcm92aWRlcnMge1xuICByZXR1cm4ge1xuICAgIMm1cHJvdmlkZXJzOiBbXG4gICAgICBEZXZ0b29sc0V4dGVuc2lvbixcbiAgICAgIERldnRvb2xzRGlzcGF0Y2hlcixcbiAgICAgIFN0b3JlRGV2dG9vbHMsXG4gICAgICB7XG4gICAgICAgIHByb3ZpZGU6IElOSVRJQUxfT1BUSU9OUyxcbiAgICAgICAgdXNlVmFsdWU6IG9wdGlvbnMsXG4gICAgICB9LFxuICAgICAge1xuICAgICAgICBwcm92aWRlOiBJU19FWFRFTlNJT05fT1JfTU9OSVRPUl9QUkVTRU5ULFxuICAgICAgICBkZXBzOiBbUkVEVVhfREVWVE9PTFNfRVhURU5TSU9OLCBTVE9SRV9ERVZUT09MU19DT05GSUddLFxuICAgICAgICB1c2VGYWN0b3J5OiBjcmVhdGVJc0V4dGVuc2lvbk9yTW9uaXRvclByZXNlbnQsXG4gICAgICB9LFxuICAgICAge1xuICAgICAgICBwcm92aWRlOiBSRURVWF9ERVZUT09MU19FWFRFTlNJT04sXG4gICAgICAgIHVzZUZhY3Rvcnk6IGNyZWF0ZVJlZHV4RGV2dG9vbHNFeHRlbnNpb24sXG4gICAgICB9LFxuICAgICAge1xuICAgICAgICBwcm92aWRlOiBTVE9SRV9ERVZUT09MU19DT05GSUcsXG4gICAgICAgIGRlcHM6IFtJTklUSUFMX09QVElPTlNdLFxuICAgICAgICB1c2VGYWN0b3J5OiBjcmVhdGVDb25maWcsXG4gICAgICB9LFxuICAgICAge1xuICAgICAgICBwcm92aWRlOiBTdGF0ZU9ic2VydmFibGUsXG4gICAgICAgIGRlcHM6IFtTdG9yZURldnRvb2xzXSxcbiAgICAgICAgdXNlRmFjdG9yeTogY3JlYXRlU3RhdGVPYnNlcnZhYmxlLFxuICAgICAgfSxcbiAgICAgIHtcbiAgICAgICAgcHJvdmlkZTogUmVkdWNlck1hbmFnZXJEaXNwYXRjaGVyLFxuICAgICAgICB1c2VFeGlzdGluZzogRGV2dG9vbHNEaXNwYXRjaGVyLFxuICAgICAgfSxcbiAgICBdLFxuICB9O1xufVxuIl19

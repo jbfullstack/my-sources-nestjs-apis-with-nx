@@ -1,0 +1,149 @@
+{
+    "version": 1,
+    "projects": {
+      "api": {
+        "root": "apps/api",
+        "sourceRoot": "apps/api/src",
+        "projectType": "application",
+        "prefix": "api",
+        "schematics": {},
+        "targets": {
+          "deploy": {
+            "builder": "@nrwl/workspace:run-commands",
+            "options": {
+              "commands": [
+                "nx build api",
+                "docker build -f ./apps/api/Dockerfile . -t api"
+              ],
+              "parallel": false
+            }
+          },
+          "build": {
+            "builder": "@nrwl/node:build",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/apps/api",
+              "main": "apps/api/src/main.ts",
+              "tsConfig": "apps/api/tsconfig.app.json",
+              "assets": ["apps/api/src/assets"],
+              "generatePackageJson": true
+            },
+            "configurations": {
+              "production": {
+                "optimization": true,
+                "extractLicenses": true,
+                "inspect": false,
+                "fileReplacements": [
+                  {
+                    "replace": "apps/api/src/environments/environment.ts",
+                    "with": "apps/api/src/environments/environment.prod.ts"
+                  }
+                ]
+              }
+            }
+          },
+          "serve": {
+            "builder": "@nrwl/node:execute",
+            "options": {
+              "buildTarget": "api:build"
+            }
+          },
+          "lint": {
+            "builder": "@nrwl/linter:eslint",
+            "options": {
+              "lintFilePatterns": ["apps/api/**/*.ts"]
+            }
+          },
+          "test": {
+            "builder": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/api"],
+            "options": {
+              "jestConfig": "apps/api/jest.config.js",
+              "passWithNoTests": true
+            }
+          }
+        }
+      },
+      "my-sources": {
+        "root": "apps/my-sources",
+        "sourceRoot": "apps/my-sources/src",
+        "projectType": "application",
+        "prefix": "my-sources",
+        "schematics": {},
+        "targets": {
+          "deploy": {
+            "builder": "@nrwl/workspace:run-commands",
+            "options": {
+              "commands": [
+                "nx build my-sources",
+                "docker build -f ./apps/my-sources/Dockerfile . -t my-sources"
+              ],
+              "parallel": false
+            }
+          },
+          "build": {
+            "builder": "@nrwl/node:build",
+            "outputs": ["{options.outputPath}"],
+            "options": {
+              "outputPath": "dist/apps/my-sources",
+              "main": "apps/my-sources/src/main.ts",
+              "tsConfig": "apps/my-sources/tsconfig.app.json",
+              "assets": ["apps/my-sources/src/assets"],
+              "generatePackageJson": true
+            },
+            "configurations": {
+              "production": {
+                "optimization": true,
+                "extractLicenses": true,
+                "inspect": false,
+                "fileReplacements": [
+                  {
+                    "replace": "apps/my-sources/src/environments/environment.ts",
+                    "with": "apps/my-sources/src/environments/environment.prod.ts"
+                  }
+                ]
+              }
+            }
+          },
+          "serve": {
+            "builder": "@nrwl/node:execute",
+            "options": {
+              "buildTarget": "my-sources:build"
+            }
+          },
+          "lint": {
+            "builder": "@nrwl/linter:eslint",
+            "options": {
+              "lintFilePatterns": ["apps/my-sources/**/*.ts"]
+            }
+          },
+          "test": {
+            "builder": "@nrwl/jest:jest",
+            "outputs": ["coverage/apps/my-sources"],
+            "options": {
+              "jestConfig": "apps/my-sources/jest.config.js",
+              "passWithNoTests": true
+            }
+          }
+        }
+      },
+      "todos": {
+        "root": "libs/todos",
+        "sourceRoot": "libs/todos/src",
+        "projectType": "library",
+        "schematics": {},
+        "targets": {
+          "lint": {
+            "builder": "@nrwl/linter:eslint",
+            "options": {
+              "lintFilePatterns": ["libs/todos/**/*.ts"]
+            }
+          }
+        }
+      }
+    },
+    "cli": {
+      "defaultCollection": "@nrwl/nest"
+    },
+    "defaultProject": "api"
+  }
