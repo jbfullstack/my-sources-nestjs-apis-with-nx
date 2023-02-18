@@ -9,7 +9,9 @@
     "start": "node dist/api/main",
     "build": "nx build api --prod",
     "docker:build": "doker build .",
-    "test": "nx test"
+    "test": "nx test",
+    "start:prod": "node main",
+    "start:migrate:prod": "prisma migrate deploy && yarn run start:prod"
   },
   "private": true,
   "dependencies": {
