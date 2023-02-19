@@ -33,7 +33,8 @@ cd script
 cp -r ../dist/apps/api ./back/app
 cp ../package.json ./back/app/package.json
 cp ../yarn.lock ./back/app/yarn.lock
-cp ../.env ./back/app/.env
+cp ../docker-compose.env ./.env
+cp ../docker-back.env ./back/app/.env
 cp -r ../prisma    ./back/app/prisma
 cp ./run_migration_and_start.sh    ./back/app/run_migration_and_start.sh
 #cp ../docker-compose.yml ./back/app/docker-compose.yml
