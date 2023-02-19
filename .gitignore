@@ -10,6 +10,11 @@ node_modules
 
 # Keep env variable out of version control
 .env
+docker-compose.env
+docker-back.env
+/script/back/app
+/script/.env
+
 
 # IDEs and editors
 /.idea
