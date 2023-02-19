@@ -43,7 +43,7 @@ COPY --chown=node:node --from=build /home/node/app/node_modules/.prisma/client  
 # ENV ADMIN_PASSWORD="$2a$10$kSbH1fEQwsxsNh1Bru9mi.lVue6S7IASPHlOYlo1VxuEnQyFRY00y"
 # ENV ADMIN_PSEUDO="admin_pseudo"
 # ENV ADMIN_ROLE_ID=3
-ENV POSTGRES_PASSWORD prisma_mdp
+# ENV POSTGRES_PASSWORD prisma_mdp
 # ENV JWT_EXPIRE=3600
 # ENV JWT_SECRET="JBHIVE-SECRET-875-!?"   
 # ENV DATABASE_URL="postgresql://prisma_user:prisma_mdp@postgres:5432/prisma?schema=public"
