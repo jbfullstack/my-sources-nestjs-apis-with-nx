@@ -57,7 +57,7 @@ export class UserService extends PrismaClient implements OnModuleInit, OnModuleD
                 nickname,
                 roleId: +roleId,
                 hidden: false,  // TODO admin manage hidden & activated
-                activated: true,
+                activated: false,
                 token: '',
             }
         })
