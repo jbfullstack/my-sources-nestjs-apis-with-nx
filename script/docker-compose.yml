@@ -1,5 +1,19 @@
 version: '3.8'
 services:
+  ngrx-client:
+    container_name: front
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - nest-api
+    # volumes: # Volume binding
+    #     - './angulardockerproject:/home/node/app' 
+    # command: > 
+    #     bash -c "yarn install && ng serve --host 0.0.0.0 --port 4200"
+
   nest-api:
     container_name: back
     build:
@@ -22,6 +36,8 @@ services:
       - .env
     volumes:
       - postgres:/var/lib/postgresql/data
+
+  
 
 volumes:
   postgres:

@@ -4,16 +4,16 @@ images=$(sudo docker image ls -aq)
 
 # Clean sudo docker networks
 ##sudo docker network rm front_back
-sudo docker network rm back_db
+# sudo docker network rm back_db
 
 # clean containers
 sudo docker stop front
 sudo docker stop back 
 sudo docker stop postgres
 
-sudo docker rm front
-sudo docker rm back 
-sudo docker rm postgres
+sudo docker rm -f front
+sudo docker rm -f back 
+sudo docker rm -f -v postgres
 
 # clean images
 sudo docker image rm ${images} -f
@@ -38,6 +38,17 @@ cp ../docker-back.env ./back/app/.env
 cp -r ../prisma    ./back/app/prisma
 cp ./run_migration_and_start.sh    ./back/app/run_migration_and_start.sh
 #cp ../docker-compose.yml ./back/app/docker-compose.yml
+
+### FRONT
+cd ../
+rm -rf front/app
+yarn run nx run my-sources:build
+cd script
+cp -r ../dist/apps/my-sources ./front/app
+cp ../package.json ./front/app/package.json
+cp ../yarn.lock ./front/app/yarn.lock
+cp ../docker-back.env ./front/app/.env
+# cp ./start_angular_container.sh ./front/app/start_angular_container.sh
 
 
 sudo docker compose up -d
