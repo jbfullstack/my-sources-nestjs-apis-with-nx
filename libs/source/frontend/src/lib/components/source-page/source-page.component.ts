@@ -191,7 +191,7 @@ export class SourcePageComponent implements OnInit{
     }
 
     isValid(){
-        if (this.newSourceTitle.trim() === '') {
+        if (this.newSourceTitle.trim() === '' ||  this.atLeastOneInputContainsQuoteChar()) {
             return false
         } else {
 
@@ -205,6 +205,19 @@ export class SourcePageComponent implements OnInit{
         }
         
         return false
+    }
+    
+    atLeastOneInputContainsQuoteChar() {
+        if ( this.newSourceContent.includes('"') ) {
+            return true;
+        } else if ( this.newSourceDescription.includes('"') ) {
+            return true;
+        }  else if ( this.newSourceTitle.includes('"') ) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 
     isValidHttpUrl(str: string) {
