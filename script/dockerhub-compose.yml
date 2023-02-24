@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+
+  ngrx-client:
+    container_name: front
+    image: jeremybashroomdockerhub/my_sources_front:1.1
+    ports:
+      - 80:80
+    depends_on:
+      - nest-api
+
+  nest-api:
+    container_name: back
+    image: jeremybashroomdockerhub/my_sources_back:1.0
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+    environment:
+      - NODE_ENV=production
+      - DEBUG=true
+      - DEBUG_GUARDS=true
+      - ADMIN_EMAIL=admin@example.com
+      - ADMIN_PASSWORD=$2a$10$s8HQDNo06dqNVA4.Ouj74O8z1Uq1LJHwzC/DCrB5YZ/VWfmCdd/pe
+      - ADMIN_PSEUDO=admin_pseudo
+      - ADMIN_ROLE_ID=3
+      - JWT_EXPIRE=3600
+      - JWT_SECRET=JBHIVE-SECRET-875-!?   
+      - DATABASE_URL=postgresql://prisma_user:prisma_mdp@postgres:5432/prisma?schema=public
+
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    volumes:
+      - /home/ash/docker-mount/postgres/data:/var/lib/postgresql/data
+    environment:
+      - NODE_ENV=production
+      - POSTGRES_USER=prisma_user
+      - POSTGRES_PASSWORD=prisma_mdp
+      - POSTGRES_DB=prisma
+volumes:
+  postgres:
+    name: nest_prisma_postgres

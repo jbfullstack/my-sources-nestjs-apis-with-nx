@@ -87,7 +87,7 @@ WORKDIR /usr/share/nginx/html
 RUN rm *
 
 # COPY --from=front_build /home/node/app/app/my-sources .
-COPY /app/my-sources .
+COPY /app .
 
 # Copy nginx configuration and build application inside the final container
 COPY nginx.conf /etc/nginx/conf.d/default.conf

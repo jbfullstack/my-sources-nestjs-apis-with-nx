@@ -12,6 +12,7 @@ node_modules
 .env
 docker-compose.env
 docker-back.env
+dockerhub-compose.env
 /script/back/app
 /script/front/app
 /script/.env

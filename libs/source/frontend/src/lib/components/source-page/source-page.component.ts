@@ -191,7 +191,9 @@ export class SourcePageComponent implements OnInit{
     }
 
     isValid(){
-        if (this.newSourceTitle.trim() === '' ||  this.atLeastOneInputContainsQuoteChar()) {
+        if (this.newSourceTitle.trim() === '') {
+            return false
+        } else if (this.atLeastOneInputContainsQuoteChar()){
             return false
         } else {
 
